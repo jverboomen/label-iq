@@ -337,6 +337,23 @@ export default function HomePage() {
           </div>
         </div>
       </main>
+
+      {/* Medical Disclaimer Footer */}
+      <footer className="border-t bg-destructive/10 mt-12">
+        <div className="max-w-4xl mx-auto px-6 py-6 md:px-8">
+          <div className="flex gap-3 items-start">
+            <AlertCircle className="h-6 w-6 text-destructive flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-base font-semibold text-destructive mb-1" data-testid="text-footer-warning">
+                This is NOT to be considered medical advice.
+              </p>
+              <p className="text-sm text-foreground" data-testid="text-footer-disclaimer">
+                Please refer all questions to your physician.
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
