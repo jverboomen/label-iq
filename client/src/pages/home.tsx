@@ -160,6 +160,48 @@ export default function HomePage() {
               className="resize-none text-base"
               data-testid="input-question"
             />
+            
+            {/* Example Questions - Clinical Spotlight */}
+            {!question && selectedDrugId && (
+              <div className="space-y-2 py-2">
+                <p className="text-xs font-medium text-muted-foreground">💡 Try these example questions:</p>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setQuestion("What are the most serious warnings and precautions?")}
+                    className="px-3 py-1.5 text-xs rounded-full bg-primary/10 text-primary hover-elevate active-elevate-2 border border-primary/20"
+                    data-testid="button-example-warnings"
+                  >
+                    ⚠️ Warnings & Precautions
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setQuestion("What are the most common side effects?")}
+                    className="px-3 py-1.5 text-xs rounded-full bg-primary/10 text-primary hover-elevate active-elevate-2 border border-primary/20"
+                    data-testid="button-example-side-effects"
+                  >
+                    💊 Common Side Effects
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setQuestion("What drug interactions should I know about?")}
+                    className="px-3 py-1.5 text-xs rounded-full bg-primary/10 text-primary hover-elevate active-elevate-2 border border-primary/20"
+                    data-testid="button-example-interactions"
+                  >
+                    🔄 Drug Interactions
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setQuestion("What is this medication used for?")}
+                    className="px-3 py-1.5 text-xs rounded-full bg-primary/10 text-primary hover-elevate active-elevate-2 border border-primary/20"
+                    data-testid="button-example-indications"
+                  >
+                    ℹ️ What is it for?
+                  </button>
+                </div>
+              </div>
+            )}
+            
             <div className="flex items-center justify-between gap-3">
               <p className="text-xs text-muted-foreground">
                 {question.length < 10 && question.length > 0 
