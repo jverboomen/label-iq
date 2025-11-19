@@ -216,7 +216,7 @@ export default function HomePage() {
                 className="font-medium"
                 data-testid="button-submit"
               >
-                {queryMutation.isPending ? "Analyzing..." : "Ask the Label"}
+                {queryMutation.isPending ? "Analyzing..." : "Ask Question"}
               </Button>
             </div>
           </form>
