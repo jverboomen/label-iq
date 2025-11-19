@@ -164,7 +164,7 @@ export default function HomePage() {
             {/* Example Questions - Clinical Spotlight */}
             {!question && selectedDrugId && (
               <div className="space-y-2 py-2">
-                <p className="text-xs font-medium text-muted-foreground">💡 Try these example questions:</p>
+                <p className="text-xs font-medium text-muted-foreground">Try these example questions:</p>
                 <div className="flex flex-wrap gap-2">
                   <button
                     type="button"
@@ -172,7 +172,7 @@ export default function HomePage() {
                     className="px-3 py-1.5 text-xs rounded-full bg-primary/10 text-primary hover-elevate active-elevate-2 border border-primary/20"
                     data-testid="button-example-warnings"
                   >
-                    ⚠️ Warnings & Precautions
+                    Warnings & Precautions
                   </button>
                   <button
                     type="button"
@@ -180,7 +180,7 @@ export default function HomePage() {
                     className="px-3 py-1.5 text-xs rounded-full bg-primary/10 text-primary hover-elevate active-elevate-2 border border-primary/20"
                     data-testid="button-example-side-effects"
                   >
-                    💊 Common Side Effects
+                    Common Side Effects
                   </button>
                   <button
                     type="button"
@@ -188,7 +188,7 @@ export default function HomePage() {
                     className="px-3 py-1.5 text-xs rounded-full bg-primary/10 text-primary hover-elevate active-elevate-2 border border-primary/20"
                     data-testid="button-example-interactions"
                   >
-                    🔄 Drug Interactions
+                    Drug Interactions
                   </button>
                   <button
                     type="button"
@@ -196,7 +196,7 @@ export default function HomePage() {
                     className="px-3 py-1.5 text-xs rounded-full bg-primary/10 text-primary hover-elevate active-elevate-2 border border-primary/20"
                     data-testid="button-example-indications"
                   >
-                    ℹ️ What is it for?
+                    What is it for?
                   </button>
                 </div>
               </div>
@@ -549,12 +549,12 @@ export default function HomePage() {
                               data-testid="button-view-fda"
                             >
                               <a
-                                href={`https://dailymed.nlm.nih.gov/dailymed/search.cfm?labeltype=all&query=${encodeURIComponent(selectedDrug.drugName)}`}
+                                href="https://www.accessdata.fda.gov/scripts/cder/daf/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
                                 <FileText className="h-4 w-4" />
-                                View Full Label on FDA.gov
+                                Search FDA Drugs Database
                               </a>
                             </Button>
                             <Button
