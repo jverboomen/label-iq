@@ -610,10 +610,10 @@ export default function HomePage() {
       </footer>
 
       {/* Powered By Footer */}
-      <div className="border-t bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
+      <div className="border-t bg-background">
         <div className="max-w-4xl mx-auto px-6 py-8 md:px-8">
           <div className="flex flex-col items-center justify-center gap-4 text-center">
-            <p className="text-sm text-muted-foreground font-medium">Powered by</p>
+            <p className="text-sm text-foreground font-medium">Powered by</p>
             <a 
               href="https://www.massiveinsights.com/" 
               target="_blank" 
@@ -624,7 +624,7 @@ export default function HomePage() {
               <img 
                 src="/massive-insights-logo.jpg" 
                 alt="Massive Insights - Data & Analytics Experts" 
-                className="h-16 w-auto object-contain drop-shadow-lg hover:drop-shadow-2xl transition-all"
+                className="h-16 w-auto object-contain hover:opacity-80 transition-all"
                 data-testid="img-massive-insights-logo"
               />
             </a>
