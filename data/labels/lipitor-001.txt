@@ -1,0 +1,36 @@
+LIPITOR (atorvastatin calcium) tablets for oral use
+
+HIGHLIGHTS OF PRESCRIBING INFORMATION
+
+INDICATIONS AND USAGE
+LIPITOR is an HMG-CoA reductase inhibitor (statin) indicated as an adjunct therapy to diet to reduce elevated total cholesterol, LDL-C, apolipoprotein B, and triglycerides and to increase HDL-C in patients with primary hyperlipidemia and mixed dyslipidemia. LIPITOR is also indicated to reduce the risk of myocardial infarction, stroke, revascularization procedures, and angina in patients without clinically evident coronary heart disease, but with multiple risk factors.
+
+DOSAGE AND ADMINISTRATION
+The recommended starting dose of LIPITOR is 10 or 20 mg once daily. Patients who require a larger reduction in LDL-C (more than 45%) may be started at 40 mg once daily. The dosage range is 10 to 80 mg once daily. LIPITOR can be administered as a single dose at any time of the day, with or without food. The starting dose and maintenance doses should be individualized according to patient characteristics such as goal of therapy and response.
+
+CONTRAINDICATIONS
+LIPITOR is contraindicated in patients with active liver disease, which may include unexplained persistent elevations in hepatic transaminase levels. LIPITOR is contraindicated in women who are pregnant or may become pregnant. Serum cholesterol and triglycerides increase during normal pregnancy, and cholesterol or cholesterol derivatives are essential for fetal development. Atherosclerosis is a chronic process, and the discontinuation of lipid-lowering drugs during pregnancy should have little impact on the outcome of long-term therapy of primary hypercholesterolemia. There are no adequate and well-controlled studies of LIPITOR use during pregnancy. LIPITOR is contraindicated in nursing mothers. It is not known whether atorvastatin is excreted into human milk.
+
+WARNINGS AND PRECAUTIONS
+Myopathy and Rhabdomyolysis: Rare cases of rhabdomyolysis with acute renal failure secondary to myoglobinuria have been reported with LIPITOR and with other drugs in this class. Uncomplicated myalgia has been reported in clinical trials. Myopathy, defined as muscle aching or muscle weakness in conjunction with increases in creatine phosphokinase (CPK) values greater than ten times the upper limit of normal, should be considered in any patient with diffuse myalgias, muscle tenderness or weakness, and/or marked elevation of CPK. Patients should be advised to report promptly unexplained muscle pain, tenderness, or weakness, particularly if accompanied by malaise or fever or if muscle signs and symptoms persist after discontinuing LIPITOR. LIPITOR therapy should be discontinued if markedly elevated CPK levels occur or myopathy is diagnosed or suspected.
+
+Liver Enzyme Abnormalities: It is recommended that liver enzyme tests be performed before the initiation of treatment and repeated as clinically indicated. There have been rare postmarketing reports of fatal and non-fatal hepatic failure in patients taking statins, including atorvastatin. If serious liver injury with clinical symptoms and/or hyperbilirubinemia or jaundice occurs during treatment with LIPITOR, promptly interrupt therapy. If an alternate etiology is not found do not restart LIPITOR. LIPITOR should be used with caution in patients who consume substantial quantities of alcohol and/or have a history of liver disease.
+
+ADVERSE REACTIONS
+The most common adverse reactions (incidence ≥ 2% and greater than placebo) in patients treated with LIPITOR in placebo-controlled trials were: nasopharyngitis, arthralgia, diarrhea, pain in extremity, and urinary tract infection. In general, the adverse reactions observed in clinical trials were mild and transient. Less than 2% of patients were discontinued from controlled clinical studies due to adverse experiences attributable to LIPITOR. The most common adverse reactions that led to treatment discontinuation were: myalgia, diarrhea, nausea, alanine aminotransferase increase, hepatic enzyme increase, and aspartate aminotransferase increase.
+
+DRUG INTERACTIONS
+Strong Inhibitors of CYP3A4: Atorvastatin is metabolized by cytochrome P450 3A4. Concomitant administration of LIPITOR with strong inhibitors of CYP3A4 can lead to increases in plasma concentrations of atorvastatin. The extent of interaction and potentiation of effects depend on the variability of effect on CYP3A4. Clarithromycin: In healthy adults, plasma concentrations of atorvastatin increased approximately 500% with concomitant administration of LIPITOR 80 mg with clarithromycin (500 mg twice daily). Therefore, in patients taking clarithromycin, therapy with LIPITOR should be limited to a maximum dose of 20 mg daily. Combination with protease inhibitors is not recommended. Itraconazole: Plasma concentrations of atorvastatin increased approximately 330% when LIPITOR 40 mg was co-administered with itraconazole 200 mg daily. Grapefruit juice contains one or more components that inhibit CYP3A4 and can increase plasma concentrations of atorvastatin, especially with excessive grapefruit juice consumption (more than 1.2 liters daily).
+
+USE IN SPECIFIC POPULATIONS
+Pregnancy: LIPITOR is contraindicated in women who are or may become pregnant. Lipid-lowering drugs offer no benefit during pregnancy, because cholesterol and cholesterol derivatives are needed for normal fetal development. Atherosclerosis is a chronic process, and discontinuation of lipid-lowering drugs during pregnancy should have little impact on long-term outcomes of primary hypercholesterolemia therapy. Serum cholesterol and triglycerides increase during normal pregnancy. If a patient becomes pregnant while taking this drug, LIPITOR should be discontinued immediately and the patient should be apprised of the potential hazard to the fetus.
+
+Nursing Mothers: It is not known whether atorvastatin is excreted in human milk; however, a small amount of another drug in this class does pass into breast milk. Because of the potential for serious adverse reactions in nursing infants, women taking LIPITOR should not breastfeed their infants.
+
+Pediatric Use: The safety and effectiveness of LIPITOR have been established in boys and postmenarchal girls, 10 to 17 years of age with heterozygous familial hypercholesterolemia. Doses greater than 20 mg have not been studied in this patient population.
+
+CLINICAL PHARMACOLOGY
+Mechanism of Action: LIPITOR is a selective, competitive inhibitor of HMG-CoA reductase, the rate-limiting enzyme that converts 3-hydroxy-3-methylglutaryl-coenzyme A to mevalonate, a precursor of sterols, including cholesterol. In animal models, atorvastatin lowers plasma cholesterol and lipoprotein levels by inhibiting HMG-CoA reductase and cholesterol synthesis in the liver and by increasing the number of hepatic LDL receptors on the cell-surface to enhance uptake and catabolism of LDL. Atorvastatin also reduces LDL production and the number of LDL particles.
+
+OVERDOSAGE
+There is no specific treatment for atorvastatin overdosage. In the event of an overdose, the patient should be treated symptomatically and supportive measures instituted as required. Due to extensive drug binding to plasma proteins, hemodialysis is not expected to significantly enhance atorvastatin clearance.

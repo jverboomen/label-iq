@@ -1,0 +1,44 @@
+LISINOPRIL tablets for oral use
+
+HIGHLIGHTS OF PRESCRIBING INFORMATION
+
+INDICATIONS AND USAGE
+Lisinopril is an angiotensin converting enzyme (ACE) inhibitor indicated for: Treatment of hypertension in adults and pediatric patients 6 years of age and older. Adjunct therapy in the management of heart failure. Treatment of acute myocardial infarction in hemodynamically stable patients within 24 hours of symptom onset to improve survival.
+
+DOSAGE AND ADMINISTRATION
+Hypertension: The recommended initial dose is 10 mg once daily. Patients not adequately controlled on 10 mg may be increased to 20 mg once daily. Doses up to 80 mg have been used but do not appear to give a greater effect. If blood pressure is not controlled with lisinopril alone, a low dose of a diuretic may be added.
+
+Heart Failure: Initial dose is 5 mg once daily in patients with heart failure. The usual effective dosage range is 5 to 40 mg administered as a single daily dose. Dosage should be titrated at intervals of no less than 2 weeks to the highest level tolerated by the patient up to a maximum of 40 mg daily.
+
+CONTRAINDICATIONS
+Lisinopril is contraindicated in patients who are hypersensitive to this product or to any other ACE inhibitor. Lisinopril is contraindicated in patients with a history of angioedema related to previous treatment with an ACE inhibitor. Do not co-administer aliskiren with lisinopril in patients with diabetes.
+
+WARNINGS AND PRECAUTIONS
+Anaphylactoid and Possibly Related Reactions: Presumably because angiotensin-converting enzyme inhibitors affect the metabolism of eicosanoids and polypeptides, including endogenous bradykinin, patients receiving ACE inhibitors may be subject to a variety of adverse reactions, some of them serious. Head and Neck Angioedema: Angioedema of the face, extremities, lips, tongue, glottis and/or larynx has been reported in patients treated with ACE inhibitors including lisinopril. This may occur at any time during treatment. Angioedema associated with laryngeal edema may be fatal. If angioedema of the face, extremities, lips, tongue, glottis and/or larynx occurs, treatment with lisinopril should be discontinued and appropriate therapy instituted immediately.
+
+Hypotension: Excessive hypotension is rare in uncomplicated hypertensive patients but is a possible consequence of lisinopril use in salt/volume depleted persons such as those treated vigorously with diuretics or patients on dialysis. In patients with heart failure, hypotension occurred in 5.0% of patients receiving lisinopril.
+
+Impaired Renal Function: Changes in renal function including acute renal failure can be caused by drugs that inhibit the renin-angiotensin system. Patients whose renal function may depend in part on the activity of the renin-angiotensin system may be at particular risk of developing acute renal failure on lisinopril. Monitor renal function periodically in patients receiving lisinopril.
+
+Hyperkalemia: Serum potassium should be monitored periodically in patients receiving lisinopril. Drugs that inhibit the renin-angiotensin system can cause hyperkalemia. Risk factors for the development of hyperkalemia include renal insufficiency, diabetes mellitus, and the concomitant use of potassium-sparing diuretics, potassium supplements and/or potassium-containing salt substitutes.
+
+ADVERSE REACTIONS
+Lisinopril has been evaluated for safety in more than 11,000 patients. In clinical trials, the most common adverse reactions (occurring in greater than 2% of patients and more frequently than placebo) were: dizziness (5.4%), headache (5.2%), cough (3.5%), fatigue (3.0%), and diarrhea (2.4%). Other adverse reactions occurring in 0.3 to 1.0% of patients included: chest pain, nausea, vomiting, dyspepsia, rash, asthenia, orthostatic effects, and decreased libido.
+
+Cough: A dry, persistent cough has been reported with all ACE inhibitors. The cough is often worse when lying down. The cough is non-productive and resolves after discontinuation of therapy.
+
+DRUG INTERACTIONS
+Diuretics: Patients on diuretics, especially those in whom diuretic therapy was recently instituted, may occasionally experience an excessive reduction of blood pressure after initiation of therapy with lisinopril. The possibility of hypotensive effects with lisinopril can be minimized by either discontinuing the diuretic or increasing the salt intake prior to initiation of treatment.
+
+Non-Steroidal Anti-Inflammatory Agents (NSAIDs): In some patients with compromised renal function who are being treated with NSAIDs, the co-administration of ACE inhibitors may result in a further deterioration of renal function. These effects are usually reversible. Reports suggest that NSAIDs may diminish the antihypertensive effect of ACE inhibitors.
+
+Potassium Supplements and Potassium-Sparing Diuretics: Lisinopril can attenuate potassium loss caused by thiazide diuretics and increase serum potassium when used alone. Use of potassium supplements, potassium-sparing diuretics, or potassium-containing salt substitutes concomitantly with ACE inhibitors can increase the risk of hyperkalemia.
+
+USE IN SPECIFIC POPULATIONS
+Pregnancy: Lisinopril can cause fetal harm when administered to a pregnant woman. Use of drugs that act on the renin-angiotensin system during the second and third trimesters of pregnancy reduces fetal renal function and increases fetal and neonatal morbidity and death. When pregnancy is detected, discontinue lisinopril as soon as possible.
+
+Nursing Mothers: It is not known whether lisinopril is excreted in human milk. Because many drugs are excreted in human milk and because of the potential for serious adverse reactions in nursing infants from ACE inhibitors, a decision should be made whether to discontinue nursing or discontinue the drug.
+
+Pediatric Use: Neonates with a history of in utero exposure to lisinopril: If oliguria or hypotension occurs, support blood pressure and renal perfusion. Safety and effectiveness of lisinopril have been established in pediatric patients aged 6 years or older.
+
+Geriatric Use: Of the total number of patients who received lisinopril in controlled clinical studies, 20.5% were 65 years and older while 3.7% were 75 years and older. No overall differences in effectiveness or safety were observed between these patients and younger patients.

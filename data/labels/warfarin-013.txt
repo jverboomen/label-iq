@@ -1,0 +1,47 @@
+WARFARIN SODIUM tablets for oral use
+
+HIGHLIGHTS OF PRESCRIBING INFORMATION
+
+WARNING: BLEEDING RISK
+Warfarin sodium can cause major or fatal bleeding. Bleeding is more likely to occur during the starting period and with a higher dose. Risk factors for bleeding include high intensity anticoagulation (INR greater than 4), age 65 or older, history of gastrointestinal bleeding, hypertension, cerebrovascular disease, serious heart disease, anemia, malignancy, trauma, renal insufficiency, concomitant drugs, and long duration of warfarin therapy. Perform regular monitoring of INR in all treated patients. Those at high risk of bleeding may benefit from more frequent INR monitoring, careful dose adjustment to desired INR, and a shorter duration of therapy. Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding.
+
+INDICATIONS AND USAGE
+Warfarin sodium is a vitamin K antagonist indicated for: Prophylaxis and treatment of venous thrombosis and its extension, and pulmonary embolism. Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation and/or cardiac valve replacement. Reduction in the risk of death, recurrent myocardial infarction, and thromboembolic events such as stroke or systemic embolization after myocardial infarction.
+
+DOSAGE AND ADMINISTRATION
+The dosage and administration of warfarin sodium must be individualized for each patient according to the patient's INR response to the drug. Adjust the dose based upon the patient's INR and the clinical scenario. The recommended target INR is 2 to 3 for most patients, but may be 2.5 to 3.5 for patients with mechanical heart valves. The duration of therapy depends on the indication for use and risk factors for each individual patient. Initial Dosing: The recommended initial dose is 2 to 5 mg once daily with dosage adjustments based on INR determinations. Lower initiation doses may be considered for patients with certain genetic variations in CYP2C9 and VKORC1 enzymes.
+
+Maintenance Dosing: The typical maintenance dose ranges from 2 to 10 mg once daily. The dose is adjusted according to INR measurements. INR should be determined daily after the administration of the initial dose until INR has stabilized. Intervals between subsequent INR determinations should be based upon the physician's judgment of the patient's reliability and response to warfarin. Acceptable intervals for INR determinations are normally within 4 weeks.
+
+CONTRAINDICATIONS
+Warfarin is contraindicated in any localized or general physical condition or personal circumstance in which the hazard of hemorrhage might be greater than the potential clinical benefits of anticoagulation, such as: Pregnancy (warfarin can cause fetal harm), hemorrhagic tendencies or blood dyscrasias, recent or contemplated surgery of the central nervous system or eye, traumatic surgery resulting in large open surfaces, bleeding tendencies associated with active ulceration or overt bleeding of the gastrointestinal, genitourinary, or respiratory tracts, cerebrovascular hemorrhage, aneurysms - cerebral or aortic, pericarditis and pericardial effusions, and bacterial endocarditis. Warfarin is also contraindicated in patients with a history of hypersensitivity to warfarin or any component of this product.
+
+WARNINGS AND PRECAUTIONS
+Tissue Necrosis: Necrosis and/or gangrene of skin and other tissues is an uncommon but serious risk. Necrosis may be associated with local thrombosis and usually appears within a few days of the start of warfarin therapy. Careful clinical evaluation is required to determine whether necrosis is caused by an underlying disease. Discontinue warfarin therapy when warfarin is determined to be the cause of developing necrosis.
+
+Systemic Atheroemboli and Cholesterol Microemboli: Atheroemboli and cholesterol microemboli can present with a variety of signs and symptoms depending on the site of embolization. The most commonly involved visceral organs are the kidneys followed by the pancreas, spleen, and liver. Discontinuation of warfarin is recommended when such phenomena are observed.
+
+Acute Kidney Injury: Acute kidney injury has been reported in patients treated with warfarin in the setting of an elevated INR and excessive anticoagulation. More frequent INR monitoring may be needed in patients with compromised renal function.
+
+Calciphylaxis: Calciphylaxis is a rare but serious and potentially fatal syndrome of vascular calcification with skin necrosis. Patients with ESRD are at increased risk. Discontinue warfarin and treat appropriately if calciphylaxis is diagnosed.
+
+ADVERSE REACTIONS
+The most serious risks associated with warfarin therapy are bleeding, tissue necrosis, and gangrene. Other adverse reactions include: hemorrhage from any tissue or organ, necrosis of skin and other tissues, systemic atheroemboli and cholesterol microemboli, purple toes syndrome, hepatitis, elevated liver enzymes, jaundice, hypersensitivity/allergic reactions including anaphylactic reactions, vasculitis, and edema.
+
+DRUG INTERACTIONS
+Warfarin is a narrow therapeutic range (index) drug, and its anticoagulation effect may be affected by numerous drugs and dietary vitamin K. Drugs may interact with warfarin through pharmacodynamic or pharmacokinetic mechanisms. Pharmacodynamic mechanisms for drug interactions with warfarin are synergism (impaired hemostasis, reduced clotting factor synthesis), competitive antagonism (vitamin K), and altered physiologic control loop for vitamin K metabolism. Pharmacokinetic mechanisms for drug interactions with warfarin are mainly enzyme induction, enzyme inhibition, and reduced plasma protein binding. These interactions may increase or decrease the INR response.
+
+Antibiotics and Antifungals: Antibiotics and antifungals are commonly associated with drug interactions with warfarin. Many antibiotics and antifungals can increase the anticoagulant effect of warfarin. More frequent INR monitoring is recommended during and for a period after antibiotic or antifungal use.
+
+NSAIDs: NSAIDs and aspirin increase the risk of bleeding. Monitor patients closely when warfarin is used concomitantly with NSAIDs or aspirin.
+
+Herbal Products: St. John's Wort may decrease warfarin's effect. Patients should be advised to avoid use of St. John's Wort while taking warfarin. Many other herbal products have potential to interact with warfarin.
+
+USE IN SPECIFIC POPULATIONS
+Pregnancy: Warfarin can cause fetal harm when administered to a pregnant woman. Warfarin exposure during pregnancy causes a recognized pattern of major congenital malformations (warfarin embryopathy and fetotoxicity), fatal fetal hemorrhage, and an increased risk of spontaneous abortion and fetal mortality. Warfarin is contraindicated in women who are pregnant.
+
+Nursing Mothers: Based on very limited published data, warfarin has not been detected in the plasma of breastfed infants whose mothers were treated with warfarin. Prothrombin times in breastfed infants whose mothers are taking warfarin have been reported to be unaffected. Use of warfarin is compatible with breastfeeding provided the infant has normal coagulation and is monitored for bruising or bleeding.
+
+Pediatric Use: Safety and effectiveness of warfarin in pediatric patients below the age of 18 have not been established in randomized controlled trials. However, the use of warfarin in pediatric patients is well-documented for the prevention and treatment of thromboembolic events.
+
+Geriatric Use: Patients 60 years or older appear to exhibit greater than expected INR response to warfarin. Lower initiation and maintenance doses should be considered for elderly patients.

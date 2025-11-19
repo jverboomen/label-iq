@@ -1,0 +1,39 @@
+METFORMIN HYDROCHLORIDE tablets for oral use
+
+HIGHLIGHTS OF PRESCRIBING INFORMATION
+
+INDICATIONS AND USAGE
+Metformin hydrochloride is indicated as an adjunct to diet and exercise to improve glycemic control in adults and pediatric patients 10 years of age and older with type 2 diabetes mellitus.
+
+DOSAGE AND ADMINISTRATION
+There is no fixed dosage regimen for the management of hyperglycemia in patients with type 2 diabetes with metformin hydrochloride or any other pharmacologic agent. Dosage of metformin hydrochloride must be individualized on the basis of both effectiveness and tolerance, while not exceeding the maximum recommended daily doses. The recommended starting dose of metformin hydrochloride is 500 mg orally twice a day or 850 mg once a day, given with meals. Dosage increases should be made in increments of 500 mg weekly or 850 mg every 2 weeks, up to a maximum of 2550 mg per day, given in divided doses. Metformin hydrochloride should be given in divided doses with meals.
+
+CONTRAINDICATIONS
+Metformin hydrochloride is contraindicated in patients with severe renal impairment (eGFR below 30 mL/min/1.73 m²). Metformin hydrochloride is contraindicated in patients with acute or chronic metabolic acidosis, including diabetic ketoacidosis, with or without coma. Metformin hydrochloride is contraindicated in patients with a history of a serious hypersensitivity reaction to metformin hydrochloride. Metformin hydrochloride is contraindicated in patients with acute heart failure and unstable or acute congestive heart failure.
+
+WARNINGS AND PRECAUTIONS
+Lactic Acidosis: Lactic acidosis is a rare, but serious, metabolic complication that can occur due to metformin accumulation during treatment with metformin hydrochloride. When it occurs, it is fatal in approximately 50% of cases. Lactic acidosis may also occur in association with a number of pathophysiologic conditions, including diabetes mellitus, and whenever there is significant tissue hypoperfusion and hypoxemia. Lactic acidosis is characterized by elevated blood lactate levels (greater than 5 mmol/L), decreased blood pH, electrolyte disturbances with an increased anion gap, and an increased lactate/pyruvate ratio. When metformin is implicated as the cause of lactic acidosis, metformin plasma levels greater than 5 mcg/mL are generally found. The reported incidence of lactic acidosis in patients receiving metformin hydrochloride is very low (approximately 0.03 cases/1000 patient-years, with approximately 0.015 fatal cases/1000 patient-years). Patients with congestive heart failure requiring pharmacologic management, in particular those with unstable or acute congestive heart failure who are at risk of hypoperfusion and hypoxemia, are at increased risk of lactic acidosis. The risk of lactic acidosis increases with the degree of renal dysfunction and the patient's age.
+
+Vitamin B12 Deficiency: In controlled clinical trials of metformin of 29 weeks duration, a decrease to subnormal levels of previously normal serum vitamin B12 levels, without clinical manifestations, was observed in approximately 7% of patients. Such decrease, possibly due to interference with B12 absorption from the B12-intrinsic factor complex, is, however, very rarely associated with anemia and appears to be rapidly reversible with discontinuation of metformin or vitamin B12 supplementation. Measurement of hematologic parameters on an annual basis is advised in patients on metformin and any apparent abnormalities should be appropriately investigated and managed. Certain individuals (those with inadequate vitamin B12 or calcium intake or absorption) appear to be predisposed to developing subnormal vitamin B12 levels. In these patients, routine serum vitamin B12 measurements at 2- to 3-year intervals may be useful.
+
+Hypoglycemia: Hypoglycemia does not occur in patients receiving metformin alone under usual circumstances of use, but could occur when caloric intake is deficient, when strenuous exercise is not compensated by caloric supplementation, or during concomitant use with other glucose-lowering agents (such as sulfonylureas and insulin) or ethanol.
+
+ADVERSE REACTIONS
+The most common adverse reactions due to initiation of metformin therapy are diarrhea, nausea/vomiting, flatulence, asthenia, indigestion, abdominal discomfort, and headache. In a US double-blind clinical study of metformin in patients with type 2 diabetes, a total of 141 patients received metformin therapy (up to 2550 mg per day) and 145 patients received placebo. Adverse reactions reported in greater than 5% of the metformin patients, and that were more common than in placebo patients, were diarrhea (53.2% vs 11.7%), nausea/vomiting (25.5% vs 8.3%), and flatulence (12.1% vs 5.5%).
+
+DRUG INTERACTIONS
+Carbonic Anhydrase Inhibitors: Topiramate or other carbonic anhydrase inhibitors frequently cause a decrease in serum bicarbonate and induce non-anion gap, hyperchloremic metabolic acidosis. Concomitant use of these drugs may increase the risk for lactic acidosis. Consider more frequent monitoring of these patients.
+
+Drugs that Reduce Metformin Clearance: Concomitant use of drugs that interfere with common renal tubular transport systems involved in the renal elimination of metformin could increase systemic exposure to metformin and may increase the risk for lactic acidosis. Consider the benefits and risks of concomitant use.
+
+Alcohol: Alcohol is known to potentiate the effect of metformin on lactate metabolism. Warn patients against excessive alcohol intake while receiving metformin hydrochloride.
+
+USE IN SPECIFIC POPULATIONS
+Pregnancy: Limited data with metformin in pregnant women are not sufficient to determine a drug-associated risk for major birth defects or miscarriage. Published studies have not reported an increased risk of major birth defects or miscarriage with metformin use during pregnancy. There are risks to the mother and fetus associated with poorly controlled diabetes in pregnancy.
+
+Pediatric Use: The safety and effectiveness of metformin for the treatment of type 2 diabetes have been established in pediatric patients ages 10 to 16 years. Use of metformin in this age group is supported by evidence from adequate and well-controlled studies in adults, with additional data from a controlled clinical study in pediatric patients age 10 to 16 years with type 2 diabetes.
+
+Geriatric Use: Metformin is known to be substantially excreted by the kidney. Because the risk of serious adverse reactions to the drug is greater in patients with impaired renal function, metformin should only be used in patients with normal renal function. Because aging is associated with reduced renal function, metformin should be used with caution as age increases.
+
+CLINICAL PHARMACOLOGY
+Metformin is an antihyperglycemic agent which improves glucose tolerance in patients with type 2 diabetes, lowering both basal and postprandial plasma glucose. Metformin decreases hepatic glucose production, decreases intestinal absorption of glucose, and improves insulin sensitivity by increasing peripheral glucose uptake and utilization. Unlike sulfonylureas, metformin does not produce hypoglycemia in either patients with type 2 diabetes or normal subjects and does not cause hyperinsulinemia. With metformin therapy, insulin secretion remains unchanged while fasting insulin levels and day-long plasma insulin response may actually decrease.
