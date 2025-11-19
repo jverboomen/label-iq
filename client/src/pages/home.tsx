@@ -613,7 +613,7 @@ export default function HomePage() {
       <div className="border-t bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
         <div className="max-w-4xl mx-auto px-6 py-8 md:px-8">
           <div className="flex flex-col items-center justify-center gap-4 text-center">
-            <p className="text-sm text-muted-foreground font-medium">Brought to you by</p>
+            <p className="text-sm text-muted-foreground font-medium">Powered by</p>
             <a 
               href="https://www.massiveinsights.com/" 
               target="_blank" 
