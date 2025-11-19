@@ -149,6 +149,20 @@ export default function HomePage() {
                 </SelectContent>
               </Select>
             )}
+            
+            {/* Selected Drug Logo Display */}
+            {selectedDrug && selectedDrug.logoPath && (
+              <div className="flex items-center justify-center py-4 animate-fade-in">
+                <div className="p-4 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 rounded-xl shadow-lg border-2 border-primary/20 hover-lift">
+                  <img 
+                    src={selectedDrug.logoPath} 
+                    alt={`${selectedDrug.drugName} logo`}
+                    className="h-20 w-auto object-contain"
+                    data-testid="img-selected-drug-logo"
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Question Input */}
