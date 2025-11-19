@@ -29,17 +29,30 @@ export default function HomePage() {
   // Query mutation
   const queryMutation = useMutation({
     mutationFn: async (data: { labelId: string; question: string }) => {
-      return await apiRequest("POST", "/api/query", data);
+      console.log('API request starting:', data);
+      const result = await apiRequest("POST", "/api/query", data);
+      console.log('API response received:', result);
+      return result;
     },
     onSuccess: (data: QueryResponse) => {
+      console.log('Mutation onSuccess called with:', data);
       setResponse(data);
+    },
+    onError: (error) => {
+      console.error('Mutation error:', error);
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedDrugId || question.trim().length < 10) return;
+    console.log('Form submitted', { selectedDrugId, question: question.trim() });
     
+    if (!selectedDrugId || question.trim().length < 10) {
+      console.log('Validation failed', { selectedDrugId, questionLength: question.trim().length });
+      return;
+    }
+    
+    console.log('Triggering mutation...');
     queryMutation.mutate({
       labelId: selectedDrugId,
       question: question.trim(),
@@ -154,7 +167,7 @@ export default function HomePage() {
                     </p>
                   </CardContent>
                 </Card>
-              ) : response ? (
+              ) : response && response.evidence && response.evidence.length > 0 ? (
                 <>
                   {/* Evidence Section */}
                   <div className="space-y-4">
