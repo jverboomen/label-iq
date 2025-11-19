@@ -263,15 +263,29 @@ export default function HomePage() {
 
                   {/* Summary Section */}
                   <div className="space-y-4">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <h2 className="text-sm font-semibold" data-testid="text-summary-header">
                         Plain Language Summary
                       </h2>
-                      <div className="flex items-center gap-1 px-2 py-0.5 bg-accent text-accent-foreground rounded text-xs font-medium border">
-                        <Sparkles className="h-3 w-3" />
-                        <span>AI-Generated</span>
-                      </div>
+                      {response.sourceType === "general_knowledge" ? (
+                        <div className="flex items-center gap-1 px-2 py-0.5 bg-amber-100 text-amber-900 dark:bg-amber-900/20 dark:text-amber-200 rounded text-xs font-medium border border-amber-300 dark:border-amber-800">
+                          <Sparkles className="h-3 w-3" />
+                          <span>From OpenAI General Knowledge</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1 px-2 py-0.5 bg-accent text-accent-foreground rounded text-xs font-medium border">
+                          <Sparkles className="h-3 w-3" />
+                          <span>AI-Generated from Label</span>
+                        </div>
+                      )}
                     </div>
+                    {response.sourceType === "general_knowledge" && (
+                      <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 p-3 rounded text-xs text-amber-900 dark:text-amber-200">
+                        <strong>Note:</strong> This answer is based on OpenAI's general pharmaceutical knowledge, 
+                        not from the specific FDA label for {response.drugName}. The label does not directly 
+                        address this question.
+                      </div>
+                    )}
                     <p className="text-base leading-relaxed" data-testid="text-summary">
                       {response.summary}
                     </p>

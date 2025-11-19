@@ -134,6 +134,63 @@ If the label doesn't address the question, respond with:
 
     const response = JSON.parse(completion.choices[0].message.content || "{}");
     
+    // If not found in label, use general knowledge as fallback
+    if (response.notFound) {
+      console.log('Question not answered by label, using OpenAI general knowledge fallback');
+      
+      const generalSystemPrompt = `You are a knowledgeable pharmaceutical assistant. Answer questions about medications using your general medical knowledge.
+
+Rules:
+1. Provide accurate, evidence-based information
+2. Write a clear, plain-language summary (120-160 words)
+3. Acknowledge when answering from general knowledge vs. specific drug labels
+4. Use accessible language for non-medical audiences
+5. Be helpful but remind users to consult healthcare providers for personalized advice`;
+
+      const generalUserPrompt = `Question about ${label.drugName}: ${question}
+
+Please provide a helpful answer based on general pharmaceutical knowledge. Format as JSON:
+{
+  "summary": "plain language explanation in 120-160 words",
+  "canAnswer": true
+}
+
+If you cannot provide a reliable answer, respond with:
+{
+  "summary": "I don't have enough reliable information to answer this question safely.",
+  "canAnswer": false
+}`;
+
+      try {
+        const generalCompletion = await openai.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+            { role: "system", content: generalSystemPrompt },
+            { role: "user", content: generalUserPrompt },
+          ],
+          response_format: { type: "json_object" },
+          temperature: 0.5,
+          max_tokens: 800,
+        });
+
+        const generalResponse = JSON.parse(generalCompletion.choices[0].message.content || "{}");
+        
+        if (generalResponse.canAnswer) {
+          return {
+            evidence: [],
+            summary: generalResponse.summary || "",
+            labelId: label.labelId,
+            drugName: label.drugName,
+            disclaimer: "Educational only — not medical advice. Consult your healthcare provider.",
+            notFound: false,
+            sourceType: "general_knowledge" as const,
+          };
+        }
+      } catch (generalError) {
+        console.error('Error using general knowledge fallback:', generalError);
+      }
+    }
+    
     return {
       evidence: response.notFound ? [] : (response.evidence || []),
       summary: response.notFound ? "" : (response.summary || ""),
@@ -141,6 +198,7 @@ If the label doesn't address the question, respond with:
       drugName: label.drugName,
       disclaimer: "Educational only — not medical advice. Consult your healthcare provider.",
       notFound: response.notFound || false,
+      sourceType: response.notFound ? undefined : ("label" as const),
     };
   } catch (error) {
     console.error('Error querying OpenAI:', error);

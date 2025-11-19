@@ -50,6 +50,7 @@ export const queryResponseSchema = z.object({
   drugName: z.string(),
   disclaimer: z.string(),
   notFound: z.boolean().optional(), // True when no relevant text found
+  sourceType: z.enum(["label", "general_knowledge"]).optional(), // Where the answer came from
 });
 
 export type QueryResponse = z.infer<typeof queryResponseSchema>;
