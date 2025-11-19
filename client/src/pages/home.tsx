@@ -81,10 +81,24 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b">
-        <div className="max-w-4xl mx-auto px-6 py-8 md:px-8">
-          <div className="text-center space-y-2">
+      {/* FDA-Style Header */}
+      <header className="bg-primary">
+        <div className="max-w-7xl mx-auto px-6 py-4 md:px-8">
+          <div className="flex items-center gap-4">
+            <img 
+              src="/fda-logo-full.svg" 
+              alt="U.S. Food and Drug Administration" 
+              className="h-10 md:h-12"
+              data-testid="img-fda-logo"
+            />
+          </div>
+        </div>
+      </header>
+      
+      {/* Sub-header with App Info */}
+      <div className="bg-accent border-b">
+        <div className="max-w-4xl mx-auto px-6 py-6 md:px-8">
+          <div className="space-y-2">
             <h1 className="text-2xl font-semibold text-foreground" data-testid="text-app-title">
               Label iQ
             </h1>
@@ -96,7 +110,7 @@ export default function HomePage() {
             </p>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-6 py-8 md:px-8 md:py-12">

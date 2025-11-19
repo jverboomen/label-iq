@@ -20,7 +20,7 @@ Preferred communication style: Simple, everyday language.
 - Tailwind CSS with custom design system for styling
 
 **Design Philosophy:**
-The frontend follows a healthcare-informed Material Design approach, prioritizing trust through clarity, medical-grade readability, and professional restraint. The design system is defined in `design_guidelines.md` and enforced through custom Tailwind configuration with healthcare-specific spacing, typography, and color tokens.
+The frontend follows FDA.gov's official government website design, featuring authentic FDA branding (official logo in blue header) to establish trust and authority. The design prioritizes medical-grade readability and professional restraint following `design_guidelines.md`, with custom Tailwind configuration using healthcare-specific spacing, typography, and FDA color tokens.
 
 **Component Architecture:**
 - Shadcn UI component library (New York style variant) provides accessible, customizable primitives

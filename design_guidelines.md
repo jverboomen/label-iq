@@ -51,10 +51,15 @@ Tailwind units: **2, 3, 4, 6, 8, 12**
 
 ## Component Library
 
-### 1. Header
-- Application title "Label iQ" with tagline: "Ask FDA Drug Labels in Plain Language"
-- Subtitle: "Evidence-Based Answers from Official FDA Labels"
-- Layout: Centered, `border-b` divider
+### 1. Header (FDA.gov Style)
+- **Primary Header:** Blue background (`bg-primary`) with official FDA logo
+  - Logo: White SVG from FDA website (`/fda-logo-full.svg`)
+  - Height: 40px on mobile, 48px on desktop
+  - Full-width layout with `max-w-7xl` container
+- **Sub-header:** Light accent background with app branding
+  - Application title "Label iQ" with tagline: "Ask FDA Drug Labels in Plain Language"
+  - Subtitle: "Evidence-Based Answers from Official FDA Labels"
+  - Layout: `max-w-4xl` container, `border-b` divider
 
 ### 2. Drug Selector
 - **Label:** "Select Drug" (text-sm font-medium)
@@ -145,9 +150,15 @@ Tailwind units: **2, 3, 4, 6, 8, 12**
 
 ---
 
-## No Images Required
+## Official FDA Branding
 
-This is a utility application focused on text interaction. The interface is typography and form-driven with no hero sections or decorative imagery.
+**Logo Assets:**
+- `/fda-logo-full.svg` - Official FDA logo (white, for blue header)
+- `/fda-logo-icon.svg` - FDA icon version
+- Source: FDA.gov website (https://www.fda.gov/themes/custom/preview/assets/images/)
+
+**Design Consistency:**
+This application matches the official FDA.gov government website design with authentic branding to establish trust and authority for medical information delivery.
 
 ---
 
