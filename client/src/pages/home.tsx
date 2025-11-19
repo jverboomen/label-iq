@@ -608,6 +608,29 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* Powered By Footer */}
+      <div className="border-t bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
+        <div className="max-w-4xl mx-auto px-6 py-8 md:px-8">
+          <div className="flex flex-col items-center justify-center gap-3 text-center">
+            <p className="text-sm text-muted-foreground">Brought to you by</p>
+            <a 
+              href="https://www.massiveinsights.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group"
+              data-testid="link-massive-insights"
+            >
+              <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent hover:scale-105 transition-transform">
+                MASSIVE INSIGHTS
+              </h3>
+              <p className="text-xs text-muted-foreground mt-1 group-hover:text-foreground transition-colors">
+                Data & Analytics Experts
+              </p>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
