@@ -15,6 +15,7 @@ export default function HomePage() {
   const [question, setQuestion] = useState<string>("");
   const [showReadability, setShowReadability] = useState(false);
   const [response, setResponse] = useState<QueryResponse | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Fetch drug index for dropdown
   const { data: drugIndex, isLoading: loadingDrugs } = useQuery<DrugIndexEntry[]>({
@@ -30,16 +31,28 @@ export default function HomePage() {
   const queryMutation = useMutation({
     mutationFn: async (data: { labelId: string; question: string }) => {
       console.log('API request starting:', data);
-      const result = await apiRequest("POST", "/api/query", data);
+      const response = await apiRequest("POST", "/api/query", data);
+      const result = await response.json();
       console.log('API response received:', result);
       return result;
     },
     onSuccess: (data: QueryResponse) => {
       console.log('Mutation onSuccess called with:', data);
+      console.log('Response data structure:', JSON.stringify(data, null, 2));
+      console.log('Evidence array:', data.evidence);
+      console.log('Label ID:', data.labelId);
+      console.log('Drug name:', data.drugName);
       setResponse(data);
+      console.log('State updated, response now:', data);
     },
     onError: (error) => {
       console.error('Mutation error:', error);
+      setResponse(null);
+      setErrorMessage(
+        error instanceof Error 
+          ? `Failed to generate answer: ${error.message}` 
+          : 'Failed to generate answer. Please try again.'
+      );
     },
   });
 
@@ -51,6 +64,10 @@ export default function HomePage() {
       console.log('Validation failed', { selectedDrugId, questionLength: question.trim().length });
       return;
     }
+    
+    // Clear previous response and errors when starting new query
+    setResponse(null);
+    setErrorMessage(null);
     
     console.log('Triggering mutation...');
     queryMutation.mutate({
@@ -148,6 +165,41 @@ export default function HomePage() {
             </div>
           </form>
 
+          {/* Error Message */}
+          {errorMessage && !queryMutation.isPending && (
+            <div className="mt-12">
+              <Card className="border-destructive">
+                <CardContent className="p-6">
+                  <div className="flex gap-3">
+                    <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-destructive" data-testid="text-error">
+                        {errorMessage}
+                      </p>
+                      <Button
+                        onClick={() => {
+                          setErrorMessage(null);
+                          if (selectedDrugId && question.trim().length >= 10) {
+                            queryMutation.mutate({
+                              labelId: selectedDrugId,
+                              question: question.trim(),
+                            });
+                          }
+                        }}
+                        variant="outline"
+                        size="sm"
+                        className="mt-3"
+                        data-testid="button-retry"
+                      >
+                        Try Again
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
           {/* Response Panel */}
           {(response || queryMutation.isPending) && (
             <div className="space-y-8 mt-12">
@@ -167,25 +219,27 @@ export default function HomePage() {
                     </p>
                   </CardContent>
                 </Card>
-              ) : response && response.evidence && response.evidence.length > 0 ? (
+              ) : response ? (
                 <>
                   {/* Evidence Section */}
-                  <div className="space-y-4">
-                    <h2 className="text-sm font-semibold" data-testid="text-evidence-header">
-                      Evidence from FDA Label
-                    </h2>
-                    <div className="space-y-3">
-                      {response.evidence.map((quote, idx) => (
-                        <blockquote
-                          key={idx}
-                          className="pl-4 border-l-4 border-primary italic text-base leading-relaxed"
-                          data-testid={`text-quote-${idx}`}
-                        >
-                          {quote}
-                        </blockquote>
-                      ))}
+                  {response.evidence && response.evidence.length > 0 && (
+                    <div className="space-y-4">
+                      <h2 className="text-sm font-semibold" data-testid="text-evidence-header">
+                        Evidence from FDA Label
+                      </h2>
+                      <div className="space-y-3">
+                        {response.evidence.map((quote, idx) => (
+                          <blockquote
+                            key={idx}
+                            className="pl-4 border-l-4 border-primary italic text-base leading-relaxed"
+                            data-testid={`text-quote-${idx}`}
+                          >
+                            {quote}
+                          </blockquote>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Summary Section */}
                   <div className="space-y-4">
