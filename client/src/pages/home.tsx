@@ -81,14 +81,15 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* FDA-Style Header */}
-      <header className="bg-primary">
-        <div className="max-w-7xl mx-auto px-6 py-4 md:px-8">
-          <div className="flex items-center gap-4">
+      {/* FDA-Style Header with Gradient Animation */}
+      <header className="relative overflow-hidden shadow-2xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 animate-gradient"></div>
+        <div className="relative max-w-7xl mx-auto px-6 py-4 md:px-8">
+          <div className="flex items-center gap-4 animate-fade-in">
             <img 
               src="/fda-logo-full.svg" 
               alt="U.S. Food and Drug Administration" 
-              className="h-10 md:h-12"
+              className="h-10 md:h-12 drop-shadow-lg"
               data-testid="img-fda-logo"
             />
           </div>
@@ -96,16 +97,20 @@ export default function HomePage() {
       </header>
       
       {/* Sub-header with App Info */}
-      <div className="bg-accent border-b">
-        <div className="max-w-4xl mx-auto px-6 py-6 md:px-8">
-          <div className="space-y-2">
-            <h1 className="text-2xl font-semibold text-foreground" data-testid="text-app-title">
-              Label iQ
-            </h1>
-            <p className="text-base text-foreground" data-testid="text-tagline">
+      <div className="relative bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 border-b shadow-lg">
+        <div className="max-w-4xl mx-auto px-6 py-8 md:px-8">
+          <div className="space-y-3 animate-fade-in">
+            <div className="flex items-center gap-3">
+              <h1 className="text-4xl font-bold gradient-text animate-pulse-glow" data-testid="text-app-title">
+                Label iQ
+              </h1>
+              <Sparkles className="h-8 w-8 text-purple-500 animate-float" />
+            </div>
+            <p className="text-xl font-semibold text-foreground" data-testid="text-tagline">
               Ask Your Questions in Plain Language
             </p>
-            <p className="text-sm text-muted-foreground" data-testid="text-subtitle">
+            <p className="text-base text-muted-foreground flex items-center gap-2" data-testid="text-subtitle">
+              <Shield className="h-5 w-5 text-blue-500" />
               Evidence-Based Answers from Official FDA Labels
             </p>
           </div>
@@ -279,12 +284,12 @@ export default function HomePage() {
                 <>
                   {/* Evidence Section */}
                   {response.evidence && response.evidence.length > 0 && (
-                    <div className="space-y-4">
+                    <div className="space-y-4 animate-fade-in">
                       <div className="flex items-center gap-2">
-                        <h2 className="text-sm font-semibold" data-testid="text-evidence-header">
+                        <h2 className="text-lg font-bold gradient-text" data-testid="text-evidence-header">
                           Evidence from FDA Label
                         </h2>
-                        <div className="flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary rounded text-xs font-medium">
+                        <div className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-full text-xs font-medium shadow-lg">
                           <FileText className="h-3 w-3" />
                           <span>Verbatim from Label</span>
                         </div>
@@ -293,8 +298,9 @@ export default function HomePage() {
                         {response.evidence.map((quote, idx) => (
                           <blockquote
                             key={idx}
-                            className="pl-4 border-l-4 border-primary italic text-base leading-relaxed"
+                            className="pl-6 border-l-4 border-gradient-to-b from-blue-500 to-purple-500 italic text-base leading-relaxed bg-gradient-to-r from-blue-50/50 to-indigo-50/50 dark:from-blue-950/20 dark:to-indigo-950/20 p-4 rounded-r-lg shadow-md hover-lift"
                             data-testid={`text-quote-${idx}`}
+                            style={{ borderImage: 'linear-gradient(to bottom, #3b82f6, #a855f7) 1' }}
                           >
                             {quote}
                           </blockquote>
@@ -367,11 +373,12 @@ export default function HomePage() {
 
                   {/* Safety Insights Dashboard */}
                   {response.safetyInsights && (
-                    <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-900">
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-base flex items-center gap-2">
-                          <Shield className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                          Safety Insights
+                    <Card className="relative overflow-hidden glow-border hover-lift animate-fade-in shadow-2xl">
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 animate-gradient"></div>
+                      <CardHeader className="pb-3 relative">
+                        <CardTitle className="text-lg font-bold flex items-center gap-2">
+                          <Shield className="h-6 w-6 text-blue-600 dark:text-blue-400 animate-float" />
+                          <span className="gradient-text">Safety Insights</span>
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-3">
@@ -406,11 +413,12 @@ export default function HomePage() {
 
                   {/* Provenance Trail */}
                   {response.provenance && (
-                    <Card className="bg-slate-50 dark:bg-slate-950/50">
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-sm flex items-center gap-2">
-                          <Database className="h-4 w-4" />
-                          How We Answered This
+                    <Card className="relative overflow-hidden glass-effect hover-lift animate-fade-in shadow-xl border-2">
+                      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-purple-500/20 to-transparent rounded-full blur-3xl"></div>
+                      <CardHeader className="pb-3 relative">
+                        <CardTitle className="text-base font-bold flex items-center gap-2">
+                          <Database className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                          <span className="gradient-text">How We Answered This</span>
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
