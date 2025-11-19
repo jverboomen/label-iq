@@ -103,7 +103,7 @@ export default function HomePage() {
               Label iQ
             </h1>
             <p className="text-base text-foreground" data-testid="text-tagline">
-              Ask FDA Drug Labels in Plain Language
+              Ask Your Questions in Plain Language
             </p>
             <p className="text-sm text-muted-foreground" data-testid="text-subtitle">
               Evidence-Based Answers from Official FDA Labels
