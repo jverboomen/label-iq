@@ -15,6 +15,7 @@ export const drugIndexEntrySchema = z.object({
   labelId: z.string(),
   drugName: z.string(),
   snapshotDate: z.string(),
+  logoPath: z.string().optional(),
 });
 
 export type DrugIndexEntry = z.infer<typeof drugIndexEntrySchema>;

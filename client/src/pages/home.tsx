@@ -296,57 +296,78 @@ export default function HomePage() {
             </div>
           )}
 
-          {/* Readability Scores Section */}
-          <div className="mt-12 pt-12 border-t">
-            <button
-              onClick={() => setShowReadability(!showReadability)}
-              className="flex items-center gap-2 w-full text-left hover-elevate active-elevate-2 p-3 rounded-lg"
-              data-testid="button-toggle-readability"
-            >
-              {showReadability ? (
-                <ChevronDown className="h-5 w-5" />
-              ) : (
-                <ChevronRight className="h-5 w-5" />
-              )}
-              <h2 className="text-lg font-semibold">Label Readability Analysis</h2>
-              <span className="text-sm text-muted-foreground ml-auto">
-                {readabilityScores?.length || 0} drugs analyzed
-              </span>
-            </button>
+          {/* Drug Information Section */}
+          {selectedDrug && (
+            <div className="mt-12 pt-12 border-t">
+              <button
+                onClick={() => setShowReadability(!showReadability)}
+                className="flex items-center gap-2 w-full text-left hover-elevate active-elevate-2 p-3 rounded-lg"
+                data-testid="button-toggle-drug-info"
+              >
+                {showReadability ? (
+                  <ChevronDown className="h-5 w-5" />
+                ) : (
+                  <ChevronRight className="h-5 w-5" />
+                )}
+                <h2 className="text-lg font-semibold">Drug Information & Label Snapshot</h2>
+              </button>
 
-            {showReadability && readabilityScores && (
-              <div className="mt-6 overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left p-3 font-medium">Drug Name</th>
-                      <th className="text-right p-3 font-medium">Flesch Score</th>
-                      <th className="text-right p-3 font-medium">Grade Level</th>
-                      <th className="text-right p-3 font-medium">SMOG</th>
-                      <th className="text-right p-3 font-medium">Composite</th>
-                      <th className="text-right p-3 font-medium">Words</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {readabilityScores.map((score) => (
-                      <tr 
-                        key={score.labelId} 
-                        className="border-b hover-elevate"
-                        data-testid={`row-readability-${score.labelId}`}
-                      >
-                        <td className="p-3 font-medium">{score.drugName}</td>
-                        <td className="p-3 text-right font-mono">{score.fleschReadingEase.toFixed(1)}</td>
-                        <td className="p-3 text-right font-mono">{score.fleschKincaidGrade.toFixed(1)}</td>
-                        <td className="p-3 text-right font-mono">{score.smog.toFixed(1)}</td>
-                        <td className="p-3 text-right font-mono">{score.composite.toFixed(0)}</td>
-                        <td className="p-3 text-right font-mono">{score.wordCount.toLocaleString()}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
+              {showReadability && (
+                <Card className="mt-6">
+                  <CardContent className="p-6">
+                    <div className="flex flex-col md:flex-row gap-6">
+                      {/* Drug Logo */}
+                      {selectedDrug.logoPath && (
+                        <div className="flex-shrink-0">
+                          <img 
+                            src={selectedDrug.logoPath} 
+                            alt={`${selectedDrug.drugName} logo`}
+                            className="h-16 w-auto object-contain"
+                            data-testid="img-drug-logo"
+                          />
+                        </div>
+                      )}
+                      
+                      {/* Drug Details */}
+                      <div className="flex-1 space-y-4">
+                        <div>
+                          <h3 className="font-semibold text-lg mb-1" data-testid="text-drug-name">
+                            {selectedDrug.drugName}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            Label ID: {selectedDrug.labelId} • Snapshot Date: {selectedDrug.snapshotDate}
+                          </p>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <div>
+                            <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                              <FileText className="h-4 w-4" />
+                              About This Label
+                            </h4>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                              This is an official FDA drug label containing prescribing information, 
+                              warnings, contraindications, dosage guidelines, and clinical data. 
+                              Use the question field above to ask specific questions about this medication 
+                              in plain language.
+                            </p>
+                          </div>
+                          
+                          <div className="bg-muted/50 p-4 rounded-lg">
+                            <p className="text-xs text-muted-foreground">
+                              <strong>Note:</strong> Label data is sourced directly from FDA databases. 
+                              Answers combine verbatim excerpts from this label with AI-generated plain 
+                              language summaries to help you understand complex medical information.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          )}
         </div>
       </main>
 

@@ -2,126 +2,151 @@
   {
     "labelId": "drug-001",
     "drugName": "SYMBICORT (Budesonide and Formoterol Fumarate Dihydrate)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/SYMBICORT_LOGO.svg"
   },
   {
     "labelId": "drug-002",
     "drugName": "Biktarvy (bictegravir sodium, emtricitabine, and tenofovir alafenamide fumarate)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/BIKTARVY_LOGO.svg"
   },
   {
     "labelId": "drug-003",
     "drugName": "West-Ward Columbus Inc. (Empagliflozin)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/JARDIANCE_LOGO.svg"
   },
   {
     "labelId": "drug-004",
     "drugName": "Trulicity (Dulaglutide)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/TRULICITY_LOGO.svg"
   },
   {
     "labelId": "drug-005",
     "drugName": "Catalent Germany Eberbach GmbH (nintedanib)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/OFEV_LOGO.svg"
   },
   {
     "labelId": "drug-006",
     "drugName": "Cilag AG (ustekinumab)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/STELARA_LOGO.svg"
   },
   {
     "labelId": "drug-007",
     "drugName": "JAKAFI (ruxolitinib)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/JAKAFI_LOGO.svg"
   },
   {
     "labelId": "drug-008",
     "drugName": "Patheon, Inc. (rivaroxaban)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/XARELTO_LOGO.svg"
   },
   {
     "labelId": "drug-009",
     "drugName": "Trelegy Ellipta (fluticasone furoate, umeclidinium bromide and vilanterol trifenatate)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/TRELEGY_LOGO.svg"
   },
   {
     "labelId": "drug-010",
     "drugName": "JANUVIA (sitagliptin)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/JANUVIA_LOGO.svg"
   },
   {
     "labelId": "drug-011",
     "drugName": "ENTRESTO (Sacubitril and Valsartan)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/ENTRESTO_LOGO.svg"
   },
   {
     "labelId": "drug-012",
     "drugName": "ENBREL (etanercept)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/ENBREL_LOGO.svg"
   },
   {
     "labelId": "drug-013",
     "drugName": "MOUNJARO (tirzepatide)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/MOUNJARO_LOGO.svg"
   },
   {
     "labelId": "drug-014",
     "drugName": "Humira (Adalimumab)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/HUMIRA_LOGO.svg"
   },
   {
     "labelId": "drug-015",
     "drugName": "Revlimid (Lenalidomide)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/REVLIMID_LOGO.svg"
   },
   {
     "labelId": "drug-016",
     "drugName": "Novo Nordisk Pharmaceutical Industries, LP (semaglutide)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/OZEMPIC_LOGO.svg"
   },
   {
     "labelId": "drug-017",
     "drugName": "Xtandi (enzalutamide)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/XTANDI_LOGO.svg"
   },
   {
     "labelId": "drug-018",
     "drugName": "Linzess (linaclotide)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/LINZESS_LOGO.svg"
   },
   {
     "labelId": "drug-019",
     "drugName": "ELIQUIS (apixaban)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/ELIQUIS_LOGO.svg"
   },
   {
     "labelId": "drug-020",
     "drugName": "Pfizer Ireland Pharmaceuticals Unlimited Company (palbociclib)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/IBRANCE_LOGO.svg"
   },
   {
     "labelId": "drug-021",
     "drugName": "Sanofi S.r.l. (insulin glargine)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/LANTUS_LOGO.svg"
   },
   {
     "labelId": "drug-022",
     "drugName": "Imbruvica (Ibrutinib)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/IMBRUVICA_LOGO.svg"
   },
   {
     "labelId": "drug-023",
     "drugName": "NOVOLOG (insulin aspart)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/NOVOLOG_LOGO.svg"
   },
   {
     "labelId": "drug-024",
     "drugName": "FARXIGA (DAPAGLIFLOZIN)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/FARXIGA_LOGO.svg"
   },
   {
     "labelId": "drug-025",
     "drugName": "Astellas Pharma Inc. (mirabegron)",
-    "snapshotDate": "2024-11-19"
+    "snapshotDate": "2024-11-19",
+    "logoPath": "/drug-logos/MYRBETRIQ_LOGO.svg"
   }
 ]
