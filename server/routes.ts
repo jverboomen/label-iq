@@ -105,6 +105,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // GET /api/download-label/:labelId - Download label text file
+  app.get("/api/download-label/:labelId", async (req, res) => {
+    try {
+      const { labelId } = req.params;
+      const label = await loadLabel(labelId);
+      
+      const filename = `${label.drugName.replace(/[^a-z0-9]/gi, '_')}_Label.txt`;
+      
+      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.send(label.labelText);
+    } catch (error) {
+      console.error('Error downloading label:', error);
+      res.status(500).json({ error: 'Failed to download label' });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

@@ -538,6 +538,41 @@ export default function HomePage() {
                               language summaries to help you understand complex medical information.
                             </p>
                           </div>
+
+                          {/* Label Access Actions */}
+                          <div className="flex flex-wrap gap-2 pt-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              asChild
+                              className="gap-2"
+                              data-testid="button-view-fda"
+                            >
+                              <a
+                                href={`https://dailymed.nlm.nih.gov/dailymed/search.cfm?labeltype=all&query=${encodeURIComponent(selectedDrug.drugName)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <FileText className="h-4 w-4" />
+                                View Full Label on FDA.gov
+                              </a>
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              asChild
+                              className="gap-2"
+                              data-testid="button-download-label"
+                            >
+                              <a
+                                href={`/api/download-label/${selectedDrug.labelId}`}
+                                download
+                              >
+                                <Download className="h-4 w-4" />
+                                Download Label Text
+                              </a>
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
