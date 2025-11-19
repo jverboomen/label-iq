@@ -42,6 +42,27 @@ export const queryRequestSchema = z.object({
 
 export type QueryRequest = z.infer<typeof queryRequestSchema>;
 
+// Safety Insights Schema
+export const safetyInsightsSchema = z.object({
+  hasBoxedWarning: z.boolean(),
+  riskLevel: z.enum(["low", "moderate", "high"]).optional(),
+  contraindications: z.array(z.string()).optional(),
+  readabilityGrade: z.string().optional(),
+});
+
+export type SafetyInsights = z.infer<typeof safetyInsightsSchema>;
+
+// Provenance Trail Schema
+export const provenanceSchema = z.object({
+  chunksSearched: z.number(),
+  relevantPassages: z.number(),
+  model: z.string(),
+  responseTime: z.number(), // in seconds
+  fallbackUsed: z.boolean(),
+});
+
+export type Provenance = z.infer<typeof provenanceSchema>;
+
 // Query Response Schema
 export const queryResponseSchema = z.object({
   evidence: z.array(z.string()), // Verbatim quotes from FDA label
@@ -51,6 +72,9 @@ export const queryResponseSchema = z.object({
   disclaimer: z.string(),
   notFound: z.boolean().optional(), // True when no relevant text found
   sourceType: z.enum(["label", "general_knowledge"]).optional(), // Where the answer came from
+  safetyInsights: safetyInsightsSchema.optional(),
+  provenance: provenanceSchema.optional(),
+  followUpQuestions: z.array(z.string()).optional(),
 });
 
 export type QueryResponse = z.infer<typeof queryResponseSchema>;

@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle, ChevronDown, ChevronRight, FileText, Sparkles } from "lucide-react";
+import { AlertCircle, ChevronDown, ChevronRight, FileText, Sparkles, Shield, Clock, Database, Copy, Download, TrendingUp } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { DrugIndexEntry, QueryResponse, ReadabilityScore } from "@shared/schema";
 
@@ -347,6 +347,128 @@ export default function HomePage() {
                       </p>
                     </div>
                   </div>
+
+                  {/* Export/Share Actions */}
+                  <div className="flex gap-2 justify-end">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const text = `${response.drugName}\n\nQuestion: ${question}\n\n${response.evidence.length > 0 ? 'Evidence:\n' + response.evidence.join('\n\n') + '\n\n' : ''}Summary:\n${response.summary}\n\nDisclaimer: ${response.disclaimer}`;
+                        navigator.clipboard.writeText(text);
+                      }}
+                      className="gap-2"
+                      data-testid="button-copy"
+                    >
+                      <Copy className="h-4 w-4" />
+                      Copy Answer
+                    </Button>
+                  </div>
+
+                  {/* Safety Insights Dashboard */}
+                  {response.safetyInsights && (
+                    <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-900">
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-base flex items-center gap-2">
+                          <Shield className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                          Safety Insights
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <div className="flex flex-wrap gap-2">
+                          {response.safetyInsights.hasBoxedWarning && (
+                            <div className="px-3 py-1.5 bg-red-100 dark:bg-red-900/30 text-red-900 dark:text-red-200 border border-red-300 dark:border-red-800 rounded-full text-xs font-medium flex items-center gap-1">
+                              <AlertCircle className="h-3 w-3" />
+                              Boxed Warning
+                            </div>
+                          )}
+                          {response.safetyInsights.riskLevel && (
+                            <div className={`px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1 ${
+                              response.safetyInsights.riskLevel === 'high' 
+                                ? 'bg-red-100 dark:bg-red-900/30 text-red-900 dark:text-red-200 border border-red-300 dark:border-red-800'
+                                : response.safetyInsights.riskLevel === 'moderate'
+                                ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800'
+                                : 'bg-green-100 dark:bg-green-900/30 text-green-900 dark:text-green-200 border border-green-300 dark:border-green-800'
+                            }`}>
+                              <TrendingUp className="h-3 w-3" />
+                              Risk: {response.safetyInsights.riskLevel.charAt(0).toUpperCase() + response.safetyInsights.riskLevel.slice(1)}
+                            </div>
+                          )}
+                        </div>
+                        {response.safetyInsights.contraindications && response.safetyInsights.contraindications.length > 0 && (
+                          <div className="text-xs text-muted-foreground">
+                            <strong>Key Contraindications:</strong> {response.safetyInsights.contraindications[0]}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {/* Provenance Trail */}
+                  {response.provenance && (
+                    <Card className="bg-slate-50 dark:bg-slate-950/50">
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-sm flex items-center gap-2">
+                          <Database className="h-4 w-4" />
+                          How We Answered This
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                          <div className="space-y-1">
+                            <p className="text-muted-foreground">Sections Searched</p>
+                            <p className="font-semibold text-base">{response.provenance.chunksSearched}</p>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-muted-foreground">Relevant Passages</p>
+                            <p className="font-semibold text-base">{response.provenance.relevantPassages}</p>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-muted-foreground">AI Model</p>
+                            <p className="font-semibold text-sm font-mono">{response.provenance.model}</p>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-muted-foreground flex items-center gap-1">
+                              <Clock className="h-3 w-3" />
+                              Response Time
+                            </p>
+                            <p className="font-semibold text-base">{response.provenance.responseTime.toFixed(2)}s</p>
+                          </div>
+                        </div>
+                        {response.provenance.fallbackUsed && (
+                          <div className="mt-3 pt-3 border-t text-xs text-amber-700 dark:text-amber-300">
+                            ⚠️ General knowledge fallback used (label didn't directly address question)
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {/* Follow-up Questions */}
+                  {response.followUpQuestions && response.followUpQuestions.length > 0 && (
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-semibold flex items-center gap-2">
+                        <Sparkles className="h-4 w-4" />
+                        Suggested Follow-up Questions
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {response.followUpQuestions.map((q, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => {
+                              setQuestion(q);
+                              window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                            className="px-4 py-2 text-sm bg-blue-50 dark:bg-blue-950/30 text-blue-900 dark:text-blue-200 hover-elevate active-elevate-2 rounded-lg border border-blue-200 dark:border-blue-900 text-left"
+                            data-testid={`button-followup-${idx}`}
+                          >
+                            {q}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </>
               ) : null}
             </div>

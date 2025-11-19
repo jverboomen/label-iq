@@ -82,10 +82,80 @@ function findRelevantChunks(
   return scoredChunks.slice(0, topK).map(s => s.chunk);
 }
 
+function extractSafetyInsights(labelText: string, question: string) {
+  const lowerLabel = labelText.toLowerCase();
+  const lowerQuestion = question.toLowerCase();
+  
+  // Detect boxed warning
+  const hasBoxedWarning = /boxed warning|black box|contraindicated/i.test(labelText);
+  
+  // Determine risk level based on question and label content
+  let riskLevel: "low" | "moderate" | "high" | undefined;
+  if (lowerQuestion.includes("warning") || lowerQuestion.includes("serious")) {
+    if (hasBoxedWarning || /death|fatal|life-threatening/i.test(labelText)) {
+      riskLevel = "high";
+    } else if (/severe|serious|significant/i.test(labelText)) {
+      riskLevel = "moderate";
+    } else {
+      riskLevel = "low";
+    }
+  }
+  
+  // Extract key contraindications (simplified)
+  const contraindications: string[] = [];
+  const contraMatch = labelText.match(/contraindications?:?\s*([^.]{20,200})/i);
+  if (contraMatch) {
+    contraindications.push(contraMatch[1].trim().substring(0, 100));
+  }
+  
+  return {
+    hasBoxedWarning,
+    riskLevel,
+    contraindications: contraindications.length > 0 ? contraindications : undefined,
+  };
+}
+
+function generateFollowUpQuestions(question: string): string[] {
+  const lowerQ = question.toLowerCase();
+  
+  if (lowerQ.includes("warning") || lowerQ.includes("precaution")) {
+    return [
+      "What are the most common side effects?",
+      "What drug interactions should I know about?",
+      "Who should not take this medication?"
+    ];
+  } else if (lowerQ.includes("side effect")) {
+    return [
+      "What are the most serious warnings?",
+      "How common are these side effects?",
+      "What should I do if I experience side effects?"
+    ];
+  } else if (lowerQ.includes("interaction")) {
+    return [
+      "What are the warnings for this drug?",
+      "What should I avoid while taking this?",
+      "How should I take this medication?"
+    ];
+  } else if (lowerQ.includes("used for") || lowerQ.includes("indication")) {
+    return [
+      "What are the dosage guidelines?",
+      "How long does treatment typically last?",
+      "What are the side effects?"
+    ];
+  }
+  
+  return [
+    "What are the warnings for this drug?",
+    "What are the common side effects?",
+    "What is this medication used for?"
+  ];
+}
+
 export async function queryLabel(
   label: DrugLabel,
   question: string
 ): Promise<QueryResponse> {
+  const startTime = Date.now();
   const chunks = chunkText(label.labelText);
   const relevantChunks = findRelevantChunks(chunks, question);
   
@@ -176,6 +246,7 @@ If you cannot provide a reliable answer, respond with:
         const generalResponse = JSON.parse(generalCompletion.choices[0].message.content || "{}");
         
         if (generalResponse.canAnswer) {
+          const responseTime = (Date.now() - startTime) / 1000;
           return {
             evidence: [],
             summary: generalResponse.summary || "",
@@ -184,12 +255,24 @@ If you cannot provide a reliable answer, respond with:
             disclaimer: "Educational only — not medical advice. Consult your healthcare provider.",
             notFound: false,
             sourceType: "general_knowledge" as const,
+            provenance: {
+              chunksSearched: chunks.length,
+              relevantPassages: 0,
+              model: "gpt-4o-mini",
+              responseTime,
+              fallbackUsed: true,
+            },
+            followUpQuestions: generateFollowUpQuestions(question),
           };
         }
       } catch (generalError) {
         console.error('Error using general knowledge fallback:', generalError);
       }
     }
+    
+    const responseTime = (Date.now() - startTime) / 1000;
+    const safetyInsights = extractSafetyInsights(label.labelText, question);
+    const followUpQuestions = generateFollowUpQuestions(question);
     
     return {
       evidence: response.notFound ? [] : (response.evidence || []),
@@ -199,6 +282,15 @@ If you cannot provide a reliable answer, respond with:
       disclaimer: "Educational only — not medical advice. Consult your healthcare provider.",
       notFound: response.notFound || false,
       sourceType: response.notFound ? undefined : ("label" as const),
+      safetyInsights: response.notFound ? undefined : safetyInsights,
+      provenance: response.notFound ? undefined : {
+        chunksSearched: chunks.length,
+        relevantPassages: relevantChunks.length,
+        model: "gpt-4o-mini",
+        responseTime,
+        fallbackUsed: false,
+      },
+      followUpQuestions,
     };
   } catch (error) {
     console.error('Error querying OpenAI:', error);
