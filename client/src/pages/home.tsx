@@ -396,8 +396,8 @@ export default function HomePage() {
                           )}
                         </div>
                         {response.safetyInsights.contraindications && response.safetyInsights.contraindications.length > 0 && (
-                          <div className="text-xs text-muted-foreground">
-                            <strong>Key Contraindications:</strong> {response.safetyInsights.contraindications[0]}
+                          <div className="text-xs text-muted-foreground break-words">
+                            <strong>Key Contraindications:</strong> {response.safetyInsights.contraindications.join('; ')}
                           </div>
                         )}
                       </CardContent>
