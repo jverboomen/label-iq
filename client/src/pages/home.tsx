@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle, ChevronDown, ChevronRight } from "lucide-react";
+import { AlertCircle, ChevronDown, ChevronRight, FileText, Sparkles } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { DrugIndexEntry, QueryResponse, ReadabilityScore } from "@shared/schema";
 
@@ -238,9 +238,15 @@ export default function HomePage() {
                   {/* Evidence Section */}
                   {response.evidence && response.evidence.length > 0 && (
                     <div className="space-y-4">
-                      <h2 className="text-sm font-semibold" data-testid="text-evidence-header">
-                        Evidence from FDA Label
-                      </h2>
+                      <div className="flex items-center gap-2">
+                        <h2 className="text-sm font-semibold" data-testid="text-evidence-header">
+                          Evidence from FDA Label
+                        </h2>
+                        <div className="flex items-center gap-1 px-2 py-0.5 bg-primary/10 text-primary rounded text-xs font-medium">
+                          <FileText className="h-3 w-3" />
+                          <span>Verbatim from Label</span>
+                        </div>
+                      </div>
                       <div className="space-y-3">
                         {response.evidence.map((quote, idx) => (
                           <blockquote
@@ -257,9 +263,15 @@ export default function HomePage() {
 
                   {/* Summary Section */}
                   <div className="space-y-4">
-                    <h2 className="text-sm font-semibold" data-testid="text-summary-header">
-                      Plain Language Summary
-                    </h2>
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-sm font-semibold" data-testid="text-summary-header">
+                        Plain Language Summary
+                      </h2>
+                      <div className="flex items-center gap-1 px-2 py-0.5 bg-accent text-accent-foreground rounded text-xs font-medium border">
+                        <Sparkles className="h-3 w-3" />
+                        <span>AI-Generated</span>
+                      </div>
+                    </div>
                     <p className="text-base leading-relaxed" data-testid="text-summary">
                       {response.summary}
                     </p>
