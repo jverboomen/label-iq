@@ -119,14 +119,13 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* FDA Official Header */}
-      <header className="relative overflow-hidden shadow-2xl">
-        <div className="absolute inset-0 bg-[#007CBA]"></div>
-        <div className="relative max-w-7xl mx-auto px-6 py-4 md:px-8">
-          <div className="flex items-center gap-4 animate-fade-in">
+      <header className="bg-[#007CBA] shadow-md">
+        <div className="max-w-7xl mx-auto px-6 py-4 md:px-8">
+          <div className="flex items-center gap-4">
             <img 
               src="/fda-logo-full.svg" 
               alt="U.S. Food and Drug Administration" 
-              className="h-10 md:h-12 drop-shadow-lg"
+              className="h-10 md:h-12"
               data-testid="img-fda-logo"
             />
           </div>
@@ -134,20 +133,16 @@ export default function HomePage() {
       </header>
       
       {/* Sub-header with App Info */}
-      <div className="relative bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 border-b shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-8 md:px-8">
-          <div className="space-y-3 animate-fade-in">
-            <div className="flex items-center gap-3">
-              <h1 className="text-4xl font-bold text-[#007CBA] dark:text-[#0ea5e9] animate-pulse-glow" data-testid="text-app-title">
-                Label iQ
-              </h1>
-              <Sparkles className="h-8 w-8 text-[#007CBA] dark:text-[#0ea5e9] animate-float" />
-            </div>
-            <p className="text-xl font-semibold text-foreground" data-testid="text-tagline">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700">
+        <div className="max-w-4xl mx-auto px-6 py-6 md:px-8">
+          <div className="space-y-2">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white" data-testid="text-app-title">
+              Label iQ
+            </h1>
+            <p className="text-lg text-gray-700 dark:text-gray-300" data-testid="text-tagline">
               Ask Your Questions in Plain Language
             </p>
-            <p className="text-base text-muted-foreground flex items-center gap-2" data-testid="text-subtitle">
-              <Database className="h-5 w-5 text-blue-500" />
+            <p className="text-sm text-gray-600 dark:text-gray-400" data-testid="text-subtitle">
               Powered by Denodo AI SDK + AWS Bedrock
             </p>
           </div>
@@ -156,20 +151,20 @@ export default function HomePage() {
 
       {/* Main Content - Chatbot */}
       <main className="max-w-4xl mx-auto px-6 py-8 md:px-8 md:py-12">
-        <Card className="shadow-2xl glow-border">
-          <CardHeader className="bg-gradient-to-br from-slate-50 to-blue-50/30 dark:from-slate-900/50 dark:to-blue-950/30 border-b">
-            <CardTitle className="flex items-center gap-2 text-2xl">
-              <MessageSquare className="h-6 w-6 text-[#007CBA]" />
-              <span className="text-[#007CBA] dark:text-[#0ea5e9]">Denodo AI Assistant</span>
+        <Card className="shadow-lg">
+          <CardHeader className="border-b">
+            <CardTitle className="flex items-center gap-2">
+              <MessageSquare className="h-5 w-5 text-[#007CBA]" />
+              <span>Denodo AI Assistant</span>
             </CardTitle>
-            <CardDescription className="text-base">
+            <CardDescription>
               Ask questions about FDA drug labels. Powered by AWS Bedrock Claude 3.5 Sonnet + Denodo Agora.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Chat Messages */}
             <div 
-              className="h-96 overflow-y-auto border-2 rounded-xl p-4 space-y-4 bg-gradient-to-br from-slate-50/50 to-blue-50/20 dark:from-slate-950/50 dark:to-blue-950/20"
+              className="h-96 overflow-y-auto border rounded-lg p-4 space-y-4 bg-gray-50 dark:bg-slate-900"
               data-testid="container-chat-messages"
             >
               {chatMessages.length === 0 ? (
@@ -185,21 +180,21 @@ export default function HomePage() {
                     <div className="flex flex-wrap gap-2 justify-center mt-3">
                       <button
                         onClick={() => setChatInput("What is SYMBICORT used for?")}
-                        className="px-4 py-2 text-sm rounded-full bg-[#007CBA] text-white hover-elevate active-elevate-2 shadow-md font-medium"
+                        className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
                         data-testid="button-example-symbicort"
                       >
                         What is SYMBICORT?
                       </button>
                       <button
                         onClick={() => setChatInput("List all medications in the database")}
-                        className="px-4 py-2 text-sm rounded-full bg-[#007CBA] text-white hover-elevate active-elevate-2 shadow-md font-medium"
+                        className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
                         data-testid="button-example-list"
                       >
                         List medications
                       </button>
                       <button
                         onClick={() => setChatInput("What are the side effects of LIPITOR?")}
-                        className="px-4 py-2 text-sm rounded-full bg-[#007CBA] text-white hover-elevate active-elevate-2 shadow-md font-medium"
+                        className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
                         data-testid="button-example-lipitor"
                       >
                         LIPITOR side effects
@@ -215,10 +210,10 @@ export default function HomePage() {
                     data-testid={`message-${msg.role}-${idx}`}
                   >
                     <div
-                      className={`max-w-[80%] rounded-xl px-4 py-3 shadow-lg ${
+                      className={`max-w-[80%] rounded-lg px-4 py-2.5 ${
                         msg.role === "user"
                           ? "bg-[#007CBA] text-white"
-                          : "bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700"
+                          : "bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700"
                       }`}
                     >
                       <p className="text-sm whitespace-pre-wrap break-words">
@@ -299,9 +294,9 @@ export default function HomePage() {
             </form>
 
             {/* Information Footer */}
-            <div className="text-xs text-muted-foreground bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-3 rounded-xl border-2 border-[#007CBA]/20">
+            <div className="text-xs text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-slate-800 p-3 rounded-lg border border-gray-200 dark:border-slate-700">
               <p className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-[#007CBA] dark:text-[#0ea5e9]" />
+                <Shield className="h-3.5 w-3.5" />
                 <strong>Note:</strong> This chatbot queries Denodo AI SDK, which uses AWS Bedrock (Claude 3.5 Sonnet) and Denodo Agora database.
               </p>
             </div>
@@ -309,34 +304,23 @@ export default function HomePage() {
         </Card>
 
         {/* Technology Stack Footer */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-2 text-base text-muted-foreground text-center px-4">
-          <span>Powered by</span>
-          <div className="flex items-center gap-2 text-[#007CBA] dark:text-[#0ea5e9]">
-            <Database className="h-5 w-5" />
-            <span className="font-bold">Denodo AI SDK</span>
-          </div>
-          <span>+</span>
-          <div className="flex items-center gap-2 text-[#007CBA] dark:text-[#0ea5e9]">
-            <Sparkles className="h-5 w-5" />
-            <span className="font-bold">AWS Bedrock</span>
-          </div>
-          <span>in partnership with</span>
-          <span className="font-bold text-[#007CBA] dark:text-[#0ea5e9]">Massive Insights</span>
+        <div className="mt-8 text-sm text-gray-600 dark:text-gray-400 text-center px-4">
+          <p>Powered by <span className="font-semibold">Denodo AI SDK</span> + <span className="font-semibold">AWS Bedrock</span> in partnership with <span className="font-semibold text-gray-900 dark:text-gray-100">Massive Insights</span></p>
         </div>
 
         {/* Built By Massive Insights */}
-        <div className="mt-8 pb-8 flex flex-col items-center justify-center gap-4">
-          <div className="text-sm font-semibold text-muted-foreground">Built by</div>
-          <div className="px-8 py-4 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 rounded-2xl border-2 border-[#007CBA]/30 shadow-2xl hover-elevate">
+        <div className="mt-6 pb-8 flex flex-col items-center justify-center gap-3">
+          <div className="text-sm text-gray-600 dark:text-gray-400">Built by</div>
+          <div className="px-6 py-3 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm">
             <img 
               src="/massive-insights-logo.jpg" 
               alt="Massive Insights" 
-              className="h-14 w-auto object-contain"
+              className="h-12 w-auto object-contain"
               data-testid="img-massive-insights-logo"
             />
           </div>
-          <div className="text-sm font-medium text-[#007CBA] dark:text-[#0ea5e9]">
-            For Denodo Hackathon 2025 🏆
+          <div className="text-sm text-gray-600 dark:text-gray-400">
+            For Denodo Hackathon 2025
           </div>
         </div>
       </main>
