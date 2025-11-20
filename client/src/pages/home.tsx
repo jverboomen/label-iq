@@ -153,9 +153,13 @@ export default function HomePage() {
       <main className="max-w-4xl mx-auto px-6 py-8 md:px-8 md:py-12">
         <Card className="shadow-lg">
           <CardHeader className="border-b">
-            <CardTitle className="flex items-center gap-2">
-              <MessageSquare className="h-5 w-5 text-[#007CBA]" />
-              <span>Denodo AI Assistant</span>
+            <CardTitle className="flex items-center gap-3">
+              <img 
+                src="/denodo-logo.png" 
+                alt="Denodo" 
+                className="h-6 w-auto object-contain"
+              />
+              <span>AI Assistant</span>
             </CardTitle>
             <CardDescription>
               Ask questions about FDA drug labels. Powered by AWS Bedrock Claude 3.5 Sonnet + Denodo Agora.
