@@ -308,8 +308,8 @@ export default function HomePage() {
           </CardContent>
         </Card>
 
-        {/* Powered By Footer */}
-        <div className="mt-8 flex items-center justify-center gap-4 text-sm text-muted-foreground">
+        {/* Technology Stack Footer */}
+        <div className="mt-6 flex items-center justify-center gap-4 text-sm text-muted-foreground">
           <span>Powered by:</span>
           <div className="flex items-center gap-2">
             <Database className="h-4 w-4" />
@@ -319,6 +319,22 @@ export default function HomePage() {
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4" />
             <span className="font-semibold">AWS Bedrock</span>
+          </div>
+        </div>
+
+        {/* Built By Massive Insights */}
+        <div className="mt-6 pb-8 flex flex-col items-center justify-center gap-3">
+          <div className="text-xs text-muted-foreground">Built by</div>
+          <div className="px-6 py-3 bg-gradient-to-r from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 rounded-xl border-2 border-primary/20 shadow-lg hover-elevate">
+            <img 
+              src="/massive-insights-logo.jpg" 
+              alt="Massive Insights" 
+              className="h-12 w-auto object-contain"
+              data-testid="img-massive-insights-logo"
+            />
+          </div>
+          <div className="text-xs text-muted-foreground italic">
+            For Denodo Hackathon 2025
           </div>
         </div>
       </main>
