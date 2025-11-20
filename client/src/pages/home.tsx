@@ -309,8 +309,8 @@ export default function HomePage() {
         </Card>
 
         {/* Technology Stack Footer */}
-        <div className="mt-6 flex items-center justify-center gap-4 text-sm text-muted-foreground">
-          <span>Powered by:</span>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground text-center px-4">
+          <span>Powered by</span>
           <div className="flex items-center gap-2">
             <Database className="h-4 w-4" />
             <span className="font-semibold">Denodo AI SDK</span>
@@ -320,6 +320,8 @@ export default function HomePage() {
             <Sparkles className="h-4 w-4" />
             <span className="font-semibold">AWS Bedrock</span>
           </div>
+          <span>in partnership with</span>
+          <span className="font-semibold text-foreground">Massive Insights</span>
         </div>
 
         {/* Built By Massive Insights */}
