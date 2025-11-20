@@ -2,10 +2,11 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { promises as fs } from "fs";
 import path from "path";
-import { queryRequestSchema, type DrugIndexEntry, type DrugLabel, type ReadabilityScore } from "@shared/schema";
+import { queryRequestSchema, chatRequestSchema, type DrugIndexEntry, type DrugLabel, type ReadabilityScore } from "@shared/schema";
 import { queryLabel } from "./rag";
 import { calculateReadability } from "./readability";
 import { createDenodoClient } from "./denodo";
+import { chatWithBedrock, isBedrockConfigured, type ChatMessage } from "./bedrock";
 
 // Cache for labels and readability scores
 let drugIndex: DrugIndexEntry[] | null = null;
@@ -172,6 +173,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error downloading label:', error);
       res.status(500).json({ error: 'Failed to download label' });
+    }
+  });
+
+  // POST /api/chat - Chat with AI assistant using AWS Bedrock
+  app.post("/api/chat", async (req, res) => {
+    try {
+      const validation = chatRequestSchema.safeParse(req.body);
+      
+      if (!validation.success) {
+        return res.status(400).json({ error: validation.error.errors });
+      }
+      
+      const { messages } = validation.data;
+
+      // Check if Bedrock is configured
+      if (!isBedrockConfigured()) {
+        return res.status(503).json({ 
+          error: 'AWS Bedrock is not configured. Please set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION environment variables.' 
+        });
+      }
+
+      // System prompt for FDA drug label context
+      const systemPrompt = `You are a helpful medical AI assistant powered by Amazon Bedrock and Denodo Agora data virtualization. You help users understand FDA drug labels and prescription medications.
+
+Rules:
+1. Provide accurate, evidence-based information about medications
+2. Use clear, accessible language for non-medical audiences
+3. Always remind users to consult healthcare providers for personalized medical advice
+4. When discussing specific drugs, reference FDA-approved information when available
+5. Be helpful, accurate, and professional
+
+Current context: The user is using Label iQ, a system that queries FDA drug labels from Denodo Agora and provides AI-powered answers using AWS Bedrock.`;
+
+      const response = await chatWithBedrock(messages as ChatMessage[], systemPrompt);
+      
+      res.json(response);
+    } catch (error) {
+      console.error('Error processing chat:', error);
+      res.status(500).json({ error: 'Failed to process chat request' });
     }
   });
 

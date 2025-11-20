@@ -78,3 +78,27 @@ export const queryResponseSchema = z.object({
 });
 
 export type QueryResponse = z.infer<typeof queryResponseSchema>;
+
+// Chat Message Schema
+export const chatMessageSchema = z.object({
+  role: z.enum(["user", "assistant"]),
+  content: z.string(),
+});
+
+export type ChatMessage = z.infer<typeof chatMessageSchema>;
+
+// Chat Request Schema
+export const chatRequestSchema = z.object({
+  messages: z.array(chatMessageSchema),
+});
+
+export type ChatRequest = z.infer<typeof chatRequestSchema>;
+
+// Chat Response Schema
+export const chatResponseSchema = z.object({
+  message: z.string(),
+  model: z.string(),
+  responseTime: z.number(),
+});
+
+export type ChatResponse = z.infer<typeof chatResponseSchema>;
