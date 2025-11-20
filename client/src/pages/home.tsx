@@ -78,6 +78,9 @@ export default function HomePage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [queryHistory, setQueryHistory] = useState<QueryHistoryItem[]>([]);
+  const [unlockedSqlQueries, setUnlockedSqlQueries] = useState<Set<number>>(new Set());
+  const [sqlPasswordAttempt, setSqlPasswordAttempt] = useState<Record<number, string>>({});
+  const SQL_PASSWORD = "denodo";
 
   // Chatbot mutation
   const chatMutation = useMutation({
@@ -153,6 +156,13 @@ export default function HomePage() {
     if (username.trim() && password.trim()) {
       setIsLoggedIn(true);
       setShowAuth(false);
+    }
+  };
+
+  const handleSqlPasswordSubmit = (msgIdx: number, pwd: string) => {
+    if (pwd === SQL_PASSWORD) {
+      setUnlockedSqlQueries(prev => new Set([...prev, msgIdx]));
+      setSqlPasswordAttempt(prev => ({ ...prev, [msgIdx]: "" }));
     }
   };
 
@@ -419,17 +429,33 @@ export default function HomePage() {
                             </div>
                           )}
                           
-                          {/* SQL Query */}
+                          {/* SQL Query with Password Protection */}
                           {msg.sqlQuery && (
                             <div>
-                              <details className="text-xs">
-                                <summary className="cursor-pointer text-muted-foreground hover:text-foreground font-semibold">
-                                  View SQL Query
-                                </summary>
-                                <pre className="mt-1 p-2 bg-gray-100 dark:bg-slate-800 rounded text-xs overflow-x-auto font-mono">
-                                  {msg.sqlQuery}
-                                </pre>
-                              </details>
+                              {unlockedSqlQueries.has(idx) ? (
+                                <details className="text-xs" defaultOpen>
+                                  <summary className="cursor-pointer text-muted-foreground hover:text-foreground font-semibold">
+                                    SQL Query (Unlocked)
+                                  </summary>
+                                  <pre className="mt-1 p-2 bg-gray-100 dark:bg-slate-800 rounded text-xs overflow-x-auto font-mono">
+                                    {msg.sqlQuery}
+                                  </pre>
+                                </details>
+                              ) : (
+                                <div className="text-xs space-y-2">
+                                  <button
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      const pwd = prompt("Enter password to view SQL query:");
+                                      if (pwd) handleSqlPasswordSubmit(idx, pwd);
+                                    }}
+                                    className="text-[#007CBA] hover:underline font-semibold"
+                                    data-testid={`button-unlock-sql-${idx}`}
+                                  >
+                                    🔒 View SQL Query (Password Protected)
+                                  </button>
+                                </div>
+                              )}
                             </div>
                           )}
                           
