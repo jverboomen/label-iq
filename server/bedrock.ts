@@ -1,18 +1,7 @@
-import {
-  BedrockRuntimeClient,
-  ConverseCommand,
-  ConverseCommandInput,
-  Message as BedrockMessage,
-} from "@aws-sdk/client-bedrock-runtime";
-
-// Initialize Bedrock client
-const bedrockClient = new BedrockRuntimeClient({
-  region: process.env.AWS_REGION || "us-west-2",
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-  },
-});
+/**
+ * Denodo AI SDK Integration
+ * Uses Denodo's AI SDK REST API which internally calls AWS Bedrock
+ */
 
 export interface ChatMessage {
   role: "user" | "assistant";
@@ -23,65 +12,104 @@ export interface ChatResponse {
   message: string;
   model: string;
   responseTime: number;
+  source: string;
+}
+
+export interface DenodoAIResponse {
+  natural_language_response?: string;
+  execution_result?: any;
+  vql_query?: string;
+  used_tables?: string[];
+  error?: string;
 }
 
 /**
- * Chat with Claude via AWS Bedrock
+ * Chat with Denodo AI SDK which uses AWS Bedrock internally
  */
-export async function chatWithBedrock(
-  messages: ChatMessage[],
-  systemPrompt?: string
+export async function chatWithDenodoAI(
+  question: string,
+  vdpDatabaseNames?: string
 ): Promise<ChatResponse> {
   const startTime = Date.now();
 
-  // Convert our message format to Bedrock format
-  const bedrockMessages: BedrockMessage[] = messages.map((msg) => ({
-    role: msg.role,
-    content: [{ text: msg.content }],
-  }));
+  const denodoAIEndpoint = process.env.DENODO_AI_SDK_URL || "http://localhost:8008";
+  const denodoUsername = process.env.DENODO_USERNAME;
+  const denodoPassword = process.env.DENODO_PASSWORD;
 
-  const params: ConverseCommandInput = {
-    modelId: "anthropic.claude-3-5-sonnet-20241022-v2:0",
-    messages: bedrockMessages,
-    inferenceConfig: {
-      maxTokens: 2048,
-      temperature: 0.7,
-    },
-  };
-
-  // Add system prompt if provided
-  if (systemPrompt) {
-    params.system = [{ text: systemPrompt }];
+  if (!denodoUsername || !denodoPassword) {
+    throw new Error("Denodo credentials not configured");
   }
 
-  try {
-    const command = new ConverseCommand(params);
-    const response = await bedrockClient.send(command);
+  // Create Basic Auth header
+  const credentials = Buffer.from(`${denodoUsername}:${denodoPassword}`).toString('base64');
+  const authHeader = `Basic ${credentials}`;
 
+  try {
+    // Build query parameters
+    const params = new URLSearchParams({
+      question: question,
+      verbose: "true", // Get natural language response
+    });
+
+    if (vdpDatabaseNames) {
+      params.append("vdp_database_names", vdpDatabaseNames);
+    }
+
+    const url = `${denodoAIEndpoint}/answerQuestion?${params.toString()}`;
+    
+    console.log(`[Denodo AI SDK] Querying: ${url}`);
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': authHeader,
+        'Accept': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Denodo AI SDK error (${response.status}): ${errorText}`);
+    }
+
+    const data = await response.json() as DenodoAIResponse;
     const responseTime = (Date.now() - startTime) / 1000;
 
-    // Extract text from response
-    const content = response.output?.message?.content?.[0];
-    const text = content && "text" in content ? content.text : "";
+    console.log(`[Denodo AI SDK] Response received in ${responseTime}s`);
 
     return {
-      message: text || "",
-      model: "Claude 3.5 Sonnet (via AWS Bedrock)",
+      message: data.natural_language_response || data.execution_result?.toString() || "No response generated",
+      model: "Claude via Denodo AI SDK + AWS Bedrock",
       responseTime,
+      source: "Denodo AI SDK",
     };
   } catch (error) {
-    console.error("Error calling Bedrock:", error);
-    throw new Error("Failed to generate response from Bedrock");
+    console.error("Error calling Denodo AI SDK:", error);
+    throw new Error("Failed to generate response from Denodo AI SDK");
   }
 }
 
 /**
- * Check if AWS Bedrock credentials are configured
+ * Check if Denodo AI SDK is configured
  */
-export function isBedrockConfigured(): boolean {
-  return !!(
-    process.env.AWS_ACCESS_KEY_ID &&
-    process.env.AWS_SECRET_ACCESS_KEY &&
-    process.env.AWS_REGION
-  );
+export function isDenodoAIConfigured(): boolean {
+  const endpoint = process.env.DENODO_AI_SDK_URL;
+  const username = process.env.DENODO_USERNAME;
+  const password = process.env.DENODO_PASSWORD;
+  
+  return !!(username && password && endpoint);
+}
+
+/**
+ * Test connection to Denodo AI SDK
+ */
+export async function testDenodoAIConnection(): Promise<boolean> {
+  try {
+    const denodoAIEndpoint = process.env.DENODO_AI_SDK_URL || "http://localhost:8008";
+    const response = await fetch(`${denodoAIEndpoint}/docs`);
+    return response.ok;
+  } catch (error) {
+    console.error("[Denodo AI SDK] Connection test failed:", error);
+    return false;
+  }
 }

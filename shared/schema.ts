@@ -99,6 +99,7 @@ export const chatResponseSchema = z.object({
   message: z.string(),
   model: z.string(),
   responseTime: z.number(),
+  source: z.string(),
 });
 
 export type ChatResponse = z.infer<typeof chatResponseSchema>;

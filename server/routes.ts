@@ -6,7 +6,7 @@ import { queryRequestSchema, chatRequestSchema, type DrugIndexEntry, type DrugLa
 import { queryLabel } from "./rag";
 import { calculateReadability } from "./readability";
 import { createDenodoClient } from "./denodo";
-import { chatWithBedrock, isBedrockConfigured, type ChatMessage } from "./bedrock";
+import { chatWithDenodoAI, isDenodoAIConfigured, type ChatMessage } from "./bedrock";
 
 // Cache for labels and readability scores
 let drugIndex: DrugIndexEntry[] | null = null;
@@ -176,7 +176,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // POST /api/chat - Chat with AI assistant using AWS Bedrock
+  // POST /api/chat - Chat with AI assistant using Denodo AI SDK (which uses AWS Bedrock)
   app.post("/api/chat", async (req, res) => {
     try {
       const validation = chatRequestSchema.safeParse(req.body);
@@ -187,26 +187,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const { messages } = validation.data;
 
-      // Check if Bedrock is configured
-      if (!isBedrockConfigured()) {
+      // Check if Denodo AI SDK is configured
+      if (!isDenodoAIConfigured()) {
         return res.status(503).json({ 
-          error: 'AWS Bedrock is not configured. Please set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_REGION environment variables.' 
+          error: 'Denodo AI SDK is not configured. Please set DENODO_AI_SDK_URL, DENODO_USERNAME, and DENODO_PASSWORD environment variables.' 
         });
       }
 
-      // System prompt for FDA drug label context
-      const systemPrompt = `You are a helpful medical AI assistant powered by Amazon Bedrock and Denodo Agora data virtualization. You help users understand FDA drug labels and prescription medications.
+      // Get the last user message as the question
+      const lastUserMessage = messages.filter(m => m.role === 'user').pop();
+      if (!lastUserMessage) {
+        return res.status(400).json({ error: 'No user message found' });
+      }
 
-Rules:
-1. Provide accurate, evidence-based information about medications
-2. Use clear, accessible language for non-medical audiences
-3. Always remind users to consult healthcare providers for personalized medical advice
-4. When discussing specific drugs, reference FDA-approved information when available
-5. Be helpful, accurate, and professional
-
-Current context: The user is using Label iQ, a system that queries FDA drug labels from Denodo Agora and provides AI-powered answers using AWS Bedrock.`;
-
-      const response = await chatWithBedrock(messages as ChatMessage[], systemPrompt);
+      // Call Denodo AI SDK with the question
+      // Denodo AI SDK will use its configured Bedrock integration
+      const response = await chatWithDenodoAI(
+        lastUserMessage.content,
+        "jl_verboomen" // Query against your Denodo database
+      );
       
       res.json(response);
     } catch (error) {
