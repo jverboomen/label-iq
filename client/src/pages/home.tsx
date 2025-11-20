@@ -368,25 +368,25 @@ export default function HomePage() {
                     </p>
                     <div className="flex flex-wrap gap-2 justify-center mt-3">
                       <button
-                        onClick={() => setChatInput("What medications are available in the database?")}
+                        onClick={() => setChatInput("Tell me about LIPITOR and its uses")}
                         className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
-                        data-testid="button-example-list"
+                        data-testid="button-example-lipitor"
                       >
-                        Available medications
+                        LIPITOR information
                       </button>
                       <button
-                        onClick={() => setChatInput("How should medications be stored properly?")}
+                        onClick={() => setChatInput("What are the side effects of JANUVIA?")}
                         className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
-                        data-testid="button-example-storage"
+                        data-testid="button-example-januvia"
                       >
-                        Storage guidelines
+                        JANUVIA side effects
                       </button>
                       <button
-                        onClick={() => setChatInput("What drug interactions should I know about?")}
+                        onClick={() => setChatInput("How should HUMIRA be stored and handled?")}
                         className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
-                        data-testid="button-example-interactions"
+                        data-testid="button-example-humira"
                       >
-                        Drug interactions
+                        HUMIRA storage
                       </button>
                     </div>
                   </div>
