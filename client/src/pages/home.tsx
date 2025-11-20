@@ -133,7 +133,7 @@ export default function HomePage() {
       </header>
       
       {/* Sub-header with App Info */}
-      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700">
+      <div className="bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700">
         <div className="max-w-4xl mx-auto px-6 py-6 md:px-8">
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white" data-testid="text-app-title">
@@ -305,7 +305,7 @@ export default function HomePage() {
 
         {/* Technology Stack Footer */}
         <div className="mt-8 text-sm text-gray-600 dark:text-gray-400 text-center px-4">
-          <p>Powered by <span className="font-semibold">Denodo AI SDK</span> + <span className="font-semibold">AWS Bedrock</span> in partnership with <span className="font-semibold text-gray-900 dark:text-gray-100">Massive Insights</span></p>
+          <p>Powered by <span className="font-semibold">Denodo AI SDK</span> + <span className="font-semibold">AWS Bedrock</span></p>
         </div>
 
         {/* Built By Massive Insights */}
