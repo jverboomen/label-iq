@@ -149,6 +149,8 @@ export async function chatWithDenodoAI(
             try {
               const data = JSON.parse(responseData) as DenodoAIResponse;
               console.log(`[Denodo AI SDK] Response received in ${responseTime}s`);
+              console.log(`[Denodo AI SDK] Tables/Views Used:`, data.tables_used || 'Not specified');
+              console.log(`[Denodo AI SDK] SQL Query:`, data.sql_query || 'Not available');
               console.log(`[Denodo AI SDK] Answer:`, data.answer);
 
               resolve({
