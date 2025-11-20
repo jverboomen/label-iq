@@ -348,25 +348,25 @@ export default function HomePage() {
                     </p>
                     <div className="flex flex-wrap gap-2 justify-center mt-3">
                       <button
-                        onClick={() => setChatInput("What is SYMBICORT used for?")}
-                        className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
-                        data-testid="button-example-symbicort"
-                      >
-                        What is SYMBICORT?
-                      </button>
-                      <button
-                        onClick={() => setChatInput("List all medications in the database")}
+                        onClick={() => setChatInput("What medications are available in the database?")}
                         className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
                         data-testid="button-example-list"
                       >
-                        List medications
+                        Available medications
                       </button>
                       <button
-                        onClick={() => setChatInput("What are the side effects of LIPITOR?")}
+                        onClick={() => setChatInput("How should medications be stored properly?")}
                         className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
-                        data-testid="button-example-lipitor"
+                        data-testid="button-example-storage"
                       >
-                        LIPITOR side effects
+                        Storage guidelines
+                      </button>
+                      <button
+                        onClick={() => setChatInput("What drug interactions should I know about?")}
+                        className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
+                        data-testid="button-example-interactions"
+                      >
+                        Drug interactions
                       </button>
                     </div>
                   </div>
