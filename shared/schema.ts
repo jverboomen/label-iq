@@ -94,12 +94,42 @@ export const chatRequestSchema = z.object({
 
 export type ChatRequest = z.infer<typeof chatRequestSchema>;
 
-// Chat Response Schema
+// Chat Response Schema with Metadata (Option 1, 3, 4)
 export const chatResponseSchema = z.object({
   message: z.string(),
   model: z.string(),
   responseTime: z.number(),
   source: z.string(),
+  tablesUsed: z.array(z.string()).optional(),
+  sqlQuery: z.string().optional(),
+  confidence: z.number().optional(),
+  executionTime: z.number().optional(),
+  timestamp: z.number().optional(),
 });
 
 export type ChatResponse = z.infer<typeof chatResponseSchema>;
+
+// Query History Schema (Option 3)
+export const queryHistorySchema = z.object({
+  id: z.string(),
+  userId: z.string().optional(),
+  question: z.string(),
+  answer: z.string(),
+  tablesUsed: z.array(z.string()),
+  confidence: z.number(),
+  timestamp: z.number(),
+});
+
+export type QueryHistory = z.infer<typeof queryHistorySchema>;
+
+// User Schema (Option 2 - Auth)
+export const userSchema = z.object({
+  id: z.string(),
+  username: z.string(),
+  password: z.string(),
+});
+
+export type User = z.infer<typeof userSchema>;
+
+export const insertUserSchema = userSchema.omit({ id: true });
+export type InsertUser = z.infer<typeof insertUserSchema>;
