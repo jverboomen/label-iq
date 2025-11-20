@@ -194,16 +194,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Get the last user message as the question
-      const lastUserMessage = messages.filter(m => m.role === 'user').pop();
-      if (!lastUserMessage) {
+      // Validate we have at least one user message
+      const hasUserMessage = messages.some(m => m.role === 'user');
+      if (!hasUserMessage) {
         return res.status(400).json({ error: 'No user message found' });
       }
 
-      // Call Denodo AI SDK with the question
-      // Denodo AI SDK will use its configured Bedrock integration
+      // Call Denodo AI SDK with the full conversation history
+      // The function will format the conversation context into the question
       const response = await chatWithDenodoAI(
-        lastUserMessage.content,
+        messages, // Pass full conversation history
         "jl_verboomen" // Query against your Denodo database
       );
       

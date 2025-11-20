@@ -6,9 +6,17 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle, ChevronDown, ChevronRight, FileText, Sparkles, Shield, Clock, Database, Copy, Download, TrendingUp } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AlertCircle, ChevronDown, ChevronRight, FileText, Sparkles, Shield, Clock, Database, Copy, Download, TrendingUp, MessageSquare, Send } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import type { DrugIndexEntry, QueryResponse, ReadabilityScore } from "@shared/schema";
+
+interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+  model?: string;
+  responseTime?: number;
+}
 
 export default function HomePage() {
   const [selectedDrugId, setSelectedDrugId] = useState<string>("");
@@ -16,6 +24,10 @@ export default function HomePage() {
   const [showReadability, setShowReadability] = useState(false);
   const [response, setResponse] = useState<QueryResponse | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  
+  // Chatbot state
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [chatInput, setChatInput] = useState<string>("");
 
   // Fetch drug index for dropdown
   const { data: drugIndex, isLoading: loadingDrugs } = useQuery<DrugIndexEntry[]>({
@@ -56,6 +68,34 @@ export default function HomePage() {
     },
   });
 
+  // Chatbot mutation
+  const chatMutation = useMutation({
+    mutationFn: async (messages: ChatMessage[]) => {
+      const response = await apiRequest("POST", "/api/chat", { messages });
+      const result = await response.json();
+      return result;
+    },
+    onSuccess: (data: { message: string; model: string; responseTime: number; source: string }) => {
+      const assistantMessage: ChatMessage = {
+        role: "assistant",
+        content: data.message,
+        model: data.model,
+        responseTime: data.responseTime,
+      };
+      setChatMessages(prev => [...prev, assistantMessage]);
+    },
+    onError: (error) => {
+      console.error('Chat error:', error);
+      const errorMessage: ChatMessage = {
+        role: "assistant",
+        content: error instanceof Error 
+          ? `Failed to generate response: ${error.message}` 
+          : 'Failed to generate response. Please try again.',
+      };
+      setChatMessages(prev => [...prev, errorMessage]);
+    },
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted', { selectedDrugId, question: question.trim() });
@@ -73,6 +113,31 @@ export default function HomePage() {
     queryMutation.mutate({
       labelId: selectedDrugId,
       question: question.trim(),
+    });
+  };
+
+  const handleChatSend = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!chatInput.trim()) {
+      return;
+    }
+    
+    const userMessage: ChatMessage = {
+      role: "user",
+      content: chatInput.trim(),
+    };
+    
+    // Clear input first
+    setChatInput("");
+    
+    // Use functional updater to ensure we have the latest state
+    // This guarantees we include any pending assistant messages
+    setChatMessages(prev => {
+      const nextMessages = [...prev, userMessage];
+      // Send to API with the complete, up-to-date message history
+      chatMutation.mutate(nextMessages);
+      return nextMessages;
     });
   };
 
@@ -119,9 +184,21 @@ export default function HomePage() {
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-6 py-8 md:px-8 md:py-12">
-        <div className="space-y-6">
-          {/* Drug Selector */}
-          <div className="space-y-3">
+        <Tabs defaultValue="rag" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-6">
+            <TabsTrigger value="rag" data-testid="tab-label-evidence">
+              <FileText className="h-4 w-4 mr-2" />
+              Label Evidence
+            </TabsTrigger>
+            <TabsTrigger value="chat" data-testid="tab-denodo-chat">
+              <MessageSquare className="h-4 w-4 mr-2" />
+              Denodo Chat
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="rag" className="space-y-6">
+            {/* Drug Selector */}
+            <div className="space-y-3">
             <Label htmlFor="drug-select" className="text-sm font-medium">
               Select Drug
             </Label>
@@ -603,7 +680,79 @@ export default function HomePage() {
               )}
             </div>
           )}
-        </div>
+          </TabsContent>
+
+          <TabsContent value="chat" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MessageSquare className="h-5 w-5" />
+                  Denodo AI Chat
+                </CardTitle>
+                <CardDescription>
+                  Ask questions about FDA labels using Denodo AI SDK powered by AWS Bedrock Claude 3.5 Sonnet
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Chat messages display */}
+                <div className="h-[400px] overflow-y-auto space-y-4 p-4 bg-muted/20 rounded-lg border" data-testid="chat-messages">
+                  {chatMessages.length === 0 ? (
+                    <div className="text-center text-muted-foreground py-20">
+                      <MessageSquare className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                      <p>Start a conversation with Denodo AI</p>
+                      <p className="text-sm mt-2">Ask about medications, labels, or database queries</p>
+                    </div>
+                  ) : (
+                    chatMessages.map((msg, idx) => (
+                      <div 
+                        key={idx} 
+                        className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                        data-testid={`chat-message-${idx}`}
+                      >
+                        <div className={`max-w-[80%] p-3 rounded-lg ${
+                          msg.role === 'user' 
+                            ? 'bg-primary text-primary-foreground' 
+                            : 'bg-muted'
+                        }`}>
+                          <p className="whitespace-pre-wrap">{msg.content}</p>
+                          {msg.model && (
+                            <p className="text-xs opacity-70 mt-2">
+                              {msg.model} • {msg.responseTime?.toFixed(1)}s
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                {/* Chat input */}
+                <form onSubmit={handleChatSend} className="flex gap-2">
+                  <Textarea
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
+                    placeholder="Ask about medications, FDA labels, or database queries..."
+                    rows={2}
+                    className="flex-1 resize-none"
+                    data-testid="input-chat"
+                  />
+                  <Button
+                    type="submit"
+                    disabled={!chatInput.trim() || chatMutation.isPending}
+                    className="self-end"
+                    data-testid="button-send-chat"
+                  >
+                    {chatMutation.isPending ? (
+                      <Clock className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Send className="h-4 w-4" />
+                    )}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </main>
 
       {/* Medical Disclaimer Footer */}
