@@ -1,8 +1,8 @@
-# Label iQ - Medical Information Query System
+# Label iQ - FDA Drug Label AI Assistant
 
 ## Overview
 
-Label iQ is a healthcare-focused web application that enables users to query FDA drug labels using natural language questions. The system retrieves verbatim evidence from official drug labels and generates plain-language summaries, maintaining medical-grade accuracy and trustworthiness. The application is built with a modern full-stack TypeScript architecture, emphasizing clarity, professional restraint, and evidence-based information delivery.
+Label iQ is a healthcare-focused hackathon prototype that demonstrates integration with Denodo AI SDK for querying FDA drug labels using natural language. The application features a conversational AI chatbot powered by AWS Bedrock (Claude 3.5 Sonnet) that retrieves information from Denodo Agora database. Built with a modern full-stack TypeScript architecture, emphasizing FDA branding, medical-grade UI design, and real-time AI model metadata display.
 
 ## User Preferences
 
@@ -25,14 +25,20 @@ The frontend follows FDA.gov's official government website design, featuring aut
 **Component Architecture:**
 - Shadcn UI component library (New York style variant) provides accessible, customizable primitives
 - Path aliases (`@/`, `@shared/`) for clean imports and separation of concerns
-- Form management with React Hook Form and Zod validation
-- Toast notifications for user feedback
-- Single-page application with focused user flow: drug selection → question input → evidence display
+- Simple chatbot interface with message history
+- Real-time display of AI model metadata and response times
+- Eye-catching animations for hackathon demo (gradient backgrounds, floating icons, pulsing glows)
+
+**User Interface:**
+- **Simplified Single-Page Chatbot:** Users interact ONLY through the Denodo AI chatbot
+- **No Custom RAG:** Removed drug selector, question forms, and custom evidence display
+- **Denodo AI SDK Integration:** All information comes from Denodo AI SDK external service
+- **Visual Assets:** Drug logos displayed from local files (`attached_assets/logos/`)
 
 **State Management Strategy:**
-- React Query handles all server state with configured stale-time and refetch policies
-- Local component state for form inputs and UI interactions
-- No global client-side state management needed due to simple data flow
+- React Query handles chatbot API requests
+- Local component state for chat messages and input
+- Functional state updaters to prevent race conditions in multi-turn conversations
 
 ### Backend Architecture
 
@@ -42,41 +48,28 @@ The frontend follows FDA.gov's official government website design, featuring aut
 - Custom middleware for request logging and JSON body parsing with raw body preservation
 
 **API Design:**
-RESTful endpoints structured around three core operations:
-1. `/api/drugs` - Returns drug index for dropdown population
-2. `/api/readability` - Provides pre-calculated readability metrics for all labels
-3. `/api/query` - Accepts drug selection and question, returns evidence and summary
+Primary endpoint for chatbot integration:
+- `/api/chat` - Accepts conversation history, queries Denodo AI SDK, returns AI response with metadata
 
-**RAG (Retrieval-Augmented Generation) Implementation:**
-The system implements a custom RAG pipeline in `server/rag.ts`:
-- Text chunking with configurable chunk size (1500 characters) and overlap (200 characters)
-- Keyword-based relevance scoring for chunk retrieval
-- Integration with OpenAI API for natural language processing
-- Verbatim quote extraction from FDA labels
-- Plain-language summary generation (120-160 words)
-- Source attribution and medical disclaimers
+**Denodo AI SDK Integration:**
+The application queries an external Denodo AI SDK microservice:
+- **Architecture:** Label iQ → Denodo AI SDK (external) → AWS Bedrock Claude 3.5 Sonnet → ChromaDB → Denodo Agora
+- **Communication:** HTTP REST API to external AI SDK service
+- **Configuration:** External AI SDK URL via `DENODO_AI_SDK_URL` secret
+- **Features:**
+  - Multi-turn conversation support with smart drug name extraction
+  - Backend extracts drug names from previous messages and appends to follow-ups for context
+  - Comprehensive logging for debugging
+  - Security: TLS certificate bypass scoped only to Denodo HTTPS agent (not global)
+  - Response includes: answer text, model name (e.g., "claude-3-5-sonnet-20241022"), response time
 
-**Readability Analysis:**
-Implemented in `server/readability.ts` to provide transparency about label complexity:
-- Flesch Reading Ease score calculation
-- Flesch-Kincaid Grade Level assessment
-- SMOG (Simple Measure of Gobbledygook) index
-- Composite readability score (0-100 scale)
-- Pre-calculated metrics cached in memory
+**Rationale:** Using external Denodo AI SDK as a separate microservice follows production-ready architecture patterns recommended by Denodo documentation. The AI SDK manages its own dependencies (200+ Python packages), Bedrock credentials, and can serve multiple applications.
 
-**Data Storage Strategy:**
-- **Primary**: Denodo Agora data virtualization platform (when configured)
-  - REST API integration via `server/denodo.ts`
-  - Queries `jl_verboomen` database for FDA drug labels
-  - HTTP Basic authentication with secure credential management
-  - Real-time data access to centralized healthcare data sources
-- **Fallback**: File-based storage for FDA drug labels (`data/labels/*.txt`)
-  - JSON index file (`data/drug-index.json`) for drug metadata
-  - Automatic fallback when Denodo credentials not configured
-  - In-memory caching of drug index and readability scores
-- Label loading on-demand per query
-
-**Rationale:** Denodo Agora integration enables Label iQ to query live FDA label data from a centralized data virtualization platform, supporting the hackathon goal of demonstrating integration with Denodo's data federation capabilities. The system gracefully falls back to local files for development and demos without Denodo access.
+**Legacy Components (Not Used in Current UI):**
+- `server/rag.ts` - Custom RAG pipeline (removed from UI per user request)
+- `server/readability.ts` - Label readability analysis (not displayed)
+- `server/denodo.ts` - Direct Denodo Agora REST API (view not published, falls back to local files)
+- `/api/drugs` and `/api/readability` endpoints - Not used in simplified chatbot UI
 
 ### AI Chatbot Architecture
 
