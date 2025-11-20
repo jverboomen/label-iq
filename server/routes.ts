@@ -202,9 +202,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Call Denodo AI SDK with the full conversation history
       // The function will format the conversation context into the question
+      // Specify all 9 FDA label section views for comprehensive querying
       const response = await chatWithDenodoAI(
         messages, // Pass full conversation history
-        "jl_verboomen" // Query against your Denodo database
+        "jl_verboomen" // Query against your Denodo database with all 9 views
       );
       
       res.json(response);
