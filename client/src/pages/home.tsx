@@ -3,8 +3,9 @@ import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { MessageSquare, Send, Database, Sparkles, Shield } from "lucide-react";
+import { MessageSquare, Send, Sparkles, Shield } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
+import welcomeImage from "@assets/generated_images/fda_drug_information_database_icon.png";
 
 // Drug logo mapping (using public directory for production builds)
 const DRUG_LOGOS: Record<string, string> = {
@@ -169,7 +170,7 @@ export default function HomePage() {
             >
               {chatMessages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
-                  <Database className="h-16 w-16 text-muted-foreground/40" />
+                  <img src={welcomeImage} alt="FDA Drug Information" className="h-16 w-16" />
                   <div className="space-y-2">
                     <p className="text-lg font-semibold text-muted-foreground">
                       Welcome to Denodo AI Assistant
