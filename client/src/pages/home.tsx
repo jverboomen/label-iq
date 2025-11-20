@@ -3,7 +3,9 @@ import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { MessageSquare, Send, Sparkles, Shield, Pill, LogOut, History, LogIn } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { MessageSquare, Send, Sparkles, Shield, Pill, LogOut, History, LogIn, Lock } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
 // Drug logo mapping (using public directory for production builds)
@@ -79,6 +81,8 @@ export default function HomePage() {
   const [password, setPassword] = useState("");
   const [queryHistory, setQueryHistory] = useState<QueryHistoryItem[]>([]);
   const [unlockedSqlQueries, setUnlockedSqlQueries] = useState<Record<number, boolean>>({});
+  const [sqlPasswordModal, setSqlPasswordModal] = useState<{ open: boolean; messageIdx: number | null }>({ open: false, messageIdx: null });
+  const [sqlPasswordInput, setSqlPasswordInput] = useState("");
   const SQL_PASSWORD = "denodo";
 
   // Chatbot mutation
@@ -158,10 +162,17 @@ export default function HomePage() {
     }
   };
 
-  const handleSqlPasswordSubmit = (msgIdx: number, pwd: string) => {
-    if (pwd === SQL_PASSWORD) {
-      setUnlockedSqlQueries(prev => ({ ...prev, [msgIdx]: true }));
+  const handleSqlPasswordSubmit = () => {
+    if (sqlPasswordModal.messageIdx !== null && sqlPasswordInput === SQL_PASSWORD) {
+      setUnlockedSqlQueries(prev => ({ ...prev, [sqlPasswordModal.messageIdx]: true }));
+      setSqlPasswordModal({ open: false, messageIdx: null });
+      setSqlPasswordInput("");
     }
+  };
+
+  const openSqlPasswordModal = (msgIdx: number) => {
+    setSqlPasswordModal({ open: true, messageIdx: msgIdx });
+    setSqlPasswordInput("");
   };
 
   if (showAuth) {
@@ -440,19 +451,14 @@ export default function HomePage() {
                                   </pre>
                                 </details>
                               ) : (
-                                <div className="text-xs space-y-2">
-                                  <button
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      const pwd = prompt("Enter password to view SQL query:");
-                                      if (pwd) handleSqlPasswordSubmit(idx, pwd);
-                                    }}
-                                    className="text-[#007CBA] hover:underline font-semibold"
-                                    data-testid={`button-unlock-sql-${idx}`}
-                                  >
-                                    🔒 View SQL Query (Password Protected)
-                                  </button>
-                                </div>
+                                <button
+                                  onClick={() => openSqlPasswordModal(idx)}
+                                  className="inline-flex items-center gap-1.5 text-[#007CBA] hover:text-[#006399] font-semibold text-xs hover:underline"
+                                  data-testid={`button-unlock-sql-${idx}`}
+                                >
+                                  <Lock className="h-3.5 w-3.5" />
+                                  View SQL Query
+                                </button>
                               )}
                             </div>
                           )}
@@ -562,6 +568,50 @@ export default function HomePage() {
             </div>
           </div>
         </main>
+
+        {/* SQL Password Dialog */}
+        <Dialog open={sqlPasswordModal.open} onOpenChange={(open) => setSqlPasswordModal({ ...sqlPasswordModal, open })}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Lock className="h-5 w-5 text-[#007CBA]" />
+                View SQL Query
+              </DialogTitle>
+              <DialogDescription>
+                Enter the password to view the underlying SQL query used by Denodo AI SDK.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              <Input
+                type="password"
+                placeholder="Enter password"
+                value={sqlPasswordInput}
+                onChange={(e) => setSqlPasswordInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleSqlPasswordSubmit();
+                }}
+                data-testid="input-sql-password"
+                autoFocus
+              />
+            </div>
+            <DialogFooter className="gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setSqlPasswordModal({ open: false, messageIdx: null })}
+                data-testid="button-cancel-sql"
+              >
+                Cancel
+              </Button>
+              <Button
+                className="bg-[#007CBA] hover:bg-[#006399]"
+                onClick={handleSqlPasswordSubmit}
+                data-testid="button-submit-sql-password"
+              >
+                Unlock
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
