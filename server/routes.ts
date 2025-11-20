@@ -5,22 +5,57 @@ import path from "path";
 import { queryRequestSchema, type DrugIndexEntry, type DrugLabel, type ReadabilityScore } from "@shared/schema";
 import { queryLabel } from "./rag";
 import { calculateReadability } from "./readability";
+import { createDenodoClient } from "./denodo";
 
 // Cache for labels and readability scores
 let drugIndex: DrugIndexEntry[] | null = null;
 let readabilityScores: ReadabilityScore[] | null = null;
 
+// Initialize Denodo client (will be null if credentials not configured)
+const denodoClient = createDenodoClient();
+
+// Test Denodo connection on startup
+if (denodoClient) {
+  denodoClient.testConnection().then(success => {
+    if (success) {
+      console.log('✅ Connected to Denodo Agora successfully');
+    } else {
+      console.warn('⚠️ Denodo connection test failed, falling back to local files');
+    }
+  }).catch(error => {
+    console.error('❌ Denodo connection error:', error);
+  });
+}
+
+async function loadDrugIndexFromLocal(): Promise<DrugIndexEntry[]> {
+  const indexPath = path.join(process.cwd(), 'data', 'drug-index.json');
+  const content = await fs.readFile(indexPath, 'utf-8');
+  return JSON.parse(content);
+}
+
 async function loadDrugIndex(): Promise<DrugIndexEntry[]> {
   if (drugIndex) return drugIndex;
   
-  const indexPath = path.join(process.cwd(), 'data', 'drug-index.json');
-  const content = await fs.readFile(indexPath, 'utf-8');
-  drugIndex = JSON.parse(content);
+  // Try Denodo first if available
+  if (denodoClient) {
+    try {
+      console.log('[Data Source] Fetching drug index from Denodo Agora...');
+      drugIndex = await denodoClient.getDrugIndex();
+      console.log(`[Data Source] ✅ Loaded ${drugIndex.length} drugs from Denodo`);
+      return drugIndex;
+    } catch (error) {
+      console.error('[Data Source] Error loading from Denodo, falling back to local files:', error);
+    }
+  }
+  
+  // Fallback to local files
+  console.log('[Data Source] Using local drug index files');
+  drugIndex = await loadDrugIndexFromLocal();
   return drugIndex;
 }
 
-async function loadLabel(labelId: string): Promise<DrugLabel> {
-  const index = await loadDrugIndex();
+async function loadLabelFromLocal(labelId: string): Promise<DrugLabel> {
+  const index = await loadDrugIndexFromLocal();
   const drug = index.find(d => d.labelId === labelId);
   
   if (!drug) {
@@ -34,6 +69,24 @@ async function loadLabel(labelId: string): Promise<DrugLabel> {
     ...drug,
     labelText,
   };
+}
+
+async function loadLabel(labelId: string): Promise<DrugLabel> {
+  // Try Denodo first if available
+  if (denodoClient) {
+    try {
+      console.log(`[Data Source] Fetching label ${labelId} from Denodo Agora...`);
+      const label = await denodoClient.getDrugLabel(labelId);
+      console.log(`[Data Source] ✅ Loaded ${label.drugName} from Denodo`);
+      return label;
+    } catch (error) {
+      console.error(`[Data Source] Error loading label ${labelId} from Denodo, falling back to local files:`, error);
+    }
+  }
+  
+  // Fallback to local files
+  console.log(`[Data Source] Using local file for label ${labelId}`);
+  return loadLabelFromLocal(labelId);
 }
 
 async function calculateAllReadability(): Promise<ReadabilityScore[]> {

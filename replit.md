@@ -65,13 +65,26 @@ Implemented in `server/readability.ts` to provide transparency about label compl
 - Pre-calculated metrics cached in memory
 
 **Data Storage Strategy:**
-- File-based storage for FDA drug labels (`data/labels/*.txt`)
-- JSON index file (`data/drug-index.json`) for drug metadata
-- In-memory caching of drug index and readability scores
-- No persistent database required for current scope
+- **Primary**: Denodo Agora data virtualization platform (when configured)
+  - REST API integration via `server/denodo.ts`
+  - Queries `jl_verboomen` database for FDA drug labels
+  - HTTP Basic authentication with secure credential management
+  - Real-time data access to centralized healthcare data sources
+- **Fallback**: File-based storage for FDA drug labels (`data/labels/*.txt`)
+  - JSON index file (`data/drug-index.json`) for drug metadata
+  - Automatic fallback when Denodo credentials not configured
+  - In-memory caching of drug index and readability scores
 - Label loading on-demand per query
 
-**Rationale:** File-based storage is sufficient for the initial dataset size and allows for easy FDA label updates without database migrations. The decision prioritizes simplicity and regulatory compliance (easy audit trail of source documents) over query performance at scale.
+**Rationale:** Denodo Agora integration enables Label iQ to query live FDA label data from a centralized data virtualization platform, supporting the hackathon goal of demonstrating integration with Denodo's data federation capabilities. The system gracefully falls back to local files for development and demos without Denodo access.
+
+**Denodo Integration Details:**
+- Connection managed via environment secrets (DENODO_BASE_URL, DENODO_USERNAME, DENODO_PASSWORD, DENODO_DATABASE)
+- Expected view schema: `fda_drug_labels` with fields: `label_id`, `drug_name`, `label_text`, `snapshot_date`, `logo_path`
+- Flexible field name mapping supports alternative column names
+- Automatic connection testing on server startup
+- Comprehensive logging for debugging data source selection
+- See `DENODO_SETUP.md` for detailed configuration guide
 
 ### Development and Build System
 
