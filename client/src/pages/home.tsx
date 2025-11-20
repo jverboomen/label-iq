@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Textarea } from "@/components/ui/textarea";
 import { MessageSquare, Send, Sparkles, Shield } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
-import welcomeImage from "@assets/generated_images/fda_drug_information_database_icon.png";
+import welcomeImage from "@assets/generated_images/subtle_fda_healthcare_database_icon.png";
 
 // Drug logo mapping (using public directory for production builds)
 const DRUG_LOGOS: Record<string, string> = {
@@ -170,7 +170,7 @@ export default function HomePage() {
             >
               {chatMessages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
-                  <img src={welcomeImage} alt="FDA Drug Information" className="h-16 w-16" />
+                  <img src={welcomeImage} alt="FDA Drug Information" className="h-40 w-40 opacity-80" />
                   <div className="space-y-2">
                     <p className="text-lg font-semibold text-muted-foreground">
                       Welcome to Denodo AI Assistant
