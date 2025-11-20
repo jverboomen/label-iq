@@ -78,6 +78,23 @@ Implemented in `server/readability.ts` to provide transparency about label compl
 
 **Rationale:** Denodo Agora integration enables Label iQ to query live FDA label data from a centralized data virtualization platform, supporting the hackathon goal of demonstrating integration with Denodo's data federation capabilities. The system gracefully falls back to local files for development and demos without Denodo access.
 
+### AI Chatbot Architecture
+
+**Integration Pattern:** Denodo AI SDK (External Microservice)
+- **Deployment:** AI SDK runs as separate service (recommended production pattern)
+- **Communication:** Label iQ → Denodo AI SDK REST API → AWS Bedrock → Claude 3.5 Sonnet
+- **Data Source:** AI SDK queries Denodo Agora for FDA label metadata
+- **Configuration:** External AI SDK instance URL provided via `DENODO_AI_SDK_URL` secret
+
+**Why External:**
+- Production-ready architecture (microservices pattern)
+- AI SDK manages its own dependencies (200+ Python packages)
+- Bedrock credentials isolated to AI SDK service
+- Scalable: AI SDK can serve multiple applications
+- Recommended by Denodo documentation for Agora deployments
+
+**Setup Guide:** See `DENODO_AI_SDK_SETUP.md` for complete instructions
+
 **Denodo Integration Details:**
 - Connection managed via environment secrets (DENODO_BASE_URL, DENODO_USERNAME, DENODO_PASSWORD, DENODO_DATABASE)
 - Expected view schema: `fda_drug_labels` with fields: `label_id`, `drug_name`, `label_text`, `snapshot_date`, `logo_path`
