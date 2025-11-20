@@ -71,7 +71,7 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 50%, #ec4899 100%);
+  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #14b8a6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -81,7 +81,7 @@
   position: relative;
   border: 2px solid transparent;
   background: linear-gradient(var(--card), var(--card)) padding-box,
-              linear-gradient(135deg, #0ea5e9, #8b5cf6, #ec4899) border-box;
+              linear-gradient(135deg, #0ea5e9, #06b6d4, #14b8a6) border-box;
 }
 
 .hover-lift {
@@ -93,7 +93,7 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-/* LIGHT MODE */
+/* LIGHT MODE - Modern Professional */
 :root {
   --button-outline: rgba(0,0,0, .10);
   --badge-outline: rgba(0,0,0, .05);
@@ -101,8 +101,8 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
   --background: 0 0% 100%;
-  --foreground: 0 0% 9%;
-  --border: 0 0% 90%;
+  --foreground: 222 47% 11%;
+  --border: 214 32% 91%;
   --card: 0 0% 98%;
   --card-foreground: 0 0% 9%;
   --card-border: 0 0% 94%;

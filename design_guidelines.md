@@ -1,167 +1,174 @@
-# Label iQ Design Guidelines
+# Label iQ Design Guidelines - Hackathon Edition
 
 ## Design Approach
 
-**System Selection: Healthcare-Informed Material Design**
-
-This medical information tool requires the trustworthiness and clarity of healthcare applications combined with Material Design's structured approach. Reference: Google Health studies, clinical portals like Epic MyChart, and FDA.gov's clean information architecture.
+**Reference: Modern SaaS Excellence**
+Drawing from Stripe's refined gradients, Linear's precision, and Vercel's dark sophistication. This hackathon demo balances medical credibility with cutting-edge visual design to impress judges while maintaining information clarity.
 
 **Core Principles:**
-- Trust through clarity: Every element serves information delivery
-- Medical-grade readability: Optimize for scanning and comprehension
-- Evidence-based hierarchy: Citations and disclaimers are first-class citizens
-- Professional restraint: No playful elements in a regulated medical context
+- Tech-forward professionalism: Modern SaaS aesthetics with medical-grade trust
+- Strategic visual impact: Sophisticated gradients and depth without clutter
+- High contrast clarity: Dark mode optimized with exceptional readability
+- Hackathon-ready: Visually striking first impression that showcases technical capability
 
 ---
 
-## Typography System
+## Color System
 
-**Font Families:**
-- **Primary (UI + Body):** Inter or System UI Stack
-- **Monospace (Citations/IDs):** JetBrains Mono or SF Mono
+**Primary Palette:**
+- **Deep Navy:** `#0A1628` (backgrounds)
+- **Rich Cobalt:** `#1E3A8A` to `#2563EB` (primary actions, headers)
+- **Vibrant Teal:** `#06B6D4` to `#14B8A6` (accents, highlights)
+- **Slate:** `#1E293B` to `#334155` (elevated surfaces)
 
-**Type Scale:**
-- **Page Title:** text-2xl font-semibold (Label iQ)
-- **Section Headers:** text-lg font-semibold (e.g., "Selected Drug", "Your Question")
-- **Body Text:** text-base leading-relaxed (questions, summaries)
-- **Quotes:** text-base leading-relaxed italic (verbatim FDA text)
-- **Labels:** text-sm font-medium (form labels, drug names)
-- **Captions:** text-xs (citations, metadata)
-- **Disclaimer:** text-sm font-medium (legal notice)
+**Text Hierarchy:**
+- Primary text: `#F8FAFC` (near-white, high contrast)
+- Secondary text: `#94A3B8` (muted descriptions)
+- Tertiary text: `#64748B` (labels, captions)
+
+**Gradients (Subtle, Strategic):**
+- **Hero:** Linear gradient from deep navy to midnight blue with teal accent glow
+- **Cards:** Subtle slate-to-transparent overlays for depth
+- **Buttons:** Cobalt to teal gradient on primary actions
+- **Borders:** Teal gradient accents on focus states
+
+**Semantic Colors:**
+- Success: `#10B981` (emerald)
+- Warning: `#F59E0B` (amber) 
+- Critical disclaimer: `#EF4444` border with dark red background
+
+---
+
+## Typography
+
+**Font Stack:**
+- **Primary:** Inter (Google Fonts) - weights 400, 500, 600
+- **Monospace:** JetBrains Mono for citations/IDs
+
+**Scale:**
+- Hero headline: `text-4xl font-semibold tracking-tight`
+- Section headers: `text-2xl font-semibold`
+- Subsections: `text-lg font-medium`
+- Body: `text-base leading-7`
+- Labels: `text-sm font-medium`
+- Captions/citations: `text-xs tracking-wide`
 
 ---
 
 ## Layout System
 
+**Spacing Primitives:** Tailwind units **3, 4, 6, 8, 12, 16**
+
 **Container Structure:**
-- Max-width: `max-w-4xl` centered layout
-- Padding: `px-6 py-8` on mobile, `px-8 py-12` on desktop
-- Single-column flow for information clarity
-
-**Spacing Primitives:**
-Tailwind units: **2, 3, 4, 6, 8, 12**
-- `gap-3` between form elements
-- `space-y-6` between major sections
-- `p-4` for card padding
-- `py-2 px-3` for inputs
-- `mb-8` between response components
-- `mt-12` for disclaimer separation
+- Hero: Full-width gradient background with `max-w-5xl` content
+- Main content: `max-w-4xl` centered
+- Padding: `px-4 py-8` mobile, `px-8 py-16` desktop
+- Section spacing: `space-y-12` for major blocks
 
 ---
 
-## Component Library
+## Component Architecture
 
-### 1. Header (FDA.gov Style)
-- **Primary Header:** Blue background (`bg-primary`) with official FDA logo
-  - Logo: White SVG from FDA website (`/fda-logo-full.svg`)
-  - Height: 40px on mobile, 48px on desktop
-  - Full-width layout with `max-w-7xl` container
-- **Sub-header:** Light accent background with app branding
-  - Application title "Label iQ" with tagline: "Ask FDA Drug Labels in Plain Language"
-  - Subtitle: "Evidence-Based Answers from Official FDA Labels"
-  - Layout: `max-w-4xl` container, `border-b` divider
+### 1. Hero Section
+**Layout:** Full-width gradient background (navy to midnight blue with teal glow)
+- **Headline:** "Label iQ" - `text-5xl font-bold` with subtle teal gradient text effect
+- **Tagline:** "AI-Powered FDA Drug Label Intelligence" - `text-xl text-slate-300`
+- **Subtext:** "Denodo AI SDK Demo - Instant evidence-based answers from official FDA labels"
+- **Visual treatment:** Floating card with frosted glass effect containing quick-start CTA
+- **Background element:** Subtle grid pattern overlay with teal accent lines
 
-### 2. Drug Selector
-- **Label:** "Select Drug" (text-sm font-medium)
-- **Dropdown:** Full-width select with 25 drugs, sorted alphabetically
-- Style: `rounded-lg border` with `py-2 px-3` padding
-- Displays: `drug_name_display` values
+### 2. Main Interface Card
+**Elevated surface** with `bg-slate-800` and subtle border glow
+- Rounded corners: `rounded-2xl`
+- Padding: `p-8`
+- Shadow: Multi-layer depth with teal glow accent
 
-### 3. Question Input Section
-- **Label:** "Your Question" (text-sm font-medium)
-- **Textarea:** Multi-line input, `rows-3`, rounded corners
-- **Placeholder:** "e.g., What are the warnings for this drug?"
-- **Submit Button:** "Ask the Label" - primary action, `py-2 px-6 rounded-lg font-medium`
+**Drug Selector:**
+- Label with teal accent bar on left
+- Custom-styled dropdown with gradient border on focus
+- Hover state: Teal glow effect
 
-### 4. Response Panel (Conditional Display)
+**Question Input:**
+- Frosted glass textarea with gradient border
+- Focus state: Animated teal gradient border
+- Placeholder with subtle animation hint
 
-**A. Evidence Section (Quotes)**
-- Header: "Evidence from FDA Label" (text-sm font-semibold)
-- Each quote in bordered container with `pl-4 border-l-4` (blockquote style)
-- Italic text formatting for verbatim passages
-- `space-y-3` between multiple quotes
+**Submit Button:**
+- Gradient background (cobalt to teal)
+- White text with medium weight
+- Hover: Slight scale + brightness increase
+- Loading state: Animated gradient shift
 
-**B. Summary Section**
-- Header: "Plain Language Summary" (text-sm font-semibold)
-- Body text: 120-160 word paraphrase, `leading-relaxed`
-- Clear paragraph structure
+### 3. Response Panel
+**Stacked card layout** with distinct visual hierarchy:
 
-**C. Citation Bar**
-- Display: `text-xs` monospace
-- Format: "Source: [Drug Name] (Label ID: [label_id])"
-- Subtle background (`bg-gray-50` equivalent)
-- `px-3 py-2 rounded`
+**Evidence Section:**
+- Dark slate background with teal left border accent
+- Quote text in lighter slate with italic styling
+- Subtle inner glow on container
 
-**D. Disclaimer**
-- Fixed text: "⚠️ Educational only — not medical advice. Consult healthcare professionals for medical decisions."
-- Style: `border-l-4` warning indicator, `px-4 py-3`
-- Prominent but not alarming
+**Summary Section:**
+- Slightly elevated from evidence card
+- Clean typography with generous line-height
+- Teal bullet points for list items
 
-**E. Empty State**
-- Message: "Not stated in this label."
-- Centered, muted styling when no answer found
+**Citation Bar:**
+- Monospace text on darkest slate
+- Inline badge styling with gradient border
+- Copy button with teal accent
 
-### 5. Readability Scores (Bonus Feature)
-- Collapsible section below main interface
-- Table display: Drug | Flesch Score | Grade Level | SMOG | Word Count
-- Header: "Label Readability Analysis" (text-lg font-semibold)
-- Sortable columns with visual indicators
+**Disclaimer:**
+- Amber/red gradient left border (4px)
+- Dark red-tinted background
+- Warning icon with gradient fill
 
----
+### 4. Readability Metrics (Bonus)
+**Collapsible section** below main interface
+- Dark header with teal expand/collapse icon
+- Table with alternating row tints
+- Gradient column headers
+- Sortable with animated state changes
 
-## Interaction Patterns
-
-**Loading States:**
-- Submit button shows "Analyzing..." during API call
-- Disable form inputs while processing
-- Simple text indicator (no spinners needed)
-
-**Progressive Disclosure:**
-- Response panel hidden until first query
-- Readability section collapsed by default
-- Expand/collapse with clear chevron icons
-
-**Form Validation:**
-- Require drug selection before submission
-- Require non-empty question (min 10 characters)
-- Inline validation messages below inputs
+### 5. Footer
+- FDA logo in monochrome white
+- "Official FDA data via Denodo AI SDK" tagline
+- Subtle separator line with teal gradient
 
 ---
 
-## Accessibility Standards
+## Images
 
-- Semantic HTML: `<select>`, `<label>`, `<textarea>`, `<blockquote>`
-- ARIA labels on all form controls
-- Focus states on all interactive elements using ring utilities
-- Keyboard navigation for dropdown and buttons
-- Screen reader announcements for response updates
-- High contrast text (WCAG AA minimum)
-- Touch targets minimum 44x44px
+**Hero Background:**
+- Abstract visualization of pharmaceutical molecules/data nodes
+- Dark blue/teal color scheme with glowing connections
+- Blurred/defocused for text overlay readability
+- Source: Generate abstract geometric pattern or use tech-forward stock imagery
 
----
-
-## Icons
-
-**Library:** Heroicons (outline style)
-- Dropdown chevron: `chevron-down`
-- Expandable sections: `chevron-right` / `chevron-down`
-- Warning (disclaimer): `exclamation-triangle`
-- Search/Submit: `magnifying-glass`
+**No additional images required** - focus on gradients and depth for visual impact
 
 ---
 
-## Official FDA Branding
+## Iconography
 
-**Logo Assets:**
-- `/fda-logo-full.svg` - Official FDA logo (white, for blue header)
-- `/fda-logo-icon.svg` - FDA icon version
-- Source: FDA.gov website (https://www.fda.gov/themes/custom/preview/assets/images/)
+**Library:** Heroicons (outline, sized `w-5 h-5` or `w-6 h-6`)
+- All icons inherit teal accent color
+- Sparkle/AI icon for submit button
+- Shield icon for FDA credibility badge
+- Document icon for citations
 
-**Design Consistency:**
-This application matches the official FDA.gov government website design with authentic branding to establish trust and authority for medical information delivery.
+---
+
+## Accessibility
+
+- WCAG AAA contrast ratios maintained with dark backgrounds
+- Focus rings use teal gradient with high visibility
+- Semantic HTML structure preserved
+- Keyboard navigation with visible focus states
+- ARIA labels on all interactive elements
+- Screen reader announcements for dynamic content updates
 
 ---
 
 ## Summary
 
-This design creates a trustworthy, medical-grade interface that prioritizes information clarity over visual flourish. The structured response format (Evidence → Summary → Citation → Disclaimer) builds user confidence through transparency. Material Design's proven patterns ensure familiarity while healthcare-informed spacing and typography optimize for the serious task of understanding prescription drug information.
+This design transforms Label iQ into a visually striking hackathon showcase while maintaining medical information credibility. The sophisticated dark color palette with strategic teal accents, subtle gradients, and depth layering creates a modern SaaS aesthetic that impresses judges. High contrast ensures readability, while the tech-forward visual treatment demonstrates the power of the Denodo AI SDK integration without compromising the serious nature of pharmaceutical data.

@@ -118,9 +118,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* FDA-Style Header with Gradient Animation */}
+      {/* Professional Header with Sleek Gradient */}
       <header className="relative overflow-hidden shadow-2xl">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 animate-gradient"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-cyan-900 animate-gradient"></div>
         <div className="relative max-w-7xl mx-auto px-6 py-4 md:px-8">
           <div className="flex items-center gap-4 animate-fade-in">
             <img 
@@ -141,7 +141,7 @@ export default function HomePage() {
               <h1 className="text-4xl font-bold gradient-text animate-pulse-glow" data-testid="text-app-title">
                 Label iQ
               </h1>
-              <Sparkles className="h-8 w-8 text-purple-500 animate-float" />
+              <Sparkles className="h-8 w-8 text-cyan-500 animate-float" />
             </div>
             <p className="text-xl font-semibold text-foreground" data-testid="text-tagline">
               Ask Your Questions in Plain Language
@@ -156,20 +156,20 @@ export default function HomePage() {
 
       {/* Main Content - Chatbot */}
       <main className="max-w-4xl mx-auto px-6 py-8 md:px-8 md:py-12">
-        <Card className="shadow-xl border-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <MessageSquare className="h-5 w-5 text-primary" />
-              Denodo AI Assistant
+        <Card className="shadow-2xl glow-border">
+          <CardHeader className="bg-gradient-to-br from-slate-50 to-blue-50/30 dark:from-slate-900/50 dark:to-blue-950/30 border-b">
+            <CardTitle className="flex items-center gap-2 text-2xl">
+              <MessageSquare className="h-6 w-6 text-cyan-500" />
+              <span className="gradient-text">Denodo AI Assistant</span>
             </CardTitle>
-            <CardDescription>
-              Ask questions about FDA drug labels. The AI will search Denodo's database for accurate information.
+            <CardDescription className="text-base">
+              Ask questions about FDA drug labels. Powered by AWS Bedrock Claude 3.5 Sonnet + Denodo Agora.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Chat Messages */}
             <div 
-              className="h-96 overflow-y-auto border rounded-lg p-4 space-y-4 bg-muted/20"
+              className="h-96 overflow-y-auto border-2 rounded-xl p-4 space-y-4 bg-gradient-to-br from-slate-50/50 to-blue-50/20 dark:from-slate-950/50 dark:to-blue-950/20"
               data-testid="container-chat-messages"
             >
               {chatMessages.length === 0 ? (
@@ -185,21 +185,21 @@ export default function HomePage() {
                     <div className="flex flex-wrap gap-2 justify-center mt-3">
                       <button
                         onClick={() => setChatInput("What is SYMBICORT used for?")}
-                        className="px-3 py-1.5 text-xs rounded-full bg-primary/10 text-primary hover-elevate active-elevate-2 border border-primary/20"
+                        className="px-4 py-2 text-sm rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover-elevate active-elevate-2 shadow-md font-medium"
                         data-testid="button-example-symbicort"
                       >
                         What is SYMBICORT?
                       </button>
                       <button
                         onClick={() => setChatInput("List all medications in the database")}
-                        className="px-3 py-1.5 text-xs rounded-full bg-primary/10 text-primary hover-elevate active-elevate-2 border border-primary/20"
+                        className="px-4 py-2 text-sm rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover-elevate active-elevate-2 shadow-md font-medium"
                         data-testid="button-example-list"
                       >
                         List medications
                       </button>
                       <button
                         onClick={() => setChatInput("What are the side effects of LIPITOR?")}
-                        className="px-3 py-1.5 text-xs rounded-full bg-primary/10 text-primary hover-elevate active-elevate-2 border border-primary/20"
+                        className="px-4 py-2 text-sm rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover-elevate active-elevate-2 shadow-md font-medium"
                         data-testid="button-example-lipitor"
                       >
                         LIPITOR side effects
@@ -215,10 +215,10 @@ export default function HomePage() {
                     data-testid={`message-${msg.role}-${idx}`}
                   >
                     <div
-                      className={`max-w-[80%] rounded-lg px-4 py-3 ${
+                      className={`max-w-[80%] rounded-xl px-4 py-3 shadow-lg ${
                         msg.role === "user"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted border"
+                          ? "bg-gradient-to-br from-blue-600 to-cyan-600 text-white"
+                          : "bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700"
                       }`}
                     >
                       <p className="text-sm whitespace-pre-wrap break-words">
@@ -299,9 +299,9 @@ export default function HomePage() {
             </form>
 
             {/* Information Footer */}
-            <div className="text-xs text-muted-foreground bg-muted/50 p-3 rounded-lg border">
+            <div className="text-xs text-muted-foreground bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-3 rounded-xl border-2 border-blue-200/50 dark:border-blue-800/50">
               <p className="flex items-center gap-2">
-                <Shield className="h-3 w-3" />
+                <Shield className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
                 <strong>Note:</strong> This chatbot queries Denodo AI SDK, which uses AWS Bedrock (Claude 3.5 Sonnet) and Denodo Agora database.
               </p>
             </div>
@@ -309,34 +309,34 @@ export default function HomePage() {
         </Card>
 
         {/* Technology Stack Footer */}
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground text-center px-4">
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-2 text-base text-muted-foreground text-center px-4">
           <span>Powered by</span>
-          <div className="flex items-center gap-2">
-            <Database className="h-4 w-4" />
-            <span className="font-semibold">Denodo AI SDK</span>
+          <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+            <Database className="h-5 w-5" />
+            <span className="font-bold">Denodo AI SDK</span>
           </div>
           <span>+</span>
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4" />
-            <span className="font-semibold">AWS Bedrock</span>
+          <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400">
+            <Sparkles className="h-5 w-5" />
+            <span className="font-bold">AWS Bedrock</span>
           </div>
           <span>in partnership with</span>
-          <span className="font-semibold text-foreground">Massive Insights</span>
+          <span className="font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Massive Insights</span>
         </div>
 
         {/* Built By Massive Insights */}
-        <div className="mt-6 pb-8 flex flex-col items-center justify-center gap-3">
-          <div className="text-xs text-muted-foreground">Built by</div>
-          <div className="px-6 py-3 bg-gradient-to-r from-slate-50 to-white dark:from-slate-900 dark:to-slate-800 rounded-xl border-2 border-primary/20 shadow-lg hover-elevate">
+        <div className="mt-8 pb-8 flex flex-col items-center justify-center gap-4">
+          <div className="text-sm font-semibold text-muted-foreground">Built by</div>
+          <div className="px-8 py-4 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 rounded-2xl border-2 border-blue-300 dark:border-blue-700 shadow-2xl hover-elevate glow-border">
             <img 
               src="/massive-insights-logo.jpg" 
               alt="Massive Insights" 
-              className="h-12 w-auto object-contain"
+              className="h-14 w-auto object-contain"
               data-testid="img-massive-insights-logo"
             />
           </div>
-          <div className="text-xs text-muted-foreground italic">
-            For Denodo Hackathon 2025
+          <div className="text-sm font-medium text-blue-600 dark:text-blue-400">
+            For Denodo Hackathon 2025 🏆
           </div>
         </div>
       </main>
