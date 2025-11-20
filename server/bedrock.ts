@@ -135,10 +135,10 @@ export async function chatWithDenodoAI(
 
       const requester = urlObj.protocol === 'https:' ? https : require('http');
       
-      const req = requester.request(options, (res) => {
+      const req = requester.request(options, (res: any) => {
         let responseData = '';
 
-        res.on('data', (chunk) => {
+        res.on('data', (chunk: any) => {
           responseData += chunk;
         });
 
@@ -168,7 +168,7 @@ export async function chatWithDenodoAI(
         });
       });
 
-      req.on('error', (error) => {
+      req.on('error', (error: any) => {
         console.error("Error calling Denodo AI SDK:", error);
         reject(new Error("Failed to generate response from Denodo AI SDK"));
       });
