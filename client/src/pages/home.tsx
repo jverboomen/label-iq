@@ -78,8 +78,7 @@ export default function HomePage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [queryHistory, setQueryHistory] = useState<QueryHistoryItem[]>([]);
-  const [unlockedSqlQueries, setUnlockedSqlQueries] = useState<Set<number>>(new Set());
-  const [sqlPasswordAttempt, setSqlPasswordAttempt] = useState<Record<number, string>>({});
+  const [unlockedSqlQueries, setUnlockedSqlQueries] = useState<Record<number, boolean>>({});
   const SQL_PASSWORD = "denodo";
 
   // Chatbot mutation
@@ -161,8 +160,7 @@ export default function HomePage() {
 
   const handleSqlPasswordSubmit = (msgIdx: number, pwd: string) => {
     if (pwd === SQL_PASSWORD) {
-      setUnlockedSqlQueries(prev => new Set([...prev, msgIdx]));
-      setSqlPasswordAttempt(prev => ({ ...prev, [msgIdx]: "" }));
+      setUnlockedSqlQueries(prev => ({ ...prev, [msgIdx]: true }));
     }
   };
 
@@ -432,8 +430,8 @@ export default function HomePage() {
                           {/* SQL Query with Password Protection */}
                           {msg.sqlQuery && (
                             <div>
-                              {unlockedSqlQueries.has(idx) ? (
-                                <details className="text-xs" defaultOpen>
+                              {unlockedSqlQueries[idx] ? (
+                                <details className="text-xs" open>
                                   <summary className="cursor-pointer text-muted-foreground hover:text-foreground font-semibold">
                                     SQL Query (Unlocked)
                                   </summary>
