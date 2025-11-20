@@ -6,11 +6,55 @@ import { Textarea } from "@/components/ui/textarea";
 import { MessageSquare, Send, Database, Sparkles, Shield } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
+// Drug logo mapping (using public directory for production builds)
+const DRUG_LOGOS: Record<string, string> = {
+  "BIKTARVY": "/drug-logos/BIKTARVY_LOGO.svg",
+  "ELIQUIS": "/drug-logos/ELIQUIS_LOGO.svg",
+  "ENBREL": "/drug-logos/ENBREL_LOGO.svg",
+  "ENTRESTO": "/drug-logos/ENTRESTO_LOGO.svg",
+  "FARXIGA": "/drug-logos/FARXIGA_LOGO.svg",
+  "HUMIRA": "/drug-logos/HUMIRA_LOGO.svg",
+  "IBRANCE": "/drug-logos/IBRANCE_LOGO.svg",
+  "IMBRUVICA": "/drug-logos/IMBRUVICA_LOGO.svg",
+  "JAKAFI": "/drug-logos/JAKAFI_LOGO.svg",
+  "JANUVIA": "/drug-logos/JANUVIA_LOGO.svg",
+  "JARDIANCE": "/drug-logos/JARDIANCE_LOGO.svg",
+  "LANTUS": "/drug-logos/LANTUS_LOGO.svg",
+  "LINZESS": "/drug-logos/LINZESS_LOGO.svg",
+  "MOUNJARO": "/drug-logos/MOUNJARO_LOGO.svg",
+  "MYRBETRIQ": "/drug-logos/MYRBETRIQ_LOGO.svg",
+  "NOVOLOG": "/drug-logos/NOVOLOG_LOGO.svg",
+  "OFEV": "/drug-logos/OFEV_LOGO.svg",
+  "OZEMPIC": "/drug-logos/OZEMPIC_LOGO.svg",
+  "REVLIMID": "/drug-logos/REVLIMID_LOGO.svg",
+  "STELARA": "/drug-logos/STELARA_LOGO.svg",
+  "SYMBICORT": "/drug-logos/SYMBICORT_LOGO.svg",
+  "TRELEGY ELLIPTA": "/drug-logos/TRELEGY_ELLIPTA_LOGO.svg",
+  "TRULICITY": "/drug-logos/TRULICITY_LOGO.svg",
+  "XARELTO": "/drug-logos/XARELTO_LOGO.svg",
+  "XTANDI": "/drug-logos/XTANDI_LOGO.svg",
+};
+
+// Function to detect drug names in message content
+function detectDrugLogos(content: string): string[] {
+  const detectedLogos = new Set<string>();
+  const upperContent = content.toUpperCase();
+  
+  for (const [drugName, logoPath] of Object.entries(DRUG_LOGOS)) {
+    if (upperContent.includes(drugName)) {
+      detectedLogos.add(logoPath);
+    }
+  }
+  
+  return Array.from(detectedLogos);
+}
+
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
   model?: string;
   responseTime?: number;
+  detectedLogos?: string[];
 }
 
 export default function HomePage() {
@@ -25,11 +69,13 @@ export default function HomePage() {
       return result;
     },
     onSuccess: (data: { message: string; model: string; responseTime: number; source: string }) => {
+      const detectedLogos = detectDrugLogos(data.message);
       const assistantMessage: ChatMessage = {
         role: "assistant",
         content: data.message,
         model: data.model,
         responseTime: data.responseTime,
+        detectedLogos: detectedLogos.length > 0 ? detectedLogos : undefined,
       };
       setChatMessages(prev => [...prev, assistantMessage]);
     },
@@ -178,6 +224,29 @@ export default function HomePage() {
                       <p className="text-sm whitespace-pre-wrap break-words">
                         {msg.content}
                       </p>
+                      
+                      {/* Display detected drug logos */}
+                      {msg.role === "assistant" && msg.detectedLogos && msg.detectedLogos.length > 0 && (
+                        <div className="mt-3 pt-3 border-t border-border/50">
+                          <p className="text-xs text-muted-foreground mb-2">Referenced Medications:</p>
+                          <div className="flex flex-wrap gap-3">
+                            {msg.detectedLogos.map((logoPath, logoIdx) => (
+                              <div
+                                key={logoIdx}
+                                className="p-2 bg-background rounded-md border hover-elevate"
+                                data-testid={`img-drug-logo-${logoIdx}`}
+                              >
+                                <img
+                                  src={logoPath}
+                                  alt="Drug logo"
+                                  className="h-8 w-auto object-contain"
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
                       {msg.role === "assistant" && msg.model && (
                         <div className="mt-2 pt-2 border-t border-border/50 flex flex-wrap gap-2 text-xs text-muted-foreground">
                           <span className="font-mono">{msg.model}</span>
