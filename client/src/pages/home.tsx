@@ -155,7 +155,7 @@ export default function HomePage() {
           <CardHeader className="border-b">
             <CardTitle className="flex items-center gap-3">
               <img 
-                src="/denodo-logo.jpg" 
+                src="/denodo-logo-clearbit.png" 
                 alt="Denodo" 
                 className="h-6 w-auto object-contain"
               />
