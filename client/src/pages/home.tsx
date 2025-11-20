@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { MessageSquare, Send, Sparkles, Shield, Pill } from "lucide-react";
+import { MessageSquare, Send, Sparkles, Shield, Pill, LogOut, History, LogIn } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
 // Drug logo mapping (using public directory for production builds)
@@ -55,11 +55,29 @@ interface ChatMessage {
   model?: string;
   responseTime?: number;
   detectedLogos?: string[];
+  tablesUsed?: string[];
+  sqlQuery?: string;
+  confidence?: number;
+  timestamp?: number;
+}
+
+interface QueryHistoryItem {
+  id: string;
+  question: string;
+  answer: string;
+  confidence: number;
+  timestamp: number;
 }
 
 export default function HomePage() {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [chatInput, setChatInput] = useState<string>("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showAuth, setShowAuth] = useState(true);
+  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [queryHistory, setQueryHistory] = useState<QueryHistoryItem[]>([]);
 
   // Chatbot mutation
   const chatMutation = useMutation({
@@ -68,16 +86,32 @@ export default function HomePage() {
       const result = await response.json();
       return result;
     },
-    onSuccess: (data: { message: string; model: string; responseTime: number; source: string }) => {
+    onSuccess: (data: { message: string; model: string; responseTime: number; source: string; tablesUsed?: string[]; sqlQuery?: string; confidence?: number }) => {
       const detectedLogos = detectDrugLogos(data.message);
+      const now = Date.now();
       const assistantMessage: ChatMessage = {
         role: "assistant",
         content: data.message,
         model: data.model,
         responseTime: data.responseTime,
         detectedLogos: detectedLogos.length > 0 ? detectedLogos : undefined,
+        tablesUsed: data.tablesUsed,
+        sqlQuery: data.sqlQuery,
+        confidence: data.confidence,
+        timestamp: now,
       };
       setChatMessages(prev => [...prev, assistantMessage]);
+      
+      // Add to query history
+      if (data.confidence !== undefined) {
+        setQueryHistory(prev => [...prev, {
+          id: Math.random().toString(36),
+          question: chatMessages[chatMessages.length - 1]?.content || "",
+          answer: data.message.substring(0, 100) + "...",
+          confidence: data.confidence,
+          timestamp: now,
+        }]);
+      }
     },
     onError: (error) => {
       console.error('Chat error:', error);
@@ -116,11 +150,134 @@ export default function HomePage() {
     });
   };
 
+  const handleAuthSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (username.trim() && password.trim()) {
+      setIsLoggedIn(true);
+      setShowAuth(false);
+    }
+  };
+
+  if (showAuth) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Card className="w-full max-w-md shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <span className="font-bold text-[#007CBA]">Label iQ</span>
+            </CardTitle>
+            <CardDescription>FDA Drug Label AI Assistant</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="text-center mb-6">
+              <h2 className="text-lg font-semibold text-[#007CBA] mb-2">
+                {authMode === "login" ? "Sign In" : "Create Account"}
+              </h2>
+            </div>
+            <form onSubmit={handleAuthSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Username</label>
+                <input 
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter username"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-800"
+                  data-testid="input-username"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Password</label>
+                <input 
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter password"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-800"
+                  data-testid="input-password"
+                />
+              </div>
+              <Button type="submit" className="w-full bg-[#007CBA] hover:bg-[#006399]" data-testid="button-auth-submit">
+                {authMode === "login" ? "Sign In" : "Sign Up"}
+              </Button>
+            </form>
+            <div className="text-center">
+              <button 
+                onClick={() => setAuthMode(authMode === "login" ? "signup" : "login")}
+                className="text-sm text-[#007CBA] hover:underline"
+                data-testid="button-toggle-auth-mode"
+              >
+                {authMode === "login" ? "Need an account? Sign up" : "Already have an account? Sign in"}
+              </button>
+            </div>
+            <Button 
+              variant="outline" 
+              className="w-full"
+              onClick={() => {
+                setIsLoggedIn(true);
+                setShowAuth(false);
+              }}
+              data-testid="button-demo"
+            >
+              Continue as Demo User
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* FDA Official Header */}
-      <header className="bg-[#007CBA] shadow-md">
-        <div className="max-w-7xl mx-auto px-6 py-4 md:px-8">
+    <div className="min-h-screen bg-background flex">
+      {/* Query History Sidebar */}
+      <aside className="w-64 bg-gray-50 dark:bg-slate-900 border-r border-gray-200 dark:border-slate-700 overflow-y-auto">
+        <div className="sticky top-0 bg-gray-50 dark:bg-slate-900 p-4 border-b border-gray-200 dark:border-slate-700">
+          <div className="flex items-center gap-2 mb-2">
+            <History className="h-4 w-4 text-[#007CBA]" />
+            <h2 className="text-sm font-semibold">Query History</h2>
+          </div>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="w-full text-xs"
+            onClick={() => {
+              setChatMessages([]);
+              setQueryHistory([]);
+            }}
+            data-testid="button-clear-history"
+          >
+            Clear History
+          </Button>
+        </div>
+        <div className="p-4 space-y-2">
+          {queryHistory.length === 0 ? (
+            <p className="text-xs text-muted-foreground">No queries yet</p>
+          ) : (
+            queryHistory.slice().reverse().map(item => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  const msg = chatMessages.find(m => m.timestamp === item.timestamp);
+                  if (msg) {
+                    setChatInput(msg.content);
+                  }
+                }}
+                className="w-full text-left p-2 text-xs bg-white dark:bg-slate-800 rounded border border-gray-200 dark:border-slate-700 hover-elevate"
+                data-testid={`button-history-${item.id}`}
+              >
+                <div className="font-medium truncate">{item.question.substring(0, 40)}</div>
+                <div className="text-muted-foreground text-xs">
+                  Confidence: {(item.confidence).toFixed(0)}%
+                </div>
+              </button>
+            ))
+          )}
+        </div>
+      </aside>
+
+      <div className="flex-1 flex flex-col">
+        {/* FDA Official Header */}
+        <header className="bg-[#007CBA] shadow-md flex items-center justify-between px-8 py-4">
           <div className="flex items-center gap-4">
             <img 
               src="/fda-logo-full.svg" 
@@ -129,28 +286,42 @@ export default function HomePage() {
               data-testid="img-fda-logo"
             />
           </div>
-        </div>
-      </header>
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={() => {
+              setIsLoggedIn(false);
+              setShowAuth(true);
+              setUsername("");
+              setPassword("");
+            }}
+            className="text-white hover:bg-[#006399]"
+            data-testid="button-logout"
+          >
+            <LogOut className="h-4 w-4 mr-2" />
+            Logout
+          </Button>
+        </header>
       
-      {/* Sub-header with App Info */}
-      <div className="bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700">
-        <div className="max-w-4xl mx-auto px-6 py-6 md:px-8">
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold text-[#007CBA]" data-testid="text-app-title">
-              Label iQ
-            </h1>
-            <p className="text-lg text-gray-700 dark:text-gray-300" data-testid="text-tagline">
-              Ask Your Questions in Plain Language
-            </p>
-            <p className="text-sm text-gray-600 dark:text-gray-400" data-testid="text-subtitle">
-              Powered by Denodo AI SDK + AWS Bedrock
-            </p>
+        {/* Sub-header with App Info */}
+        <div className="bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700">
+          <div className="max-w-4xl mx-auto px-6 py-6 md:px-8">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold text-[#007CBA]" data-testid="text-app-title">
+                Label iQ
+              </h1>
+              <p className="text-lg text-gray-700 dark:text-gray-300" data-testid="text-tagline">
+                Ask Your Questions in Plain Language
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400" data-testid="text-subtitle">
+                Powered by Denodo AI SDK + AWS Bedrock
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Main Content - Chatbot */}
-      <main className="max-w-4xl mx-auto px-6 py-8 md:px-8 md:py-12">
+        {/* Main Content - Chatbot */}
+        <main className="flex-1 max-w-4xl mx-auto w-full px-6 py-8 md:px-8 md:py-12">
         <Card className="shadow-lg">
           <CardHeader className="border-b">
             <CardTitle className="flex items-center gap-2">
@@ -220,6 +391,60 @@ export default function HomePage() {
                         {msg.content}
                       </p>
                       
+                      {/* Display metadata and data quality */}
+                      {msg.role === "assistant" && (
+                        <div className="mt-3 pt-3 border-t border-border/50 space-y-2">
+                          {/* Confidence Badge */}
+                          {msg.confidence !== undefined && (
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-semibold text-[#007CBA]">Confidence:</span>
+                              <div className="px-2 py-1 bg-[#007CBA]/10 text-[#007CBA] rounded text-xs font-medium">
+                                {msg.confidence.toFixed(0)}%
+                              </div>
+                            </div>
+                          )}
+                          
+                          {/* Tables Used */}
+                          {msg.tablesUsed && msg.tablesUsed.length > 0 && (
+                            <div>
+                              <p className="text-xs text-muted-foreground mb-1 font-semibold">Data Sources:</p>
+                              <div className="flex flex-wrap gap-1">
+                                {msg.tablesUsed.map((table, idx) => {
+                                  const tableName = table.split('.').pop() || table;
+                                  return (
+                                    <span key={idx} className="px-2 py-0.5 bg-gray-200 dark:bg-slate-700 rounded text-xs">
+                                      {tableName}
+                                    </span>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {/* SQL Query */}
+                          {msg.sqlQuery && (
+                            <div>
+                              <details className="text-xs">
+                                <summary className="cursor-pointer text-muted-foreground hover:text-foreground font-semibold">
+                                  View SQL Query
+                                </summary>
+                                <pre className="mt-1 p-2 bg-gray-100 dark:bg-slate-800 rounded text-xs overflow-x-auto font-mono">
+                                  {msg.sqlQuery}
+                                </pre>
+                              </details>
+                            </div>
+                          )}
+                          
+                          {/* Model and response time */}
+                          <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                            <span className="font-mono">{msg.model}</span>
+                            {msg.responseTime && (
+                              <span>• {msg.responseTime.toFixed(1)}s</span>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      
                       {/* Display detected drug logos */}
                       {msg.role === "assistant" && msg.detectedLogos && msg.detectedLogos.length > 0 && (
                         <div className="mt-3 pt-3 border-t border-border/50">
@@ -239,15 +464,6 @@ export default function HomePage() {
                               </div>
                             ))}
                           </div>
-                        </div>
-                      )}
-                      
-                      {msg.role === "assistant" && msg.model && (
-                        <div className="mt-2 pt-2 border-t border-border/50 flex flex-wrap gap-2 text-xs text-muted-foreground">
-                          <span className="font-mono">{msg.model}</span>
-                          {msg.responseTime && (
-                            <span>• {msg.responseTime.toFixed(1)}s</span>
-                          )}
                         </div>
                       )}
                     </div>
@@ -308,22 +524,23 @@ export default function HomePage() {
           <p>Powered by <span className="font-semibold">Denodo AI SDK</span> + <span className="font-semibold">AWS Bedrock</span></p>
         </div>
 
-        {/* Built By Massive Insights */}
-        <div className="mt-6 pb-8 flex flex-col items-center justify-center gap-3">
-          <div className="text-sm text-gray-600 dark:text-gray-400">Built by</div>
-          <div className="px-6 py-3 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm">
-            <img 
-              src="/massive-insights-logo.jpg" 
-              alt="Massive Insights" 
-              className="h-12 w-auto object-contain"
-              data-testid="img-massive-insights-logo"
-            />
+          {/* Built By Massive Insights */}
+          <div className="mt-6 pb-8 flex flex-col items-center justify-center gap-3">
+            <div className="text-sm text-gray-600 dark:text-gray-400">Built by</div>
+            <div className="px-6 py-3 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm">
+              <img 
+                src="/massive-insights-logo.jpg" 
+                alt="Massive Insights" 
+                className="h-12 w-auto object-contain"
+                data-testid="img-massive-insights-logo"
+              />
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              For Denodo Hackathon 2025
+            </div>
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">
-            For Denodo Hackathon 2025
-          </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
