@@ -154,7 +154,7 @@ export default function HomePage() {
         <Card className="shadow-lg">
           <CardHeader className="border-b">
             <CardTitle className="flex items-center gap-2">
-              <span className="font-bold text-[#00A3E0]">Denodo</span>
+              <span className="font-bold text-[#007CBA]">Denodo</span>
               <span className="text-muted-foreground">AI Assistant</span>
             </CardTitle>
             <CardDescription>
