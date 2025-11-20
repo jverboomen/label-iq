@@ -136,7 +136,7 @@ export default function HomePage() {
       <div className="bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700">
         <div className="max-w-4xl mx-auto px-6 py-6 md:px-8">
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white" data-testid="text-app-title">
+            <h1 className="text-3xl font-bold text-[#007CBA]" data-testid="text-app-title">
               Label iQ
             </h1>
             <p className="text-lg text-gray-700 dark:text-gray-300" data-testid="text-tagline">
