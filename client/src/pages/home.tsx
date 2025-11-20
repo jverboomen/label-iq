@@ -163,8 +163,9 @@ export default function HomePage() {
   };
 
   const handleSqlPasswordSubmit = () => {
-    if (sqlPasswordModal.messageIdx !== null && sqlPasswordInput === SQL_PASSWORD) {
-      setUnlockedSqlQueries(prev => ({ ...prev, [sqlPasswordModal.messageIdx]: true }));
+    const msgIdx = sqlPasswordModal.messageIdx;
+    if (msgIdx !== null && sqlPasswordInput === SQL_PASSWORD) {
+      setUnlockedSqlQueries(prev => ({ ...prev, [msgIdx]: true }));
       setSqlPasswordModal({ open: false, messageIdx: null });
       setSqlPasswordInput("");
     }
