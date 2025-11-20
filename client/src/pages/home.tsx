@@ -138,7 +138,7 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-6 py-8 md:px-8">
           <div className="space-y-3 animate-fade-in">
             <div className="flex items-center gap-3">
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-cyan-900 bg-clip-text text-transparent dark:from-slate-100 dark:via-blue-100 dark:to-cyan-100 animate-pulse-glow" data-testid="text-app-title">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-cyan-400 dark:to-cyan-300 animate-pulse-glow" data-testid="text-app-title">
                 Label iQ
               </h1>
               <Sparkles className="h-8 w-8 text-cyan-500 animate-float" />
