@@ -71,7 +71,7 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #007CBA 0%, #0ea5e9 100%);
+  background: linear-gradient(135deg, #007CBA 0%, #007CBA 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -81,7 +81,7 @@
   position: relative;
   border: 2px solid transparent;
   background: linear-gradient(var(--card), var(--card)) padding-box,
-              linear-gradient(135deg, #007CBA, #0ea5e9) border-box;
+              linear-gradient(135deg, #007CBA, #007CBA) border-box;
 }
 
 .hover-lift {
