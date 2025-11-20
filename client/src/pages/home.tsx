@@ -103,15 +103,13 @@ export default function HomePage() {
       setChatMessages(prev => [...prev, assistantMessage]);
       
       // Add to query history
-      if (data.confidence !== undefined) {
-        setQueryHistory(prev => [...prev, {
-          id: Math.random().toString(36),
-          question: chatMessages[chatMessages.length - 1]?.content || "",
-          answer: data.message.substring(0, 100) + "...",
-          confidence: data.confidence,
-          timestamp: now,
-        }]);
-      }
+      setQueryHistory(prev => [...prev, {
+        id: Math.random().toString(36),
+        question: chatMessages[chatMessages.length - 1]?.content || "",
+        answer: data.message.substring(0, 100) + "...",
+        confidence: data.confidence || 70,
+        timestamp: now,
+      }]);
     },
     onError: (error) => {
       console.error('Chat error:', error);
