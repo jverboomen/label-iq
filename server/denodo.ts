@@ -68,9 +68,9 @@ export class DenodoClient {
 
   /**
    * Get list of all drugs from Denodo
-   * Assumes a view named 'fda_drug_labels' or similar exists
+   * Assumes a view named 'product_and_label_index' or similar exists
    */
-  async getDrugIndex(viewName: string = 'fda_drug_labels'): Promise<DrugIndexEntry[]> {
+  async getDrugIndex(viewName: string = 'product_and_label_index'): Promise<DrugIndexEntry[]> {
     try {
       const rows = await this.executeQuery(viewName);
       
@@ -91,7 +91,7 @@ export class DenodoClient {
   /**
    * Get a single drug label by labelId
    */
-  async getDrugLabel(labelId: string, viewName: string = 'fda_drug_labels'): Promise<DrugLabel> {
+  async getDrugLabel(labelId: string, viewName: string = 'product_and_label_index'): Promise<DrugLabel> {
     try {
       // Query with filter for specific labelId
       const filter = `label_id eq '${labelId}'`;
