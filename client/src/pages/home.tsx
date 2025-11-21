@@ -411,23 +411,40 @@ export default function HomePage() {
             <CardTitle className="flex items-center gap-2 flex-wrap">
               <span className="font-bold text-[#007CBA]">Denodo</span>
               <span className="text-muted-foreground">AI Assistant</span>
-              {selectedDrug && (
-                <div className="flex items-center gap-1 ml-auto">
-                  <span className="text-xs text-muted-foreground">Selected:</span>
-                  <div className="px-2 py-1 bg-[#007CBA] text-white rounded text-xs font-medium">
-                    {selectedDrug}
-                  </div>
+              <div className="flex items-center gap-2 ml-auto">
+                {chatMessages.length > 0 && (
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
-                    onClick={() => setSelectedDrug(null)}
-                    className="h-6 w-6 p-0 hover:bg-red-100 dark:hover:bg-red-900"
-                    data-testid="button-clear-drug"
+                    onClick={() => {
+                      setChatMessages([]);
+                      setSelectedDrug(null);
+                      setChatInput("");
+                    }}
+                    className="h-7 text-xs"
+                    data-testid="button-new-chat"
                   >
-                    ×
+                    New Chat
                   </Button>
-                </div>
-              )}
+                )}
+                {selectedDrug && (
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs text-muted-foreground">Selected:</span>
+                    <div className="px-2 py-1 bg-[#007CBA] text-white rounded text-xs font-medium">
+                      {selectedDrug}
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setSelectedDrug(null)}
+                      className="h-6 w-6 p-0 hover:bg-red-100 dark:hover:bg-red-900"
+                      data-testid="button-clear-drug"
+                    >
+                      ×
+                    </Button>
+                  </div>
+                )}
+              </div>
             </CardTitle>
             <CardDescription>
               Ask questions about FDA drug labels. Powered by AWS Bedrock Claude 3.5 Sonnet + Denodo Agora.
