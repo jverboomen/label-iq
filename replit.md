@@ -34,7 +34,8 @@ The frontend follows FDA.gov's official government website design, featuring aut
 - **No Custom RAG:** Removed drug selector, question forms, and custom evidence display
 - **Denodo AI SDK Integration:** All information comes from Denodo AI SDK external service
 - **Interactive Drug Logo Grid:** Welcome screen displays all 14 drug logos in a responsive grid (3 columns mobile, 5 columns desktop). Clicking a logo pre-fills a drug-specific query in the chat input. Logos served from `public/drug-logos/` directory.
-  - **Custom Questions:** Some drugs (ENTRESTO, FARXIGA, Linzess) use targeted questions like "What is ENTRESTO used for?" instead of generic "Tell me about..." to get better AI responses
+  - **Custom Questions:** 9 drugs use targeted "What is X used for?" questions for better AI responses: ENTRESTO, FARXIGA, JARDIANCE, JANUVIA, JAKAFI, HUMIRA, IBRANCE, ELIQUIS, Linzess
+  - **Generic Questions:** 5 drugs use "Tell me about X": Biktarvy, ELIQUIS 30-DAY STARTER PACK, ENBREL, Imbruvica, Lantus
   - **Drug Name Case Sensitivity:** Mixed case for Biktarvy, Imbruvica, Lantus, Linzess; UPPERCASE for all other 10 drugs
 - **Role-Based Access Control (RBAC) - Demo Mode:** Three account types with application-level view filtering
   - **Judge:** Full access to all 9 database views + SQL query visibility (password-protected with "denodo")

@@ -209,6 +209,7 @@ export default function HomePage() {
       "JAKAFI": "What is JAKAFI used for?",
       "HUMIRA": "What is HUMIRA used for?",
       "IBRANCE": "What is IBRANCE used for?",
+      "ELIQUIS": "What is ELIQUIS used for?",
       "Linzess": "What is Linzess used for?",
     };
     
