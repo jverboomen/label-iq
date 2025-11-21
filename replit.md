@@ -34,11 +34,12 @@ The frontend follows FDA.gov's official government website design, featuring aut
 - **No Custom RAG:** Removed drug selector, question forms, and custom evidence display
 - **Denodo AI SDK Integration:** All information comes from Denodo AI SDK external service
 - **Interactive Drug Logo Grid:** Welcome screen displays all 25 drug logos in a responsive grid (3 columns mobile, 5 columns desktop). Clicking a logo pre-fills a drug-specific query in the chat input. Logos served from `public/drug-logos/` directory.
-- **Role-Based Access Control (RBAC):** Three account types with application-level view filtering
+- **Role-Based Access Control (RBAC) - Demo Mode:** Three account types with application-level view filtering
   - **Judge:** Full access to all 9 database views + SQL query visibility (password-protected with "denodo")
   - **Physician:** Full access to all 9 database views, SQL queries hidden
   - **Patient:** Access to 8 of 9 views (excludes master_safety_risk), SQL queries hidden, UI shows "8 of 9 views" badge
-  - **Implementation:** App-level view filtering enforced in backend. The Denodo AI SDK `tables` parameter restricts which views can be queried based on role. All roles use same Denodo credentials (`DENODO_USERNAME`/`DENODO_PASSWORD`) due to Denodo Agora managed service limitations (custom role creation not supported).
+  - **Demo Limitation:** Role selection uses honor system (user selects role) - not authenticated
+  - **Implementation:** Server-side fail-closed RBAC validation with response verification. Backend validates `tables_used` metadata and rejects unauthorized view access. All roles use same Denodo credentials (`DENODO_USERNAME`/`DENODO_PASSWORD`) due to Denodo Agora managed service limitations (custom role creation not supported). Production would add authenticated session layer. Defaults to "patient" role for safer demo security posture.
 
 **State Management Strategy:**
 - React Query handles chatbot API requests

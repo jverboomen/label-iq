@@ -203,7 +203,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get role-specific Denodo credentials and allowed views for RBAC
       // Since Denodo Agora doesn't support custom roles, we enforce view-level
       // permissions at the application level by restricting which views can be queried
-      const effectiveRole = userRole || 'judge';
+      // DEMO MODE: Default to patient (most restricted role) for safer demo
+      // Production would use authenticated session-based role assignment
+      const effectiveRole = userRole || 'patient';
       const roleCredentials = getDenodoCredentialsByRole(effectiveRole);
       const allowedViews = getAllowedViewsForRole(effectiveRole);
       

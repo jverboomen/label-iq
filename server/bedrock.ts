@@ -172,6 +172,9 @@ export async function chatWithDenodoAI(
   const authHeader = `Basic ${credentialsEncoded}`;
 
   return new Promise((resolve, reject) => {
+    // State flag to ensure only one terminal call (resolve or reject)
+    let settled = false;
+    
     try {
       // Build query parameters
       const params = new URLSearchParams({
@@ -220,6 +223,9 @@ export async function chatWithDenodoAI(
         });
 
         res.on('end', () => {
+          // Guard: prevent multiple terminal calls
+          if (settled) return;
+          
           const responseTime = (Date.now() - startTime) / 1000;
           
           if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
@@ -250,6 +256,7 @@ export async function chatWithDenodoAI(
                   console.error(`[RBAC VIOLATION] Response missing tables_used metadata - cannot verify RBAC compliance`);
                   console.error(`[RBAC VIOLATION] Failing closed to prevent potential unauthorized data access`);
                   
+                  settled = true; // Mark as settled
                   reject(new Error(
                     `Access Denied: Unable to verify access permissions for this query. ` +
                     `The system could not confirm which database views were accessed. ` +
@@ -266,12 +273,14 @@ export async function chatWithDenodoAI(
                   console.error(`[RBAC VIOLATION] Allowed views:`, allowedViews);
                   console.error(`[RBAC VIOLATION] Views used in query:`, tablesUsed);
                   
+                  settled = true; // Mark as settled
                   reject(new Error(
                     `Access Denied: This query requires access to database views that are restricted for your role (${unauthorizedViews.join(', ')}). ` +
                     `Please contact a healthcare professional for information requiring clinical interpretation.`
                   ));
                   return;
                 }
+
                 
                 console.log(`[RBAC] ✓ Access granted - all queried views are authorized:`, tablesUsed);
               }
@@ -279,6 +288,7 @@ export async function chatWithDenodoAI(
               // Calculate confidence based on execution time and table count
               const confidence = Math.min(95, 70 + (tablesUsed.length * 3));
 
+              settled = true; // Mark as settled
               resolve({
                 message: data.answer || "No response generated",
                 model: "Claude via Denodo AI SDK + AWS Bedrock",
@@ -290,10 +300,14 @@ export async function chatWithDenodoAI(
                 executionTime: data.total_execution_time,
               });
             } catch (parseError) {
+              if (settled) return; // Guard
+              settled = true;
               console.error("Error parsing Denodo AI SDK response:", parseError);
               reject(new Error("Failed to parse response from Denodo AI SDK"));
             }
           } else {
+            if (settled) return; // Guard
+            settled = true;
             console.error(`Denodo AI SDK error (${res.statusCode}):`, responseData);
             reject(new Error(`Denodo AI SDK error (${res.statusCode}): ${responseData}`));
           }
@@ -301,12 +315,16 @@ export async function chatWithDenodoAI(
       });
 
       req.on('error', (error: any) => {
+        if (settled) return; // Guard
+        settled = true;
         console.error("Error calling Denodo AI SDK:", error);
         reject(new Error("Failed to generate response from Denodo AI SDK"));
       });
 
       req.end();
     } catch (error) {
+      if (settled) return; // Guard
+      settled = true;
       console.error("Error calling Denodo AI SDK:", error);
       reject(new Error("Failed to generate response from Denodo AI SDK"));
     }

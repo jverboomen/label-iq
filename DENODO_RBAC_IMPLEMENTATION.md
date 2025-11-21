@@ -4,6 +4,24 @@
 
 This document explains how Label iQ implements role-based access control (RBAC) for the hackathon demonstration.
 
+### ⚠️ Demo Mode: Honor System Role Selection
+
+**Important Limitation for Prototype:**
+- Role selection is **NOT authenticated** - users select their own role (honor system)
+- This is acceptable for hackathon demonstration but **NOT production-ready**
+- Production implementation would require:
+  - Authenticated user sessions with server-side role storage
+  - Database-backed user accounts with assigned roles  
+  - Session tokens preventing client-side role tampering
+
+**What This Demo Successfully Demonstrates:**
+- ✅ Server-side RBAC enforcement architecture (validation logic ready for production)
+- ✅ Fail-closed security model (denies access when verification fails)
+- ✅ Proper error handling with descriptive "Access Denied" messages
+- ✅ Three distinct roles with different database view permissions
+- ✅ Complete audit logging of all access decisions
+- ✅ Production-ready validation - only needs authenticated session layer added
+
 ## ⚠️ Important: Denodo Agora Managed Service Limitations
 
 **Denodo Agora** (managed cloud service) does **NOT** support custom role creation via VQL scripts. The error message is:
@@ -22,16 +40,19 @@ For the **hackathon demo**, Label iQ uses an **application-level RBAC approach w
 - ✅ **No database configuration required** - works out of the box with Agora
 - ✅ **True RBAC functionality** demonstrated through server-side enforcement
 
-**How it works (Fail-Closed Security):**
+**How it works (Fail-Closed Security with State Protection):**
 1. Frontend sends user's role (patient/physician/judge) with each query
 2. Backend defines which views each role can access
 3. Backend sends `tables` parameter to Denodo AI SDK (hint for optimization)
-4. **Backend validates response** using fail-closed security:
-   - If `tables_used` metadata is missing → REJECT with "Access Denied" (cannot verify compliance)
-   - If any unauthorized views were queried → REJECT with "Access Denied" + specific views listed
-   - If all queried views are authorized → ALLOW response
+4. **Backend validates response** using fail-closed security with state flag protection:
+   - Promise uses `settled` state flag to prevent double-settlement
+   - If `tables_used` metadata is missing → SET `settled=true`, REJECT with "Access Denied"
+   - If any unauthorized views were queried → SET `settled=true`, REJECT with "Access Denied" + specific views
+   - If all queried views are authorized → SET `settled=true`, ALLOW response
+   - Guards prevent resolve() after reject() has been called
 5. Only verified-safe responses are returned to the user
 6. All RBAC decisions logged for security audit trail
+7. HTTP 403 errors returned to frontend for access violations
 
 This allows you to demonstrate true role-based access control during the hackathon without needing Denodo support to configure custom database users.
 

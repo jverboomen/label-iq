@@ -83,7 +83,7 @@ export default function HomePage() {
   const [unlockedSqlQueries, setUnlockedSqlQueries] = useState<Record<number, boolean>>({});
   const [sqlPasswordModal, setSqlPasswordModal] = useState<{ open: boolean; messageIdx: number | null }>({ open: false, messageIdx: null });
   const [sqlPasswordInput, setSqlPasswordInput] = useState("");
-  const [userRole, setUserRole] = useState<"judge" | "physician" | "patient">("judge");
+  const [userRole, setUserRole] = useState<"judge" | "physician" | "patient">("patient");
   const SQL_PASSWORD = "denodo";
 
   // Chatbot mutation
@@ -224,10 +224,13 @@ export default function HomePage() {
                   className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-800"
                   data-testid="select-role"
                 >
-                  <option value="judge">Judge</option>
-                  <option value="physician">Physician</option>
-                  <option value="patient">Patient</option>
+                  <option value="patient">Patient (8 of 9 views)</option>
+                  <option value="physician">Physician (All 9 views)</option>
+                  <option value="judge">Judge (All 9 views + SQL)</option>
                 </select>
+                <p className="text-xs text-muted-foreground italic">
+                  Demo Mode: Role selection is honor system for prototype demonstration. Production would use authenticated sessions.
+                </p>
               </div>
               <Button type="submit" className="w-full bg-[#007CBA] hover:bg-[#006399]" data-testid="button-auth-submit">
                 {authMode === "login" ? "Sign In" : "Sign Up"}
