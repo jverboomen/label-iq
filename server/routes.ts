@@ -232,11 +232,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error processing chat:', error);
       
-      // Check if this is an RBAC access denied error
+      // Check if this is a user-friendly message (not a technical error)
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      if (errorMessage.startsWith('Access Denied:') || errorMessage.includes('healthcare professional')) {
-        // Return 403 Forbidden with the descriptive RBAC error message
-        return res.status(403).json({ error: errorMessage });
+      const isFriendlyMessage = errorMessage.includes('healthcare professional') || 
+                                 errorMessage.includes("couldn't find an answer") ||
+                                 errorMessage.includes('try asking in a different way') ||
+                                 errorMessage.startsWith('Access Denied:');
+      
+      if (isFriendlyMessage) {
+        // Return the friendly message to the user (use 403 for access control, 400 for other issues)
+        const statusCode = errorMessage.includes('healthcare professional') || errorMessage.startsWith('Access Denied:') ? 403 : 400;
+        return res.status(statusCode).json({ error: errorMessage });
       }
       
       // For all other errors, return 500
