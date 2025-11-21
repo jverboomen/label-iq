@@ -411,7 +411,7 @@ export default function HomePage() {
                         <button
                           key={drugName}
                           onClick={() => setChatInput(`Tell me about ${drugName}`)}
-                          className="flex items-center justify-center p-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 hover-elevate active-elevate-2 transition-all"
+                          className={`flex ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "flex-col" : ""} items-center justify-center ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "gap-2" : ""} p-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 hover-elevate active-elevate-2 transition-all`}
                           data-testid={`button-drug-${drugName.toLowerCase().replace(/\s+/g, '-')}`}
                         >
                           <img 
@@ -419,6 +419,9 @@ export default function HomePage() {
                             alt={`${drugName} logo`}
                             className="h-12 w-auto object-contain"
                           />
+                          {drugName === "ELIQUIS 30-DAY STARTER PACK" && (
+                            <span className="text-xs font-medium text-center">30-Day Starter Pack</span>
+                          )}
                         </button>
                       ))}
                     </div>
