@@ -224,9 +224,9 @@ export default function HomePage() {
                   className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-800"
                   data-testid="select-role"
                 >
-                  <option value="judge">Judge - Full Access (All 9 views + SQL)</option>
-                  <option value="physician">Physician - All 9 views, no SQL</option>
-                  <option value="patient">Patient - 8 views, no SQL</option>
+                  <option value="judge">Judge - Full Access (All views + SQL)</option>
+                  <option value="physician">Physician - All views, No SQL</option>
+                  <option value="patient">Patient - All views (Demo), No SQL</option>
                 </select>
               </div>
               <Button type="submit" className="w-full bg-[#007CBA] hover:bg-[#006399]" data-testid="button-auth-submit">
@@ -318,21 +318,29 @@ export default function HomePage() {
               data-testid="img-fda-logo"
             />
           </div>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={() => {
-              setIsLoggedIn(false);
-              setShowAuth(true);
-              setUsername("");
-              setPassword("");
-            }}
-            className="text-white hover:bg-[#006399]"
-            data-testid="button-logout"
-          >
-            <LogOut className="h-4 w-4 mr-2" />
-            Logout
-          </Button>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 bg-white/20 px-3 py-1.5 rounded" data-testid="badge-user-role">
+              <span className="text-white text-sm font-medium capitalize">{userRole}</span>
+              {userRole === "judge" && <span className="text-white text-xs">(Full Access + SQL)</span>}
+              {userRole === "physician" && <span className="text-white text-xs">(All Views, No SQL)</span>}
+              {userRole === "patient" && <span className="text-white text-xs">(All Views - Demo, No SQL)</span>}
+            </div>
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={() => {
+                setIsLoggedIn(false);
+                setShowAuth(true);
+                setUsername("");
+                setPassword("");
+              }}
+              className="text-white hover:bg-[#006399]"
+              data-testid="button-logout"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
+          </div>
         </header>
       
         {/* Sub-header with App Info */}
@@ -363,6 +371,11 @@ export default function HomePage() {
             <CardDescription>
               Ask questions about FDA drug labels. Powered by AWS Bedrock Claude 3.5 Sonnet + Denodo Agora.
             </CardDescription>
+            {userRole === "patient" && (
+              <div className="mt-2 px-3 py-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs text-yellow-800 dark:text-yellow-200" data-testid="disclaimer-patient-access">
+                <strong>Demo Note:</strong> Patient role currently has access to all database views. View-level filtering (8 of 9 views) requires Denodo VDP role configuration and will be implemented for production.
+              </div>
+            )}
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Chat Messages */}

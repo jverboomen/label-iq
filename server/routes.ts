@@ -201,18 +201,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Determine database/views based on user role
-      // Judge: All 9 views + SQL
+      // Judge: All 9 views + SQL (full access)
       // Physician: All 9 views, no SQL (SQL filtering handled on frontend)
-      // Patient: First 8 views, no SQL (excluding overdose_emergency)
+      // Patient: 8 views, no SQL (excluding overdose_emergency or master_safety_risk)
       let databaseName = "jl_verboomen";
       
-      // Log user role for debugging
-      console.log(`[Access Control] User role: ${userRole || 'not specified'}`);
+      // Log user role for debugging and audit trail
+      console.log(`[Access Control] User role: ${userRole || 'not specified (defaulting to judge)'}`);
       
-      // Note: View-level filtering for patient role would require
-      // Denodo AI SDK support for specific view selection.
-      // For hackathon demo, all roles query the same database,
-      // with SQL visibility controlled on frontend.
+      // LIMITATION: View-level filtering for patient role is not currently implemented
+      // because the Denodo AI SDK vdp_database_names parameter accepts a database name,
+      // not individual view names. To properly restrict patient access to 8 views:
+      // 
+      // Possible solutions:
+      // 1. Create separate Denodo databases per role with appropriate view permissions
+      // 2. Use Denodo VDP security/role-based views
+      // 3. Post-filter results server-side (not ideal for RAG/vector search)
+      // 4. Extend Denodo AI SDK to accept comma-separated view names
+      //
+      // Current implementation: All roles query all 9 views from jl_verboomen database.
+      // SQL visibility is controlled on frontend (only Judge role can unlock SQL).
+      //
+      // TODO for production: Implement proper view-level access control via Denodo VDP roles
+      // or separate database configurations per user role.
 
       // Call Denodo AI SDK with the full conversation history
       const response = await chatWithDenodoAI(

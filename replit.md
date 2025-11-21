@@ -34,6 +34,11 @@ The frontend follows FDA.gov's official government website design, featuring aut
 - **No Custom RAG:** Removed drug selector, question forms, and custom evidence display
 - **Denodo AI SDK Integration:** All information comes from Denodo AI SDK external service
 - **Visual Assets:** Drug logos displayed from local files (`attached_assets/logos/`)
+- **Role-Based Access Control (RBAC):** Three account types with different permission levels
+  - **Judge:** Full access to all 9 database views + SQL query visibility (password-protected with "denodo")
+  - **Physician:** Access to all 9 database views, SQL queries hidden
+  - **Patient:** Intended access to 8 of 9 views (excluding sensitive data), SQL queries hidden
+  - **Implementation Note:** View-level filtering for Patient role requires Denodo VDP role configuration and is documented as a production TODO. Current demo allows all roles to query all 9 views, with SQL visibility controlled on frontend.
 
 **State Management Strategy:**
 - React Query handles chatbot API requests
