@@ -258,9 +258,8 @@ export async function chatWithDenodoAI(
                   
                   settled = true; // Mark as settled
                   reject(new Error(
-                    `Access Denied: Unable to verify access permissions for this query. ` +
-                    `The system could not confirm which database views were accessed. ` +
-                    `Please try rephrasing your question or contact support if this issue persists.`
+                    `I'm sorry, I couldn't find an answer to your question in the available drug information. ` +
+                    `Please try asking in a different way or select a drug from the list to get started.`
                   ));
                   return;
                 }

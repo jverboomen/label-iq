@@ -112,13 +112,15 @@ export default function HomePage() {
     onError: (error) => {
       console.error('Chat error:', error);
       
-      // Check if this is an RBAC restriction (not a real error, but intentional access control)
+      // Check if this is a friendly user-facing message (not a technical error)
       const errorMsg = error instanceof Error ? error.message : '';
-      const isRbacRestriction = errorMsg.includes('healthcare professional');
+      const isFriendlyMessage = errorMsg.includes('healthcare professional') || 
+                                 errorMsg.includes("couldn't find an answer") ||
+                                 errorMsg.includes('try asking in a different way');
       
       const errorMessage: ChatMessage = {
         role: "assistant",
-        content: isRbacRestriction 
+        content: isFriendlyMessage 
           ? errorMsg  // Show the helpful message directly
           : `Failed to generate response: ${errorMsg || 'Please try again.'}`,
       };
