@@ -234,7 +234,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Check if this is an RBAC access denied error
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      if (errorMessage.startsWith('Access Denied:')) {
+      if (errorMessage.startsWith('Access Denied:') || errorMessage.includes('healthcare professional')) {
         // Return 403 Forbidden with the descriptive RBAC error message
         return res.status(403).json({ error: errorMessage });
       }
