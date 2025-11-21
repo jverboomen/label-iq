@@ -266,7 +266,11 @@ export async function chatWithDenodoAI(
                 }
                 
                 // Validate that all queried tables are in the allowed list
-                const unauthorizedViews = tablesUsed.filter(table => !allowedViews.includes(table));
+                // Strip schema prefix (e.g., "jl_verboomen.table_name" -> "table_name") for comparison
+                const unauthorizedViews = tablesUsed.filter(table => {
+                  const tableName = table.includes('.') ? table.split('.').pop() || table : table;
+                  return !allowedViews.includes(tableName);
+                });
                 
                 if (unauthorizedViews.length > 0) {
                   console.error(`[RBAC VIOLATION] Query attempted to access unauthorized views:`, unauthorizedViews);
