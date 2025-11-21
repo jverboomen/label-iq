@@ -469,7 +469,7 @@ export default function HomePage() {
                         className="h-7 text-xs"
                         data-testid="button-new-chat"
                       >
-                        New Chat
+                        Change Drug
                       </Button>
                     )}
                     {selectedDrug && (
