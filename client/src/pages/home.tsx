@@ -128,16 +128,18 @@ export default function HomePage() {
       return;
     }
     
-    let messageContent = chatInput.trim();
+    const originalInput = chatInput.trim();
+    let apiContent = originalInput;
     
-    // If a drug is selected and the message doesn't mention it, automatically append it
-    if (selectedDrug && !messageContent.toUpperCase().includes(selectedDrug.toUpperCase())) {
-      messageContent = `${messageContent} for ${selectedDrug}`;
+    // If a drug is selected and the message doesn't mention it, automatically append it for API
+    if (selectedDrug && !originalInput.toUpperCase().includes(selectedDrug.toUpperCase())) {
+      apiContent = `${originalInput} for ${selectedDrug}`;
     }
     
-    const userMessage: ChatMessage = {
+    // Message to display in UI (original user input)
+    const userMessageDisplay: ChatMessage = {
       role: "user",
-      content: messageContent,
+      content: originalInput,
     };
     
     // Clear input first
@@ -146,10 +148,20 @@ export default function HomePage() {
     // Use functional updater to ensure we have the latest state
     // This guarantees we include any pending assistant messages
     setChatMessages(prev => {
-      const nextMessages = [...prev, userMessage];
-      // Send to API with the complete, up-to-date message history
-      chatMutation.mutate(nextMessages);
-      return nextMessages;
+      // Add the display message to chat
+      const updatedMessages = [...prev, userMessageDisplay];
+      
+      // Create API messages with enhanced content for the last message
+      const apiMessages = updatedMessages.map((msg, idx) => {
+        if (idx === updatedMessages.length - 1 && msg.role === "user") {
+          return { ...msg, content: apiContent };
+        }
+        return msg;
+      });
+      
+      // Send enhanced messages to API
+      chatMutation.mutate(apiMessages);
+      return updatedMessages;
     });
   };
   
