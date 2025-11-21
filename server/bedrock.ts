@@ -83,13 +83,13 @@ const ROLE_VIEW_PERMISSIONS: Record<string, string[]> = {
   patient: [
     'drug_purpose_and_identity',
     'clinical_pharmacology',
+    'dosing_and_administration',
     'interactions',
-    'master_safety_risk',
     'overdose_emergency',
     'product_and_label_index',
     'specific_population',
     'storage_and_handling'
-    // EXCLUDED: dosing_and_administration (requires healthcare professional guidance)
+    // EXCLUDED: master_safety_risk (technical risk assessments require healthcare professional review)
   ],
   physician: [
     'drug_purpose_and_identity',

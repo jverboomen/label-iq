@@ -37,7 +37,8 @@ The frontend follows FDA.gov's official government website design, featuring aut
 - **Role-Based Access Control (RBAC) - Demo Mode:** Three account types with application-level view filtering
   - **Judge:** Full access to all 9 database views + SQL query visibility (password-protected with "denodo")
   - **Physician:** Full access to all 9 database views, SQL queries hidden
-  - **Patient:** Access to 8 of 9 views (excludes master_safety_risk), SQL queries hidden, UI shows "8 of 9 views" badge
+  - **Patient:** Access to 8 of 9 views (excludes `master_safety_risk` - technical risk assessments that require healthcare professional review), SQL queries hidden, UI shows "Patient View" badge
+  - **Rationale:** Patients can access basic drug information including dosing/administration instructions, but complex safety risk assessments should be reviewed with a healthcare provider
   - **Demo Limitation:** Role selection uses honor system (user selects role) - not authenticated
   - **Implementation:** Server-side fail-closed RBAC validation with response verification. Backend validates `tables_used` metadata and rejects unauthorized view access. All roles use same Denodo credentials (`DENODO_USERNAME`/`DENODO_PASSWORD`) due to Denodo Agora managed service limitations (custom role creation not supported). Production would add authenticated session layer. Defaults to "patient" role for safer demo security posture.
 
