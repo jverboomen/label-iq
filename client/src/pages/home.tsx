@@ -398,20 +398,20 @@ export default function HomePage() {
               data-testid="container-chat-messages"
             >
               {chatMessages.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-center space-y-4 overflow-y-auto py-4">
-                  <div className="space-y-3 w-full">
-                    <p className="text-lg font-semibold text-muted-foreground">
+                <div className="flex flex-col items-center justify-center h-full text-center space-y-2 py-2">
+                  <div className="space-y-2 w-full">
+                    <p className="text-base font-semibold text-muted-foreground">
                       Welcome to Denodo AI Assistant
                     </p>
                     <p className="text-sm text-muted-foreground">
                       Select a drug to learn more:
                     </p>
-                    <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mt-4 max-w-3xl mx-auto">
+                    <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mt-2 max-w-3xl mx-auto">
                       {Object.entries(DRUG_LOGOS).map(([drugName, logoPath]) => (
                         <button
                           key={drugName}
                           onClick={() => setChatInput(`Tell me about ${drugName}`)}
-                          className={`flex ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "flex-col" : ""} items-center justify-center ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "gap-2" : ""} p-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 hover-elevate active-elevate-2 transition-all`}
+                          className={`flex ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "flex-col" : ""} items-center justify-center ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "gap-1" : ""} p-2 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 hover-elevate active-elevate-2 transition-all`}
                           data-testid={`button-drug-${drugName.toLowerCase().replace(/\s+/g, '-')}`}
                         >
                           <img 
