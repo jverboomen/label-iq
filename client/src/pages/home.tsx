@@ -450,9 +450,6 @@ export default function HomePage() {
                 )}
               </div>
             </CardTitle>
-            <CardDescription>
-              Ask questions about FDA drug labels. Powered by AWS Bedrock Claude 3.5 Sonnet + Denodo Agora.
-            </CardDescription>
             {userRole === "patient" && (
               <div className="mt-2 px-3 py-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded text-sm font-medium text-blue-800 dark:text-blue-200" data-testid="disclaimer-patient-access">
                 Patient View
