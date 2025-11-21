@@ -111,11 +111,16 @@ export default function HomePage() {
     },
     onError: (error) => {
       console.error('Chat error:', error);
+      
+      // Check if this is an RBAC restriction (not a real error, but intentional access control)
+      const errorMsg = error instanceof Error ? error.message : '';
+      const isRbacRestriction = errorMsg.includes('healthcare professional');
+      
       const errorMessage: ChatMessage = {
         role: "assistant",
-        content: error instanceof Error 
-          ? `Failed to generate response: ${error.message}` 
-          : 'Failed to generate response. Please try again.',
+        content: isRbacRestriction 
+          ? errorMsg  // Show the helpful message directly
+          : `Failed to generate response: ${errorMsg || 'Please try again.'}`,
       };
       setChatMessages(prev => [...prev, errorMessage]);
     },
