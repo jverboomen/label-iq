@@ -8,11 +8,22 @@ async function throwIfResNotOk(res: Response) {
     try {
       const errorData = JSON.parse(text);
       if (errorData.error) {
-        // For RBAC errors, just show the message without status code prefix
+        // Just show the message without status code or JSON formatting
         throw new Error(errorData.error);
       }
-    } catch {
-      // Not JSON, use the raw text
+    } catch (parseError) {
+      // If JSON parsing fails, check if the text looks like JSON and try to extract the error
+      const jsonMatch = text.match(/"error"\s*:\s*"([^"]+)"/);
+      if (jsonMatch && jsonMatch[1]) {
+        throw new Error(jsonMatch[1]);
+      }
+    }
+    
+    // Fallback: show raw text without status code for user-friendly messages
+    if (text.includes('healthcare professional') || 
+        text.includes("couldn't find an answer") ||
+        text.includes('try asking in a different way')) {
+      throw new Error(text);
     }
     
     throw new Error(`${res.status}: ${text}`);
