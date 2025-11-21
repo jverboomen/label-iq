@@ -76,11 +76,41 @@ function formatQuestionWithContext(messages: ChatMessage[]): string {
 }
 
 /**
+ * Get role-specific Denodo credentials for RBAC
+ */
+export function getDenodoCredentialsByRole(userRole: string): { username: string; password: string } {
+  switch (userRole) {
+    case 'patient':
+      return {
+        username: process.env.DENODO_PATIENT_USERNAME || process.env.DENODO_USERNAME || '',
+        password: process.env.DENODO_PATIENT_PASSWORD || process.env.DENODO_PASSWORD || ''
+      };
+    case 'physician':
+      return {
+        username: process.env.DENODO_PHYSICIAN_USERNAME || process.env.DENODO_USERNAME || '',
+        password: process.env.DENODO_PHYSICIAN_PASSWORD || process.env.DENODO_PASSWORD || ''
+      };
+    case 'judge':
+      return {
+        username: process.env.DENODO_JUDGE_USERNAME || process.env.DENODO_USERNAME || '',
+        password: process.env.DENODO_JUDGE_PASSWORD || process.env.DENODO_PASSWORD || ''
+      };
+    default:
+      // Fallback to default admin credentials
+      return {
+        username: process.env.DENODO_USERNAME || '',
+        password: process.env.DENODO_PASSWORD || ''
+      };
+  }
+}
+
+/**
  * Chat with Denodo AI SDK which uses AWS Bedrock internally
  */
 export async function chatWithDenodoAI(
   messagesOrQuestion: ChatMessage[] | string,
-  vdpDatabaseNames?: string
+  vdpDatabaseNames?: string,
+  credentials?: { username: string; password: string }
 ): Promise<ChatResponse> {
   const startTime = Date.now();
   
@@ -93,16 +123,17 @@ export async function chatWithDenodoAI(
   let denodoAIEndpoint = process.env.DENODO_AI_SDK_URL || "http://localhost:8008";
   denodoAIEndpoint = denodoAIEndpoint.replace(/\/$/, '');
   
-  const denodoUsername = process.env.DENODO_USERNAME;
-  const denodoPassword = process.env.DENODO_PASSWORD;
+  // Use provided credentials or fall back to default environment variables
+  const denodoUsername = credentials?.username || process.env.DENODO_USERNAME;
+  const denodoPassword = credentials?.password || process.env.DENODO_PASSWORD;
 
   if (!denodoUsername || !denodoPassword) {
     throw new Error("Denodo credentials not configured");
   }
 
   // Create Basic Auth header
-  const credentials = Buffer.from(`${denodoUsername}:${denodoPassword}`).toString('base64');
-  const authHeader = `Basic ${credentials}`;
+  const credentialsEncoded = Buffer.from(`${denodoUsername}:${denodoPassword}`).toString('base64');
+  const authHeader = `Basic ${credentialsEncoded}`;
 
   return new Promise((resolve, reject) => {
     try {

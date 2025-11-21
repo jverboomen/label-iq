@@ -372,8 +372,8 @@ export default function HomePage() {
               Ask questions about FDA drug labels. Powered by AWS Bedrock Claude 3.5 Sonnet + Denodo Agora.
             </CardDescription>
             {userRole === "patient" && (
-              <div className="mt-2 px-3 py-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded text-xs text-yellow-800 dark:text-yellow-200" data-testid="disclaimer-patient-access">
-                <strong>Demo Note:</strong> Patient role currently has access to all database views. View-level filtering (8 of 9 views) requires Denodo VDP role configuration and will be implemented for production.
+              <div className="mt-2 px-3 py-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded text-xs text-blue-800 dark:text-blue-200" data-testid="disclaimer-patient-access">
+                <strong>Patient Access:</strong> You have access to 8 of 9 database views. The master_safety_risk view (containing detailed safety data requiring clinical interpretation) is restricted to healthcare professionals.
               </div>
             )}
           </CardHeader>

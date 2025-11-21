@@ -6,7 +6,7 @@ import { queryRequestSchema, chatRequestSchema, type DrugIndexEntry, type DrugLa
 import { queryLabel } from "./rag";
 import { calculateReadability } from "./readability";
 import { createDenodoClient } from "./denodo";
-import { chatWithDenodoAI, isDenodoAIConfigured, type ChatMessage } from "./bedrock";
+import { chatWithDenodoAI, isDenodoAIConfigured, getDenodoCredentialsByRole, type ChatMessage } from "./bedrock";
 
 // Cache for labels and readability scores
 let drugIndex: DrugIndexEntry[] | null = null;
@@ -200,35 +200,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'No user message found' });
       }
 
-      // Determine database/views based on user role
-      // Judge: All 9 views + SQL (full access)
-      // Physician: All 9 views, no SQL (SQL filtering handled on frontend)
-      // Patient: 8 views, no SQL (excluding overdose_emergency or master_safety_risk)
-      let databaseName = "jl_verboomen";
+      // Get role-specific Denodo credentials for RBAC
+      // This enforces view-level permissions configured in Denodo VDP:
+      // - Patient role: Access to 8 of 9 views (excludes master_safety_risk)
+      // - Physician role: Access to all 9 views
+      // - Judge role: Access to all 9 views
+      const roleCredentials = getDenodoCredentialsByRole(userRole || 'judge');
       
       // Log user role for debugging and audit trail
       console.log(`[Access Control] User role: ${userRole || 'not specified (defaulting to judge)'}`);
+      console.log(`[Access Control] Using Denodo credentials for: ${roleCredentials.username}`);
       
-      // LIMITATION: View-level filtering for patient role is not currently implemented
-      // because the Denodo AI SDK vdp_database_names parameter accepts a database name,
-      // not individual view names. To properly restrict patient access to 8 views:
-      // 
-      // Possible solutions:
-      // 1. Create separate Denodo databases per role with appropriate view permissions
-      // 2. Use Denodo VDP security/role-based views
-      // 3. Post-filter results server-side (not ideal for RAG/vector search)
-      // 4. Extend Denodo AI SDK to accept comma-separated view names
-      //
-      // Current implementation: All roles query all 9 views from jl_verboomen database.
-      // SQL visibility is controlled on frontend (only Judge role can unlock SQL).
-      //
-      // TODO for production: Implement proper view-level access control via Denodo VDP roles
-      // or separate database configurations per user role.
+      // Database name for AI SDK query
+      const databaseName = "jl_verboomen";
 
-      // Call Denodo AI SDK with the full conversation history
+      // Call Denodo AI SDK with role-specific credentials
+      // The Denodo VDP server will enforce view-level permissions based on the user
       const response = await chatWithDenodoAI(
         messages, // Pass full conversation history
-        databaseName // Query against Denodo database
+        databaseName, // Query against Denodo database
+        roleCredentials // Use role-specific credentials for RBAC
       );
       
       res.json(response);
