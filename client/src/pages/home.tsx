@@ -9,9 +9,11 @@ import { MessageSquare, Send, Sparkles, Shield, Pill, LogOut, History, LogIn, Lo
 import { apiRequest } from "@/lib/queryClient";
 
 // Drug logo mapping (using public directory for production builds)
+// Only includes 15 drugs that exist in the Denodo database
 const DRUG_LOGOS: Record<string, string> = {
   "BIKTARVY": "/drug-logos/BIKTARVY_LOGO.svg",
   "ELIQUIS": "/drug-logos/ELIQUIS_LOGO.svg",
+  "ELIQUIS 30-DAY STARTER PACK": "/drug-logos/ELIQUIS_LOGO.svg",
   "ENBREL": "/drug-logos/ENBREL_LOGO.svg",
   "ENTRESTO": "/drug-logos/ENTRESTO_LOGO.svg",
   "FARXIGA": "/drug-logos/FARXIGA_LOGO.svg",
@@ -23,18 +25,6 @@ const DRUG_LOGOS: Record<string, string> = {
   "JARDIANCE": "/drug-logos/JARDIANCE_LOGO.svg",
   "LANTUS": "/drug-logos/LANTUS_LOGO.svg",
   "LINZESS": "/drug-logos/LINZESS_LOGO.svg",
-  "MOUNJARO": "/drug-logos/MOUNJARO_LOGO.svg",
-  "MYRBETRIQ": "/drug-logos/MYRBETRIQ_LOGO.svg",
-  "NOVOLOG": "/drug-logos/NOVOLOG_LOGO.svg",
-  "OFEV": "/drug-logos/OFEV_LOGO.svg",
-  "OZEMPIC": "/drug-logos/OZEMPIC_LOGO.svg",
-  "REVLIMID": "/drug-logos/REVLIMID_LOGO.svg",
-  "STELARA": "/drug-logos/STELARA_LOGO.svg",
-  "SYMBICORT": "/drug-logos/SYMBICORT_LOGO.svg",
-  "TRELEGY ELLIPTA": "/drug-logos/TRELEGY_ELLIPTA_LOGO.svg",
-  "TRULICITY": "/drug-logos/TRULICITY_LOGO.svg",
-  "XARELTO": "/drug-logos/XARELTO_LOGO.svg",
-  "XTANDI": "/drug-logos/XTANDI_LOGO.svg",
 };
 
 // Function to detect drug names in message content
