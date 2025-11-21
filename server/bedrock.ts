@@ -273,12 +273,18 @@ export async function chatWithDenodoAI(
                   return;
                 }
                 
-                // If no tables used but it's a "no answer" response, pass through
+                // If no tables used but it's a "no answer" response, pass through with patient-friendly message
                 if (tablesUsed.length === 0 && isNoAnswerResponse) {
                   console.log(`[RBAC] Passing through "no answer" response - no data accessed`);
+                  
+                  // Replace technical Denodo message with patient-friendly version
+                  const patientFriendlyMessage = 
+                    "I'm sorry, I couldn't find information about that in our drug database. " +
+                    "Could you try rephrasing your question or ask about a different topic related to this medication?";
+                  
                   settled = true;
                   resolve({
-                    message: data.answer || "No response generated",
+                    message: patientFriendlyMessage,
                     model: "Claude via Denodo AI SDK + AWS Bedrock",
                     responseTime,
                     source: "Denodo AI SDK",
