@@ -90,6 +90,7 @@ export type ChatMessage = z.infer<typeof chatMessageSchema>;
 // Chat Request Schema
 export const chatRequestSchema = z.object({
   messages: z.array(chatMessageSchema),
+  userRole: z.enum(["judge", "physician", "patient"]).optional(), // User role for access control
 });
 
 export type ChatRequest = z.infer<typeof chatRequestSchema>;
@@ -123,10 +124,14 @@ export const queryHistorySchema = z.object({
 export type QueryHistory = z.infer<typeof queryHistorySchema>;
 
 // User Schema (Option 2 - Auth)
+export const userRoleSchema = z.enum(["judge", "physician", "patient"]);
+export type UserRole = z.infer<typeof userRoleSchema>;
+
 export const userSchema = z.object({
   id: z.string(),
   username: z.string(),
   password: z.string(),
+  role: userRoleSchema,
 });
 
 export type User = z.infer<typeof userSchema>;

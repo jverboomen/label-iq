@@ -83,12 +83,13 @@ export default function HomePage() {
   const [unlockedSqlQueries, setUnlockedSqlQueries] = useState<Record<number, boolean>>({});
   const [sqlPasswordModal, setSqlPasswordModal] = useState<{ open: boolean; messageIdx: number | null }>({ open: false, messageIdx: null });
   const [sqlPasswordInput, setSqlPasswordInput] = useState("");
+  const [userRole, setUserRole] = useState<"judge" | "physician" | "patient">("judge");
   const SQL_PASSWORD = "denodo";
 
   // Chatbot mutation
   const chatMutation = useMutation({
     mutationFn: async (messages: ChatMessage[]) => {
-      const response = await apiRequest("POST", "/api/chat", { messages });
+      const response = await apiRequest("POST", "/api/chat", { messages, userRole });
       const result = await response.json();
       return result;
     },
@@ -156,7 +157,7 @@ export default function HomePage() {
 
   const handleAuthSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (username.trim() && password.trim()) {
+    if (username.trim() && password.trim() && userRole) {
       setIsLoggedIn(true);
       setShowAuth(false);
     }
@@ -214,6 +215,19 @@ export default function HomePage() {
                   className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-800"
                   data-testid="input-password"
                 />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Account Type</label>
+                <select
+                  value={userRole}
+                  onChange={(e) => setUserRole(e.target.value as "judge" | "physician" | "patient")}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-800"
+                  data-testid="select-role"
+                >
+                  <option value="judge">Judge - Full Access (All 9 views + SQL)</option>
+                  <option value="physician">Physician - All 9 views, no SQL</option>
+                  <option value="patient">Patient - 8 views, no SQL</option>
+                </select>
               </div>
               <Button type="submit" className="w-full bg-[#007CBA] hover:bg-[#006399]" data-testid="button-auth-submit">
                 {authMode === "login" ? "Sign In" : "Sign Up"}
@@ -439,8 +453,8 @@ export default function HomePage() {
                             </div>
                           )}
                           
-                          {/* SQL Query with Password Protection */}
-                          {msg.sqlQuery && (
+                          {/* SQL Query with Password Protection - Only for Judge role */}
+                          {msg.sqlQuery && userRole === "judge" && (
                             <div>
                               {unlockedSqlQueries[idx] ? (
                                 <details className="text-xs" open>

@@ -185,7 +185,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: validation.error.errors });
       }
       
-      const { messages } = validation.data;
+      const { messages, userRole } = validation.data;
 
       // Check if Denodo AI SDK is configured
       if (!isDenodoAIConfigured()) {
@@ -200,12 +200,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'No user message found' });
       }
 
+      // Determine database/views based on user role
+      // Judge: All 9 views + SQL
+      // Physician: All 9 views, no SQL (SQL filtering handled on frontend)
+      // Patient: First 8 views, no SQL (excluding overdose_emergency)
+      let databaseName = "jl_verboomen";
+      
+      // Log user role for debugging
+      console.log(`[Access Control] User role: ${userRole || 'not specified'}`);
+      
+      // Note: View-level filtering for patient role would require
+      // Denodo AI SDK support for specific view selection.
+      // For hackathon demo, all roles query the same database,
+      // with SQL visibility controlled on frontend.
+
       // Call Denodo AI SDK with the full conversation history
-      // The function will format the conversation context into the question
-      // Specify all 9 FDA label section views for comprehensive querying
       const response = await chatWithDenodoAI(
         messages, // Pass full conversation history
-        "jl_verboomen" // Query against your Denodo database with all 9 views
+        databaseName // Query against Denodo database
       );
       
       res.json(response);
