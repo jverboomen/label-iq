@@ -627,7 +627,7 @@ export default function HomePage() {
               <Textarea
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
-                placeholder="Ask about FDA drug labels..."
+                placeholder="Ask your questions here"
                 rows={2}
                 className="flex-1 resize-none"
                 data-testid="input-chat"
