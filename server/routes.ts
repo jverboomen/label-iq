@@ -6,7 +6,7 @@ import { queryRequestSchema, chatRequestSchema, type DrugIndexEntry, type DrugLa
 import { queryLabel } from "./rag";
 import { calculateReadability } from "./readability";
 import { createDenodoClient } from "./denodo";
-import { chatWithDenodoAI, isDenodoAIConfigured, getDenodoCredentialsByRole, type ChatMessage } from "./bedrock";
+import { chatWithDenodoAI, isDenodoAIConfigured, getDenodoCredentialsByRole, getAllowedViewsForRole, type ChatMessage } from "./bedrock";
 
 // Cache for labels and readability scores
 let drugIndex: DrugIndexEntry[] | null = null;
@@ -200,31 +200,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'No user message found' });
       }
 
-      // Get role-specific Denodo credentials for RBAC
-      // This enforces view-level permissions configured in Denodo VDP:
-      // - Patient role: Access to 8 of 9 views (excludes master_safety_risk)
-      // - Physician role: Access to all 9 views
-      // - Judge role: Access to all 9 views
-      const roleCredentials = getDenodoCredentialsByRole(userRole || 'judge');
+      // Get role-specific Denodo credentials and allowed views for RBAC
+      // Since Denodo Agora doesn't support custom roles, we enforce view-level
+      // permissions at the application level by restricting which views can be queried
+      const effectiveRole = userRole || 'judge';
+      const roleCredentials = getDenodoCredentialsByRole(effectiveRole);
+      const allowedViews = getAllowedViewsForRole(effectiveRole);
       
       // Log user role for debugging and audit trail
-      console.log(`[Access Control] User role: ${userRole || 'not specified (defaulting to judge)'}`);
-      console.log(`[Access Control] Using Denodo credentials for: ${roleCredentials.username}`);
+      console.log(`[Access Control] User role: ${effectiveRole}`);
+      console.log(`[Access Control] Allowed views: ${allowedViews.length} of 9`);
+      if (effectiveRole === 'patient') {
+        console.log(`[Access Control] Patient role - EXCLUDED: master_safety_risk`);
+      }
       
       // Database name for AI SDK query
       const databaseName = "jl_verboomen";
 
-      // Call Denodo AI SDK with role-specific credentials
-      // The Denodo VDP server will enforce view-level permissions based on the user
+      // Call Denodo AI SDK with role-specific view filtering
+      // App-level RBAC: Only allowed views will be queried
       const response = await chatWithDenodoAI(
         messages, // Pass full conversation history
         databaseName, // Query against Denodo database
-        roleCredentials // Use role-specific credentials for RBAC
+        roleCredentials, // Use Denodo credentials
+        allowedViews // Restrict to allowed views for this role
       );
       
       res.json(response);
     } catch (error) {
       console.error('Error processing chat:', error);
+      
+      // Check if this is an RBAC access denied error
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      if (errorMessage.startsWith('Access Denied:')) {
+        // Return 403 Forbidden with the descriptive RBAC error message
+        return res.status(403).json({ error: errorMessage });
+      }
+      
+      // For all other errors, return 500
       res.status(500).json({ error: 'Failed to process chat request' });
     }
   });

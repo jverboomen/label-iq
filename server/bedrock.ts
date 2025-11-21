@@ -76,32 +76,67 @@ function formatQuestionWithContext(messages: ChatMessage[]): string {
 }
 
 /**
+ * Define view-level permissions for each role
+ * Since Denodo Agora doesn't support custom roles, we enforce this at the app level
+ */
+const ROLE_VIEW_PERMISSIONS: Record<string, string[]> = {
+  patient: [
+    'drug_purpose_and_identity',
+    'clinical_pharmacology',
+    'dosing_and_administration',
+    'interactions',
+    'overdose_emergency',
+    'product_and_label_index',
+    'specific_population',
+    'storage_and_handling'
+    // EXCLUDED: master_safety_risk (requires clinical interpretation)
+  ],
+  physician: [
+    'drug_purpose_and_identity',
+    'clinical_pharmacology',
+    'dosing_and_administration',
+    'interactions',
+    'master_safety_risk',
+    'overdose_emergency',
+    'product_and_label_index',
+    'specific_population',
+    'storage_and_handling'
+  ],
+  judge: [
+    'drug_purpose_and_identity',
+    'clinical_pharmacology',
+    'dosing_and_administration',
+    'interactions',
+    'master_safety_risk',
+    'overdose_emergency',
+    'product_and_label_index',
+    'specific_population',
+    'storage_and_handling'
+  ]
+};
+
+/**
+ * Get allowed views for a specific role
+ */
+export function getAllowedViewsForRole(userRole: string): string[] {
+  return ROLE_VIEW_PERMISSIONS[userRole] || ROLE_VIEW_PERMISSIONS.judge;
+}
+
+/**
  * Get role-specific Denodo credentials for RBAC
+ * 
+ * NOTE: For Denodo Agora (managed service), custom role creation is not supported.
+ * This function uses the main DENODO_USERNAME/PASSWORD for all roles.
+ * View-level filtering is enforced at the application level via getAllowedViewsForRole().
  */
 export function getDenodoCredentialsByRole(userRole: string): { username: string; password: string } {
-  switch (userRole) {
-    case 'patient':
-      return {
-        username: process.env.DENODO_PATIENT_USERNAME || process.env.DENODO_USERNAME || '',
-        password: process.env.DENODO_PATIENT_PASSWORD || process.env.DENODO_PASSWORD || ''
-      };
-    case 'physician':
-      return {
-        username: process.env.DENODO_PHYSICIAN_USERNAME || process.env.DENODO_USERNAME || '',
-        password: process.env.DENODO_PHYSICIAN_PASSWORD || process.env.DENODO_PASSWORD || ''
-      };
-    case 'judge':
-      return {
-        username: process.env.DENODO_JUDGE_USERNAME || process.env.DENODO_USERNAME || '',
-        password: process.env.DENODO_JUDGE_PASSWORD || process.env.DENODO_PASSWORD || ''
-      };
-    default:
-      // Fallback to default admin credentials
-      return {
-        username: process.env.DENODO_USERNAME || '',
-        password: process.env.DENODO_PASSWORD || ''
-      };
-  }
+  // Denodo Agora managed service doesn't support custom roles
+  // All roles use the same credentials (main account)
+  // View-level filtering is enforced by restricting which views can be queried
+  return {
+    username: process.env.DENODO_USERNAME || '',
+    password: process.env.DENODO_PASSWORD || ''
+  };
 }
 
 /**
@@ -110,7 +145,8 @@ export function getDenodoCredentialsByRole(userRole: string): { username: string
 export async function chatWithDenodoAI(
   messagesOrQuestion: ChatMessage[] | string,
   vdpDatabaseNames?: string,
-  credentials?: { username: string; password: string }
+  credentials?: { username: string; password: string },
+  allowedViews?: string[]
 ): Promise<ChatResponse> {
   const startTime = Date.now();
   
@@ -145,6 +181,12 @@ export async function chatWithDenodoAI(
 
       if (vdpDatabaseNames) {
         params.append("vdp_database_names", vdpDatabaseNames);
+      }
+
+      // Add allowed views for RBAC (app-level filtering)
+      if (allowedViews && allowedViews.length > 0) {
+        params.append("tables", JSON.stringify(allowedViews));
+        console.log(`[RBAC] Restricting query to ${allowedViews.length} allowed views:`, allowedViews);
       }
 
       const urlPath = `/answerQuestion?${params.toString()}`;
@@ -198,6 +240,40 @@ export async function chatWithDenodoAI(
                 } catch {
                   tablesUsed = [];
                 }
+              }
+
+              // RBAC ENFORCEMENT: Validate that only allowed views were queried
+              if (allowedViews && allowedViews.length > 0) {
+                // FAIL-CLOSED SECURITY: If tables_used is missing/empty, we cannot verify
+                // RBAC compliance, so we must reject the response to prevent potential data leaks
+                if (tablesUsed.length === 0) {
+                  console.error(`[RBAC VIOLATION] Response missing tables_used metadata - cannot verify RBAC compliance`);
+                  console.error(`[RBAC VIOLATION] Failing closed to prevent potential unauthorized data access`);
+                  
+                  reject(new Error(
+                    `Access Denied: Unable to verify access permissions for this query. ` +
+                    `The system could not confirm which database views were accessed. ` +
+                    `Please try rephrasing your question or contact support if this issue persists.`
+                  ));
+                  return;
+                }
+                
+                // Validate that all queried tables are in the allowed list
+                const unauthorizedViews = tablesUsed.filter(table => !allowedViews.includes(table));
+                
+                if (unauthorizedViews.length > 0) {
+                  console.error(`[RBAC VIOLATION] Query attempted to access unauthorized views:`, unauthorizedViews);
+                  console.error(`[RBAC VIOLATION] Allowed views:`, allowedViews);
+                  console.error(`[RBAC VIOLATION] Views used in query:`, tablesUsed);
+                  
+                  reject(new Error(
+                    `Access Denied: This query requires access to database views that are restricted for your role (${unauthorizedViews.join(', ')}). ` +
+                    `Please contact a healthcare professional for information requiring clinical interpretation.`
+                  ));
+                  return;
+                }
+                
+                console.log(`[RBAC] ✓ Access granted - all queried views are authorized:`, tablesUsed);
               }
 
               // Calculate confidence based on execution time and table count

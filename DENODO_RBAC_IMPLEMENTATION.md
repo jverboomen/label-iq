@@ -2,7 +2,38 @@
 
 ## Overview
 
-This document explains how Label iQ implements role-based access control (RBAC) using Denodo VDP's built-in security features to enforce view-level permissions.
+This document explains how Label iQ implements role-based access control (RBAC) for the hackathon demonstration.
+
+## ⚠️ Important: Denodo Agora Managed Service Limitations
+
+**Denodo Agora** (managed cloud service) does **NOT** support custom role creation via VQL scripts. The error message is:
+```
+Role creation is not supported in managed service mode
+```
+
+### Current Implementation (Agora-Compatible)
+
+For the **hackathon demo**, Label iQ uses an **application-level RBAC approach with response validation**:
+- ✅ **All three roles use the same Denodo credentials** (`DENODO_USERNAME` and `DENODO_PASSWORD`)
+- ✅ **View-level filtering enforced via response validation** - backend checks which views were queried and rejects unauthorized access
+- ✅ **Patient role: 8 views** (excludes `master_safety_risk`)
+- ✅ **Physician/Judge roles: All 9 views**
+- ✅ **Access denied errors** shown when patients try to access restricted data requiring clinical interpretation
+- ✅ **No database configuration required** - works out of the box with Agora
+- ✅ **True RBAC functionality** demonstrated through server-side enforcement
+
+**How it works (Fail-Closed Security):**
+1. Frontend sends user's role (patient/physician/judge) with each query
+2. Backend defines which views each role can access
+3. Backend sends `tables` parameter to Denodo AI SDK (hint for optimization)
+4. **Backend validates response** using fail-closed security:
+   - If `tables_used` metadata is missing → REJECT with "Access Denied" (cannot verify compliance)
+   - If any unauthorized views were queried → REJECT with "Access Denied" + specific views listed
+   - If all queried views are authorized → ALLOW response
+5. Only verified-safe responses are returned to the user
+6. All RBAC decisions logged for security audit trail
+
+This allows you to demonstrate true role-based access control during the hackathon without needing Denodo support to configure custom database users.
 
 ## Architecture
 
