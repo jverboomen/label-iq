@@ -10,9 +10,9 @@ import { apiRequest } from "@/lib/queryClient";
 
 // Drug logo mapping (using public directory for production builds)
 // Only includes 14 drugs that exist in the Denodo database
-// Drug names must match database exactly (UPPERCASE in Denodo Agora)
+// Drug names must match database exactly (mixed case for some, uppercase for others)
 const DRUG_LOGOS: Record<string, string> = {
-  "BIKTARVY": "/drug-logos/BIKTARVY_LOGO.svg",
+  "Biktarvy": "/drug-logos/BIKTARVY_LOGO.svg",
   "ELIQUIS": "/drug-logos/ELIQUIS_LOGO.svg",
   "ELIQUIS 30-DAY STARTER PACK": "/drug-logos/ELIQUIS_LOGO.svg",
   "ENBREL": "/drug-logos/ENBREL_LOGO.svg",
@@ -20,12 +20,12 @@ const DRUG_LOGOS: Record<string, string> = {
   "FARXIGA": "/drug-logos/FARXIGA_LOGO.svg",
   "HUMIRA": "/drug-logos/HUMIRA_LOGO.svg",
   "IBRANCE": "/drug-logos/IBRANCE_LOGO.svg",
-  "IMBRUVICA": "/drug-logos/IMBRUVICA_LOGO.svg",
+  "Imbruvica": "/drug-logos/IMBRUVICA_LOGO.svg",
   "JAKAFI": "/drug-logos/JAKAFI_LOGO.svg",
   "JANUVIA": "/drug-logos/JANUVIA_LOGO.svg",
   "JARDIANCE": "/drug-logos/JARDIANCE_LOGO.svg",
-  "LANTUS": "/drug-logos/LANTUS_LOGO.svg",
-  "LINZESS": "/drug-logos/LINZESS_LOGO.svg",
+  "Lantus": "/drug-logos/LANTUS_LOGO.svg",
+  "Linzess": "/drug-logos/LINZESS_LOGO.svg",
 };
 
 // Function to detect drug names in message content
