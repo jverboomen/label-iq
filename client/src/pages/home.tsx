@@ -411,7 +411,7 @@ export default function HomePage() {
                         <button
                           key={drugName}
                           onClick={() => setChatInput(`Tell me about ${drugName}`)}
-                          className="flex flex-col items-center gap-2 p-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 hover-elevate active-elevate-2 transition-all"
+                          className="flex items-center justify-center p-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 hover-elevate active-elevate-2 transition-all"
                           data-testid={`button-drug-${drugName.toLowerCase().replace(/\s+/g, '-')}`}
                         >
                           <img 
@@ -419,7 +419,6 @@ export default function HomePage() {
                             alt={`${drugName} logo`}
                             className="h-12 w-auto object-contain"
                           />
-                          <span className="text-xs font-medium text-center">{drugName}</span>
                         </button>
                       ))}
                     </div>
