@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -76,6 +76,7 @@ export default function HomePage() {
   const [sqlPasswordInput, setSqlPasswordInput] = useState("");
   const [userRole, setUserRole] = useState<"judge" | "physician" | "patient">("patient");
   const [selectedDrug, setSelectedDrug] = useState<string | null>(null);
+  const [loadingStatus, setLoadingStatus] = useState<string>("");
   const SQL_PASSWORD = "denodo";
 
   // Chatbot mutation
@@ -128,6 +129,28 @@ export default function HomePage() {
       setChatMessages(prev => [...prev, errorMessage]);
     },
   });
+
+  // Progressive loading status updates
+  useEffect(() => {
+    if (chatMutation.isPending) {
+      setLoadingStatus("Analyzing your question...");
+      
+      const timer1 = setTimeout(() => {
+        setLoadingStatus("Querying drug database...");
+      }, 3000);
+      
+      const timer2 = setTimeout(() => {
+        setLoadingStatus("Generating response...");
+      }, 8000);
+      
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
+    } else {
+      setLoadingStatus("");
+    }
+  }, [chatMutation.isPending]);
 
   const handleChatSend = (e: React.FormEvent) => {
     e.preventDefault();
@@ -615,10 +638,13 @@ export default function HomePage() {
               {chatMutation.isPending && (
                 <div className="flex justify-start">
                   <div className="max-w-[80%] rounded-lg px-4 py-3 bg-muted border">
-                    <div className="flex items-center gap-2">
-                      <div className="h-2 w-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <div className="h-2 w-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <div className="h-2 w-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <div className="flex items-center gap-3">
+                      <div className="flex gap-1">
+                        <div className="h-2 w-2 bg-[#007CBA] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <div className="h-2 w-2 bg-[#007CBA] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <div className="h-2 w-2 bg-[#007CBA] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      </div>
+                      <span className="text-sm text-muted-foreground">{loadingStatus}</span>
                     </div>
                   </div>
                 </div>
@@ -652,10 +678,14 @@ export default function HomePage() {
             </form>
 
             {/* Information Footer */}
-            <div className="text-xs text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-slate-800 p-3 rounded-lg border border-gray-200 dark:border-slate-700">
+            <div className="text-xs text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-slate-800 p-3 rounded-lg border border-gray-200 dark:border-slate-700 space-y-1">
               <p className="flex items-center gap-2">
                 <Shield className="h-3.5 w-3.5" />
                 <strong>Note:</strong> This chatbot queries Denodo AI SDK, which uses AWS Bedrock (Claude 3.5 Sonnet) and Denodo Agora database.
+              </p>
+              <p className="flex items-center gap-2 text-[#007CBA]">
+                <span>⏱️</span>
+                <strong>Response Time:</strong> Complex queries may take 20-30 seconds as the AI searches the database and generates a response.
               </p>
             </div>
           </CardContent>
