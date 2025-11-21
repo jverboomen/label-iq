@@ -475,7 +475,7 @@ export default function HomePage() {
                     {selectedDrug && (
                       <div className="flex items-center gap-2">
                         <img 
-                          src={`/drug-logos/${selectedDrug.toLowerCase().replace(/\s+/g, '-')}.png`}
+                          src={DRUG_LOGOS[selectedDrug]}
                           alt={`${selectedDrug} logo`}
                           className="h-8 w-auto object-contain"
                           data-testid="img-selected-drug-logo"
