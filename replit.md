@@ -37,10 +37,10 @@ The frontend follows FDA.gov's official government website design, featuring aut
 - **Role-Based Access Control (RBAC) - Demo Mode:** Three account types with application-level view filtering
   - **Judge:** Full access to all 9 database views + SQL query visibility (password-protected with "denodo")
   - **Physician:** Full access to all 9 database views, SQL queries hidden
-  - **Patient:** Access to 8 of 9 views (excludes `master_safety_risk` - technical risk assessments that require healthcare professional review), SQL queries hidden, UI shows "Patient View" badge
+  - **Patient:** Intended access to 8 of 9 views (excludes `master_safety_risk` - technical risk assessments), SQL queries hidden, UI shows "Patient View" badge
   - **Rationale:** Patients can access basic drug information including dosing/administration instructions, but complex safety risk assessments should be reviewed with a healthcare provider
   - **Demo Limitation:** Role selection uses honor system (user selects role) - not authenticated
-  - **Implementation:** Server-side fail-closed RBAC validation with response verification. Backend validates `tables_used` metadata and rejects unauthorized view access. All roles use same Denodo credentials (`DENODO_USERNAME`/`DENODO_PASSWORD`) due to Denodo Agora managed service limitations (custom role creation not supported). Production would add authenticated session layer. Defaults to "patient" role for safer demo security posture.
+  - **Implementation:** Server-side RBAC validation with disclaimer system. Since Denodo AI SDK treats table restrictions as suggestions (not hard constraints), the backend validates `tables_used` metadata after response. When restricted tables are accessed, the response is shown with a clear disclaimer advising patients to consult their healthcare provider. This balances security with usability - patients get helpful information while being informed when technical data was included. All roles use same Denodo credentials (`DENODO_USERNAME`/`DENODO_PASSWORD`) due to Denodo Agora managed service limitations (custom role creation not supported). Production would add authenticated session layer. Defaults to "patient" role for safer demo security posture.
 
 **State Management Strategy:**
 - React Query handles chatbot API requests
