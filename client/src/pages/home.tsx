@@ -198,7 +198,16 @@ export default function HomePage() {
   
   const handleDrugSelect = (drugName: string) => {
     setSelectedDrug(drugName);
-    setChatInput(`Tell me about ${drugName}`);
+    
+    // Custom questions for specific drugs that need more targeted queries
+    const customQuestions: Record<string, string> = {
+      "ENTRESTO": "What is ENTRESTO used for?",
+      "FARXIGA": "What is FARXIGA used for?",
+      "Linzess": "What is Linzess used for?",
+    };
+    
+    const question = customQuestions[drugName] || `Tell me about ${drugName}`;
+    setChatInput(question);
   };
 
   const handleAuthSubmit = (e: React.FormEvent) => {

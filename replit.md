@@ -33,7 +33,9 @@ The frontend follows FDA.gov's official government website design, featuring aut
 - **Simplified Single-Page Chatbot:** Users interact ONLY through the Denodo AI chatbot
 - **No Custom RAG:** Removed drug selector, question forms, and custom evidence display
 - **Denodo AI SDK Integration:** All information comes from Denodo AI SDK external service
-- **Interactive Drug Logo Grid:** Welcome screen displays all 25 drug logos in a responsive grid (3 columns mobile, 5 columns desktop). Clicking a logo pre-fills a drug-specific query in the chat input. Logos served from `public/drug-logos/` directory.
+- **Interactive Drug Logo Grid:** Welcome screen displays all 14 drug logos in a responsive grid (3 columns mobile, 5 columns desktop). Clicking a logo pre-fills a drug-specific query in the chat input. Logos served from `public/drug-logos/` directory.
+  - **Custom Questions:** Some drugs (ENTRESTO, FARXIGA, Linzess) use targeted questions like "What is ENTRESTO used for?" instead of generic "Tell me about..." to get better AI responses
+  - **Drug Name Case Sensitivity:** Mixed case for Biktarvy, Imbruvica, Lantus, Linzess; UPPERCASE for all other 10 drugs
 - **Role-Based Access Control (RBAC) - Demo Mode:** Three account types with application-level view filtering
   - **Judge:** Full access to all 9 database views + SQL query visibility (password-protected with "denodo")
   - **Physician:** Full access to all 9 database views, SQL queries hidden
@@ -66,6 +68,8 @@ The application queries an external Denodo AI SDK microservice:
 - **Features:**
   - Multi-turn conversation support with smart drug name extraction
   - Backend extracts drug names from previous messages and appends to follow-ups for context
+  - Patient-friendly response filtering: Detects and replaces technical database schema responses with helpful guidance
+  - All error messages use everyday language (no technical jargon like "Denodo instance" or "SDK")
   - Comprehensive logging for debugging
   - Security: TLS certificate bypass scoped only to Denodo HTTPS agent (not global)
   - Response includes: answer text, model name (e.g., "claude-3-5-sonnet-20241022"), response time
