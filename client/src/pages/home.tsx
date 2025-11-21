@@ -408,98 +408,100 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Main Content - Chatbot */}
+        {/* Main Content */}
         <main className="flex-1 max-w-4xl mx-auto w-full px-6 py-8 md:px-8 md:py-12">
-        <Card className="shadow-lg">
-          <CardHeader className="border-b">
-            <CardTitle className="flex items-center gap-2 flex-wrap">
-              <span className="font-bold text-[#007CBA]">Denodo</span>
-              <span className="text-muted-foreground">AI Assistant</span>
-              <div className="flex items-center gap-2 ml-auto">
-                {chatMessages.length > 0 && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setChatMessages([]);
-                      setSelectedDrug(null);
-                      setChatInput("");
-                    }}
-                    className="h-7 text-xs"
-                    data-testid="button-new-chat"
+          {!selectedDrug ? (
+            /* Drug Selection Grid */
+            <div className="flex flex-col items-center justify-center space-y-6">
+              <div className="text-center space-y-3">
+                <h2 className="text-2xl font-bold text-[#007CBA]">
+                  Select a Medication
+                </h2>
+                <p className="text-muted-foreground">
+                  Choose a drug to start asking questions about its FDA label information
+                </p>
+              </div>
+              <div className="grid grid-cols-3 md:grid-cols-5 gap-3 max-w-4xl">
+                {Object.entries(DRUG_LOGOS).map(([drugName, logoPath]) => (
+                  <button
+                    key={drugName}
+                    onClick={() => handleDrugSelect(drugName)}
+                    className={`flex ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "flex-col" : ""} items-center justify-center ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "gap-1" : ""} p-4 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 hover-elevate active-elevate-2 transition-all`}
+                    data-testid={`button-drug-${drugName.toLowerCase().replace(/\s+/g, '-')}`}
                   >
-                    New Chat
-                  </Button>
-                )}
-                {selectedDrug && (
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs text-muted-foreground">Selected:</span>
-                    <div className="px-2 py-1 bg-[#007CBA] text-white rounded text-xs font-medium">
-                      {selectedDrug}
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setSelectedDrug(null)}
-                      className="h-6 w-6 p-0 hover:bg-red-100 dark:hover:bg-red-900"
-                      data-testid="button-clear-drug"
-                    >
-                      ×
-                    </Button>
+                    <img 
+                      src={logoPath} 
+                      alt={`${drugName} logo`}
+                      className="h-16 w-auto object-contain"
+                    />
+                    {drugName === "ELIQUIS 30-DAY STARTER PACK" && (
+                      <span className="text-[10px] font-medium text-center leading-tight">30-Day Starter Pack</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            /* Chatbot Interface */
+            <Card className="shadow-lg">
+              <CardHeader className="border-b">
+                <CardTitle className="flex items-center gap-2 flex-wrap">
+                  <span className="font-bold text-[#007CBA]">Denodo</span>
+                  <span className="text-muted-foreground">AI Assistant</span>
+                  <div className="flex items-center gap-2 ml-auto">
+                    {chatMessages.length > 0 && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setChatMessages([]);
+                          setSelectedDrug(null);
+                          setChatInput("");
+                        }}
+                        className="h-7 text-xs"
+                        data-testid="button-new-chat"
+                      >
+                        New Chat
+                      </Button>
+                    )}
+                    {selectedDrug && (
+                      <div className="flex items-center gap-1">
+                        <span className="text-xs text-muted-foreground">Selected:</span>
+                        <div className="px-2 py-1 bg-[#007CBA] text-white rounded text-xs font-medium">
+                          {selectedDrug}
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setSelectedDrug(null)}
+                          className="h-6 w-6 p-0 hover:bg-red-100 dark:hover:bg-red-900"
+                          data-testid="button-clear-drug"
+                        >
+                          ×
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </CardTitle>
+                {userRole === "patient" && (
+                  <div className="mt-2 px-3 py-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded text-sm font-medium text-blue-800 dark:text-blue-200" data-testid="disclaimer-patient-access">
+                    Patient View
                   </div>
                 )}
-              </div>
-            </CardTitle>
-            {userRole === "patient" && (
-              <div className="mt-2 px-3 py-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded text-sm font-medium text-blue-800 dark:text-blue-200" data-testid="disclaimer-patient-access">
-                Patient View
-              </div>
-            )}
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {/* Chat Messages */}
-            <div 
-              className="h-96 overflow-y-auto border rounded-lg p-4 space-y-4 bg-gray-50 dark:bg-slate-900"
-              data-testid="container-chat-messages"
-            >
-              {chatMessages.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-center space-y-2 py-2">
-                  <div className="space-y-2 w-full">
-                    <p className="text-base font-semibold text-muted-foreground">
-                      Welcome to Denodo AI Assistant
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      Select a drug to learn more:
-                    </p>
-                    <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mt-2 max-w-3xl mx-auto">
-                      {Object.entries(DRUG_LOGOS).map(([drugName, logoPath]) => {
-                        const isSelected = selectedDrug === drugName;
-                        return (
-                          <button
-                            key={drugName}
-                            onClick={() => handleDrugSelect(drugName)}
-                            className={`flex ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "flex-col" : ""} items-center justify-center ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "gap-1" : ""} p-2 rounded-md border ${
-                              isSelected 
-                                ? "border-[#007CBA] bg-[#007CBA]/10 dark:bg-[#007CBA]/20" 
-                                : "border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800"
-                            } hover-elevate active-elevate-2 transition-all`}
-                            data-testid={`button-drug-${drugName.toLowerCase().replace(/\s+/g, '-')}`}
-                          >
-                            <img 
-                              src={logoPath} 
-                              alt={`${drugName} logo`}
-                              className="h-12 w-auto object-contain"
-                            />
-                            {drugName === "ELIQUIS 30-DAY STARTER PACK" && (
-                              <span className="text-[10px] font-medium text-center leading-tight">30-Day Starter Pack</span>
-                            )}
-                          </button>
-                        );
-                      })}
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Chat Messages */}
+                <div 
+                  className="h-96 overflow-y-auto border rounded-lg p-4 space-y-4 bg-gray-50 dark:bg-slate-900"
+                  data-testid="container-chat-messages"
+                >
+                  {chatMessages.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-full text-center">
+                      <p className="text-muted-foreground">
+                        Ask your first question about {selectedDrug}
+                      </p>
                     </div>
-                  </div>
-                </div>
-              ) : (
+                  ) : (
                 chatMessages.map((msg, idx) => (
                   <div
                     key={idx}
@@ -655,27 +657,28 @@ export default function HomePage() {
             </div>
           </CardContent>
         </Card>
-
+          )}
+        
         {/* Technology Stack Footer */}
         <div className="mt-8 text-sm text-gray-600 dark:text-gray-400 text-center px-4">
           <p>Powered by <span className="font-semibold">Denodo AI SDK</span> + <span className="font-semibold">AWS Bedrock</span></p>
         </div>
 
-          {/* Built By Massive Insights */}
-          <div className="mt-6 pb-8 flex flex-col items-center justify-center gap-3">
-            <div className="text-sm text-gray-600 dark:text-gray-400">Built by</div>
-            <div className="px-6 py-3 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm">
-              <img 
-                src="/massive-insights-logo.jpg" 
-                alt="Massive Insights" 
-                className="h-12 w-auto object-contain"
-                data-testid="img-massive-insights-logo"
-              />
-            </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
-              For Denodo Hackathon 2025
-            </div>
+        {/* Built By Massive Insights */}
+        <div className="mt-6 pb-8 flex flex-col items-center justify-center gap-3">
+          <div className="text-sm text-gray-600 dark:text-gray-400">Built by</div>
+          <div className="px-6 py-3 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm">
+            <img 
+              src="/massive-insights-logo.jpg" 
+              alt="Massive Insights" 
+              className="h-12 w-auto object-contain"
+              data-testid="img-massive-insights-logo"
+            />
           </div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">
+            For Denodo Hackathon 2025
+          </div>
+        </div>
         </main>
 
         {/* SQL Password Dialog */}
