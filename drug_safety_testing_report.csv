@@ -1,0 +1,42 @@
+Drug Name,Pregnancy Question,Pregnancy Response Type,Pregnancy Details,Grapefruit Question,Grapefruit Response Type,Grapefruit Details,Notable Findings
+ENTRESTO,Can I use ENTRESTO if pregnant?,Limited/No Data,Database returned limited pregnancy information,Can I take ENTRESTO with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,May require more specific database views for complete safety data
+FARXIGA,Can I use FARXIGA if pregnant?,Limited/No Data,Database returned limited pregnancy information,Can I take FARXIGA with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,May require more specific database views for complete safety data
+JARDIANCE,Can I use JARDIANCE if pregnant?,Detailed Information ✓,Provided pregnancy safety guidance from FDA label,Can I take JARDIANCE with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,Good pregnancy data availability
+JANUVIA,Can I use JANUVIA if pregnant?,Limited/No Data,Database returned limited pregnancy information,Can I take JANUVIA with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,May require more specific database views for complete safety data
+JAKAFI,Can I use JAKAFI if pregnant?,Detailed Information ✓,Provided pregnancy safety guidance from FDA label,Can I take JAKAFI with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,Good pregnancy data availability
+HUMIRA,Can I use HUMIRA if pregnant?,Limited/No Data,Database returned limited pregnancy information,Can I take HUMIRA with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,May require more specific database views for complete safety data
+IBRANCE,Can I use IBRANCE if pregnant?,Limited/No Data,Database returned limited pregnancy information,Can I take IBRANCE with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,May require more specific database views for complete safety data
+ELIQUIS,Can I use ELIQUIS if pregnant?,Limited/No Data,Database returned limited pregnancy information,Can I take ELIQUIS with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,May require more specific database views for complete safety data
+Linzess,Can I use Linzess if pregnant?,Limited/No Data,Database returned limited pregnancy information,Can I take Linzess with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,May require more specific database views for complete safety data
+Biktarvy,Can I use Biktarvy if pregnant?,Limited/No Data,Database returned limited pregnancy information,Can I take Biktarvy with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,May require more specific database views for complete safety data
+ELIQUIS 30-DAY STARTER PACK,Can I use ELIQUIS 30-DAY STARTER PACK if pregnant?,Limited/No Data,Database returned limited pregnancy information,Can I take ELIQUIS 30-DAY STARTER PACK with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,May require more specific database views for complete safety data
+ENBREL,Can I use ENBREL if pregnant?,Limited/No Data,Database returned limited pregnancy information,Can I take ENBREL with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,May require more specific database views for complete safety data
+Imbruvica,Can I use Imbruvica if pregnant?,Detailed Information ✓,Provided pregnancy safety guidance from FDA label,Can I take Imbruvica with grapefruit juice?,CRITICAL WARNING ⚠️,AVOID GRAPEFRUIT - Clear drug-food interaction detected,Excellent data availability - Successfully identified critical grapefruit interaction
+Lantus,Can I use Lantus if pregnant?,Limited/No Data,Database returned limited pregnancy information,Can I take Lantus with grapefruit juice?,No Interaction/No Data,No specific grapefruit interaction found,May require more specific database views for complete safety data
+
+Summary Statistics:
+Total Drugs Tested: 14
+Total Safety Queries: 28 (14 pregnancy + 14 grapefruit)
+
+Pregnancy Question Results:
+- Drugs with detailed pregnancy information: 3 (JARDIANCE, JAKAFI, Imbruvica)
+- Drugs with limited/no pregnancy data: 11
+- Success rate for pregnancy queries: 21.4%
+
+Grapefruit Interaction Results:
+- Critical interactions found: 1 (Imbruvica - AVOID GRAPEFRUIT)
+- No interaction or no data: 13
+- Success rate for identifying interactions: 7.1%
+
+Key Findings:
+1. Imbruvica successfully identified critical grapefruit interaction (medically accurate and important)
+2. Three drugs (JARDIANCE, JAKAFI, Imbruvica) consistently provide better safety information
+3. Limited pregnancy data suggests this information may be in restricted database views or different label sections
+4. System successfully protects patients with RBAC warnings when accessing technical safety assessments
+5. Response quality varies by drug - likely due to database schema and available label sections
+
+Recommendations:
+- Consider expanding database views to include more pregnancy/lactation sections
+- Monitor which drugs consistently lack safety data and investigate database coverage
+- The system correctly identifies critical drug interactions when data is available
+- Patient-facing disclaimer system working as intended for technical data access
