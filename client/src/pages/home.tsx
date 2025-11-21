@@ -480,9 +480,6 @@ export default function HomePage() {
                           className="h-8 w-auto object-contain"
                           data-testid="img-selected-drug-logo"
                         />
-                        <div className="px-2 py-1 bg-[#007CBA] text-white rounded text-xs font-medium">
-                          {selectedDrug.toUpperCase()}
-                        </div>
                         <Button
                           variant="ghost"
                           size="sm"
