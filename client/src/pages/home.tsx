@@ -420,7 +420,7 @@ export default function HomePage() {
                             className="h-12 w-auto object-contain"
                           />
                           {drugName === "ELIQUIS 30-DAY STARTER PACK" && (
-                            <span className="text-xs font-medium text-center">30-Day Starter Pack</span>
+                            <span className="text-[10px] font-medium text-center leading-tight">30-Day Starter Pack</span>
                           )}
                         </button>
                       ))}
