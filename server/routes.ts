@@ -123,7 +123,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(index);
     } catch (error) {
       console.error('Error loading drug index:', error);
-      res.status(500).json({ error: 'Failed to load drug index' });
+      res.status(500).json({ error: 'Unable to load the list of medications. Please try again.' });
     }
   });
 
@@ -190,7 +190,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Check if Denodo AI SDK is configured
       if (!isDenodoAIConfigured()) {
         return res.status(503).json({ 
-          error: 'Denodo AI SDK is not configured. Please set DENODO_AI_SDK_URL, DENODO_USERNAME, and DENODO_PASSWORD environment variables.' 
+          error: 'Our drug information service is currently unavailable. Please try again later.' 
         });
       }
 

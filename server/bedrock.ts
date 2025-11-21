@@ -76,6 +76,44 @@ function formatQuestionWithContext(messages: ChatMessage[]): string {
 }
 
 /**
+ * Filter technical database schema responses and replace with patient-friendly messages
+ * Detects when Denodo AI SDK returns technical schema information instead of drug information
+ */
+function filterTechnicalResponse(answer: string): string {
+  // Patterns that indicate technical schema responses (not patient-friendly)
+  const technicalPatterns = [
+    /based on the provided schema/i,
+    /listed in the [`']?[a-z_]+\.[a-z_]+[`']? table/i,
+    /product_and_label_index/i,
+    /ndc_code_0/i,
+    /form_code_0/i,
+    /setid_0/i,
+    /not specifically provided in the sample data/i,
+    /schema sample data/i,
+    /jl_verboomen\./i,
+    /ii_verboomen\./i,
+  ];
+  
+  // Check if response contains technical database language
+  const isTechnicalResponse = technicalPatterns.some(pattern => pattern.test(answer));
+  
+  if (isTechnicalResponse) {
+    console.log('[Response Filter] Detected technical schema response - replacing with patient-friendly message');
+    
+    // Replace with patient-friendly message
+    return "I'm sorry, I don't have detailed information about that specific topic in my database. " +
+           "The information I have available may be limited. " +
+           "Could you try asking a more specific question about this medication, such as:\n" +
+           "• What is this medication used for?\n" +
+           "• What are the common side effects?\n" +
+           "• How should I take this medication?\n" +
+           "• What are the warnings or precautions?";
+  }
+  
+  return answer;
+}
+
+/**
  * Define view-level permissions for each role
  * Since Denodo Agora doesn't support custom roles, we enforce this at the app level
  */
@@ -164,7 +202,7 @@ export async function chatWithDenodoAI(
   const denodoPassword = credentials?.password || process.env.DENODO_PASSWORD;
 
   if (!denodoUsername || !denodoPassword) {
-    throw new Error("Denodo credentials not configured");
+    throw new Error("Unable to connect to drug information service. Please try again later.");
   }
 
   // Create Basic Auth header
@@ -308,12 +346,13 @@ export async function chatWithDenodoAI(
                   console.warn(`[RBAC WARNING] Allowed views:`, allowedViews);
                   console.warn(`[RBAC WARNING] Views used in query:`, tablesUsed);
                   
-                  // Instead of blocking, allow the response but add a disclaimer
+                  // Filter technical responses and add disclaimer
+                  const filteredAnswer = filterTechnicalResponse(data.answer || "No response generated");
                   const disclaimerText = "\n\n⚠️ IMPORTANT: This response includes information from technical safety assessments. Please discuss this information with your healthcare provider for complete guidance tailored to your situation.";
                   
                   settled = true;
                   resolve({
-                    message: (data.answer || "No response generated") + disclaimerText,
+                    message: filteredAnswer + disclaimerText,
                     model: "Claude via Denodo AI SDK + AWS Bedrock",
                     responseTime,
                     source: "Denodo AI SDK",
@@ -332,9 +371,12 @@ export async function chatWithDenodoAI(
               // Calculate confidence based on execution time and table count
               const confidence = Math.min(95, 70 + (tablesUsed.length * 3));
 
+              // Filter technical schema responses for patient-friendliness
+              const filteredAnswer = filterTechnicalResponse(data.answer || "No response generated");
+
               settled = true; // Mark as settled
               resolve({
-                message: data.answer || "No response generated",
+                message: filteredAnswer,
                 model: "Claude via Denodo AI SDK + AWS Bedrock",
                 responseTime,
                 source: "Denodo AI SDK",
@@ -347,13 +389,13 @@ export async function chatWithDenodoAI(
               if (settled) return; // Guard
               settled = true;
               console.error("Error parsing Denodo AI SDK response:", parseError);
-              reject(new Error("Failed to parse response from Denodo AI SDK"));
+              reject(new Error("Unable to process the response. Please try rephrasing your question."));
             }
           } else {
             if (settled) return; // Guard
             settled = true;
             console.error(`Denodo AI SDK error (${res.statusCode}):`, responseData);
-            reject(new Error(`Denodo AI SDK error (${res.statusCode}): ${responseData}`));
+            reject(new Error("Unable to process your request. Please try again or rephrase your question."));
           }
         });
       });
@@ -362,7 +404,7 @@ export async function chatWithDenodoAI(
         if (settled) return; // Guard
         settled = true;
         console.error("Error calling Denodo AI SDK:", error);
-        reject(new Error("Failed to generate response from Denodo AI SDK"));
+        reject(new Error("Unable to connect to the drug information service. Please check your connection and try again."));
       });
 
       req.end();
@@ -370,7 +412,7 @@ export async function chatWithDenodoAI(
       if (settled) return; // Guard
       settled = true;
       console.error("Error calling Denodo AI SDK:", error);
-      reject(new Error("Failed to generate response from Denodo AI SDK"));
+      reject(new Error("Unable to generate a response. Please try again."));
     }
   });
 }
