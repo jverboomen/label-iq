@@ -10,22 +10,22 @@ import { apiRequest } from "@/lib/queryClient";
 
 // Drug logo mapping (using public directory for production builds)
 // Only includes 14 drugs that exist in the Denodo database
-// Drug names must match database exactly (case-sensitive)
+// Drug names must match database exactly (UPPERCASE in Denodo Agora)
 const DRUG_LOGOS: Record<string, string> = {
-  "Biktarvy": "/drug-logos/BIKTARVY_LOGO.svg",
-  "Eliquis": "/drug-logos/ELIQUIS_LOGO.svg",
-  "Eliquis 30-Day Starter Pack": "/drug-logos/ELIQUIS_LOGO.svg",
-  "Enbrel": "/drug-logos/ENBREL_LOGO.svg",
-  "Entresto": "/drug-logos/ENTRESTO_LOGO.svg",
-  "Farxiga": "/drug-logos/FARXIGA_LOGO.svg",
-  "Humira": "/drug-logos/HUMIRA_LOGO.svg",
-  "Ibrance": "/drug-logos/IBRANCE_LOGO.svg",
-  "Imbruvica": "/drug-logos/IMBRUVICA_LOGO.svg",
-  "Jakafi": "/drug-logos/JAKAFI_LOGO.svg",
-  "Januvia": "/drug-logos/JANUVIA_LOGO.svg",
-  "Jardiance": "/drug-logos/JARDIANCE_LOGO.svg",
-  "Lantus": "/drug-logos/LANTUS_LOGO.svg",
-  "Linzess": "/drug-logos/LINZESS_LOGO.svg",
+  "BIKTARVY": "/drug-logos/BIKTARVY_LOGO.svg",
+  "ELIQUIS": "/drug-logos/ELIQUIS_LOGO.svg",
+  "ELIQUIS 30-DAY STARTER PACK": "/drug-logos/ELIQUIS_LOGO.svg",
+  "ENBREL": "/drug-logos/ENBREL_LOGO.svg",
+  "ENTRESTO": "/drug-logos/ENTRESTO_LOGO.svg",
+  "FARXIGA": "/drug-logos/FARXIGA_LOGO.svg",
+  "HUMIRA": "/drug-logos/HUMIRA_LOGO.svg",
+  "IBRANCE": "/drug-logos/IBRANCE_LOGO.svg",
+  "IMBRUVICA": "/drug-logos/IMBRUVICA_LOGO.svg",
+  "JAKAFI": "/drug-logos/JAKAFI_LOGO.svg",
+  "JANUVIA": "/drug-logos/JANUVIA_LOGO.svg",
+  "JARDIANCE": "/drug-logos/JARDIANCE_LOGO.svg",
+  "LANTUS": "/drug-logos/LANTUS_LOGO.svg",
+  "LINZESS": "/drug-logos/LINZESS_LOGO.svg",
 };
 
 // Function to detect drug names in message content
