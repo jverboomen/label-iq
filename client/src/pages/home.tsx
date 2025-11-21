@@ -200,9 +200,13 @@ export default function HomePage() {
     setSelectedDrug(drugName);
     
     // Custom questions for specific drugs that need more targeted queries
+    // These drugs need "What is X used for?" to get better responses from Denodo AI SDK
     const customQuestions: Record<string, string> = {
       "ENTRESTO": "What is ENTRESTO used for?",
       "FARXIGA": "What is FARXIGA used for?",
+      "JARDIANCE": "What is JARDIANCE used for?",
+      "JANUVIA": "What is JANUVIA used for?",
+      "JAKAFI": "What is JAKAFI used for?",
       "Linzess": "What is Linzess used for?",
     };
     

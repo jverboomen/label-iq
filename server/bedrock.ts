@@ -92,6 +92,11 @@ function filterTechnicalResponse(answer: string): string {
     /schema sample data/i,
     /jl_verboomen\./i,
     /ii_verboomen\./i,
+    /is a product name in the database/i,
+    /no additional details about.*are available from the given result/i,
+    /unfortunately.*no additional details/i,
+    /may need to request a more detailed query/i,
+    /search for additional data fields/i,
   ];
   
   // Check if response contains technical database language
