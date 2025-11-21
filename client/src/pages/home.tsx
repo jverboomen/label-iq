@@ -207,6 +207,7 @@ export default function HomePage() {
       "JARDIANCE": "What is JARDIANCE used for?",
       "JANUVIA": "What is JANUVIA used for?",
       "JAKAFI": "What is JAKAFI used for?",
+      "HUMIRA": "What is HUMIRA used for?",
       "Linzess": "What is Linzess used for?",
     };
     
