@@ -1,0 +1,119 @@
+Info: begin batch execution
+Info: number of jobs: 38
+Command #1
+Statement: CREATE ROLE patient_role
+Role creation is not supported in managed service mode
+Command #2
+Statement: CREATE ROLE physician_role
+Role creation is not supported in managed service mode
+Command #3
+Statement: CREATE ROLE judge_role
+Role creation is not supported in managed service mode
+Command #4
+Statement: GRANT CONNECT ON jl_verboomen TO patient_role
+Error parsing command 'GRANT CONNECT ON jl_verboomen TO patient_role'
+Command #5
+Statement: GRANT METADATA ON jl_verboomen TO patient_role
+Error parsing command 'GRANT METADATA ON jl_verboomen TO patient_role'
+Command #6
+Statement: GRANT CONNECT ON jl_verboomen TO physician_role
+Error parsing command 'GRANT CONNECT ON jl_verboomen TO physician_role'
+Command #7
+Statement: GRANT METADATA ON jl_verboomen TO physician_role
+Error parsing command 'GRANT METADATA ON jl_verboomen TO physician_role'
+Command #8
+Statement: GRANT CONNECT ON jl_verboomen TO judge_role
+Error parsing command 'GRANT CONNECT ON jl_verboomen TO judge_role'
+Command #9
+Statement: GRANT METADATA ON jl_verboomen TO judge_role
+Error parsing command 'GRANT METADATA ON jl_verboomen TO judge_role'
+Command #10
+Statement: ALTER ROLE patient_role GRANT EXECUTE ON jl_verboomen.drug_purpose_and_identity
+error modifying role: Error loading role 'patient_role'.
+Command #11
+Statement: ALTER ROLE patient_role GRANT EXECUTE ON jl_verboomen.clinical_pharmacology
+error modifying role: Error loading role 'patient_role'.
+Command #12
+Statement: ALTER ROLE patient_role GRANT EXECUTE ON jl_verboomen.dosing_and_administration
+error modifying role: Error loading role 'patient_role'.
+Command #13
+Statement: ALTER ROLE patient_role GRANT EXECUTE ON jl_verboomen.interactions
+error modifying role: Error loading role 'patient_role'.
+Command #14
+Statement: ALTER ROLE patient_role GRANT EXECUTE ON jl_verboomen.overdose_emergency
+error modifying role: Error loading role 'patient_role'.
+Command #15
+Statement: ALTER ROLE patient_role GRANT EXECUTE ON jl_verboomen.product_and_label_index
+error modifying role: Error loading role 'patient_role'.
+Command #16
+Statement: ALTER ROLE patient_role GRANT EXECUTE ON jl_verboomen.specific_population
+error modifying role: Error loading role 'patient_role'.
+Command #17
+Statement: ALTER ROLE patient_role GRANT EXECUTE ON jl_verboomen.storage_and_handling
+error modifying role: Error loading role 'patient_role'.
+Command #18
+Statement: ALTER ROLE physician_role GRANT EXECUTE ON jl_verboomen.drug_purpose_and_identity
+error modifying role: Error loading role 'physician_role'.
+Command #19
+Statement: ALTER ROLE physician_role GRANT EXECUTE ON jl_verboomen.clinical_pharmacology
+error modifying role: Error loading role 'physician_role'.
+Command #20
+Statement: ALTER ROLE physician_role GRANT EXECUTE ON jl_verboomen.dosing_and_administration
+error modifying role: Error loading role 'physician_role'.
+Command #21
+Statement: ALTER ROLE physician_role GRANT EXECUTE ON jl_verboomen.interactions
+error modifying role: Error loading role 'physician_role'.
+Command #22
+Statement: ALTER ROLE physician_role GRANT EXECUTE ON jl_verboomen.master_safety_risk
+error modifying role: Error loading role 'physician_role'.
+Command #23
+Statement: ALTER ROLE physician_role GRANT EXECUTE ON jl_verboomen.overdose_emergency
+error modifying role: Error loading role 'physician_role'.
+Command #24
+Statement: ALTER ROLE physician_role GRANT EXECUTE ON jl_verboomen.product_and_label_index
+error modifying role: Error loading role 'physician_role'.
+Command #25
+Statement: ALTER ROLE physician_role GRANT EXECUTE ON jl_verboomen.specific_population
+error modifying role: Error loading role 'physician_role'.
+Command #26
+Statement: ALTER ROLE physician_role GRANT EXECUTE ON jl_verboomen.storage_and_handling
+error modifying role: Error loading role 'physician_role'.
+Command #27
+Statement: ALTER ROLE judge_role GRANT EXECUTE ON jl_verboomen.drug_purpose_and_identity
+error modifying role: Error loading role 'judge_role'.
+Command #28
+Statement: ALTER ROLE judge_role GRANT EXECUTE ON jl_verboomen.clinical_pharmacology
+error modifying role: Error loading role 'judge_role'.
+Command #29
+Statement: ALTER ROLE judge_role GRANT EXECUTE ON jl_verboomen.dosing_and_administration
+error modifying role: Error loading role 'judge_role'.
+Command #30
+Statement: ALTER ROLE judge_role GRANT EXECUTE ON jl_verboomen.interactions
+error modifying role: Error loading role 'judge_role'.
+Command #31
+Statement: ALTER ROLE judge_role GRANT EXECUTE ON jl_verboomen.master_safety_risk
+error modifying role: Error loading role 'judge_role'.
+Command #32
+Statement: ALTER ROLE judge_role GRANT EXECUTE ON jl_verboomen.overdose_emergency
+error modifying role: Error loading role 'judge_role'.
+Command #33
+Statement: ALTER ROLE judge_role GRANT EXECUTE ON jl_verboomen.product_and_label_index
+error modifying role: Error loading role 'judge_role'.
+Command #34
+Statement: ALTER ROLE judge_role GRANT EXECUTE ON jl_verboomen.specific_population
+error modifying role: Error loading role 'judge_role'.
+Command #35
+Statement: ALTER ROLE judge_role GRANT EXECUTE ON jl_verboomen.storage_and_handling
+error modifying role: Error loading role 'judge_role'.
+Command #36
+Statement: CREATE USER patient_user 'patient_demo_2025' GRANT ROLE patient_role
+Error parsing command 'CREATE USER patient_user 'patient_demo_2025' GRANT ROLE patient_role'
+Command #37
+Statement: CREATE USER physician_user 'physician_demo_2025' GRANT ROLE physician_role
+Error parsing command 'CREATE USER physician_user 'physician_demo_2025' GRANT ROLE physician_role'
+Command #38
+Statement: CREATE USER judge_user 'judge_demo_2025' GRANT ROLE judge_role
+Error parsing command 'CREATE USER judge_user 'judge_demo_2025' GRANT ROLE judge_role'
+--------------------------------------------------------------------------------
+[JobStatistics ... #Runs: 38/38 #Errors: 38 #Warnings: 0]
+--------------------------------------------------------------------------------
