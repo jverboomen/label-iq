@@ -469,7 +469,7 @@ export default function HomePage() {
                       <div className="flex items-center gap-1">
                         <span className="text-xs text-muted-foreground">Selected:</span>
                         <div className="px-2 py-1 bg-[#007CBA] text-white rounded text-xs font-medium">
-                          {selectedDrug}
+                          {selectedDrug.toUpperCase()}
                         </div>
                         <Button
                           variant="ghost"
