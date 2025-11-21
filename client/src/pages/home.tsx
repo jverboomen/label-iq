@@ -499,7 +499,7 @@ export default function HomePage() {
                   {chatMessages.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-full text-center">
                       <p className="text-muted-foreground">
-                        Ask your first question about {selectedDrug}
+                        Ask your first question about {selectedDrug.toUpperCase()}
                       </p>
                     </div>
                   ) : (
