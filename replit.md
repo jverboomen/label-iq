@@ -33,7 +33,7 @@ The frontend follows FDA.gov's official government website design, featuring aut
 - **Simplified Single-Page Chatbot:** Users interact ONLY through the Denodo AI chatbot
 - **No Custom RAG:** Removed drug selector, question forms, and custom evidence display
 - **Denodo AI SDK Integration:** All information comes from Denodo AI SDK external service
-- **Visual Assets:** Drug logos displayed from local files (`attached_assets/logos/`)
+- **Interactive Drug Logo Grid:** Welcome screen displays all 25 drug logos in a responsive grid (3 columns mobile, 5 columns desktop). Clicking a logo pre-fills a drug-specific query in the chat input. Logos served from `public/drug-logos/` directory.
 - **Role-Based Access Control (RBAC):** Three account types with different permission levels enforced by Denodo VDP
   - **Judge:** Full access to all 9 database views + SQL query visibility (password-protected with "denodo")
   - **Physician:** Access to all 9 database views, SQL queries hidden

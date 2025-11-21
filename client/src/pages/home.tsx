@@ -384,37 +384,30 @@ export default function HomePage() {
               data-testid="container-chat-messages"
             >
               {chatMessages.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
-                  <Pill className="h-16 w-16 text-muted-foreground/50" />
-                  <div className="space-y-2">
+                <div className="flex flex-col items-center justify-center h-full text-center space-y-4 overflow-y-auto py-4">
+                  <div className="space-y-3 w-full">
                     <p className="text-lg font-semibold text-muted-foreground">
                       Welcome to Denodo AI Assistant
                     </p>
-                    <p className="text-sm text-muted-foreground max-w-md">
-                      Ask questions about FDA drug labels. Examples:
+                    <p className="text-sm text-muted-foreground">
+                      Select a drug to learn more:
                     </p>
-                    <div className="flex flex-wrap gap-2 justify-center mt-3">
-                      <button
-                        onClick={() => setChatInput("Tell me about LIPITOR and its uses")}
-                        className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
-                        data-testid="button-example-lipitor"
-                      >
-                        LIPITOR information
-                      </button>
-                      <button
-                        onClick={() => setChatInput("What are the side effects of JANUVIA?")}
-                        className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
-                        data-testid="button-example-januvia"
-                      >
-                        JANUVIA side effects
-                      </button>
-                      <button
-                        onClick={() => setChatInput("How should HUMIRA be stored and handled?")}
-                        className="px-3 py-1.5 text-xs rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover-elevate active-elevate-2"
-                        data-testid="button-example-humira"
-                      >
-                        HUMIRA storage
-                      </button>
+                    <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mt-4 max-w-3xl mx-auto">
+                      {Object.entries(DRUG_LOGOS).map(([drugName, logoPath]) => (
+                        <button
+                          key={drugName}
+                          onClick={() => setChatInput(`Tell me about ${drugName}`)}
+                          className="flex flex-col items-center gap-2 p-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 hover-elevate active-elevate-2 transition-all"
+                          data-testid={`button-drug-${drugName.toLowerCase().replace(/\s+/g, '-')}`}
+                        >
+                          <img 
+                            src={logoPath} 
+                            alt={`${drugName} logo`}
+                            className="h-12 w-auto object-contain"
+                          />
+                          <span className="text-xs font-medium text-center">{drugName}</span>
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
