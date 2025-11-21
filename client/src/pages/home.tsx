@@ -310,51 +310,53 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background flex">
-      {/* Query History Sidebar */}
-      <aside className="w-64 bg-gray-50 dark:bg-slate-900 border-r border-gray-200 dark:border-slate-700 overflow-y-auto">
-        <div className="sticky top-0 bg-gray-50 dark:bg-slate-900 p-4 border-b border-gray-200 dark:border-slate-700">
-          <div className="flex items-center gap-2 mb-2">
-            <History className="h-4 w-4 text-[#007CBA]" />
-            <h2 className="text-sm font-semibold">Query History</h2>
+      {/* Query History Sidebar - Only for Judges */}
+      {userRole === "judge" && (
+        <aside className="w-64 bg-gray-50 dark:bg-slate-900 border-r border-gray-200 dark:border-slate-700 overflow-y-auto">
+          <div className="sticky top-0 bg-gray-50 dark:bg-slate-900 p-4 border-b border-gray-200 dark:border-slate-700">
+            <div className="flex items-center gap-2 mb-2">
+              <History className="h-4 w-4 text-[#007CBA]" />
+              <h2 className="text-sm font-semibold">Query History</h2>
+            </div>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="w-full text-xs"
+              onClick={() => {
+                setChatMessages([]);
+                setQueryHistory([]);
+              }}
+              data-testid="button-clear-history"
+            >
+              Clear History
+            </Button>
           </div>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="w-full text-xs"
-            onClick={() => {
-              setChatMessages([]);
-              setQueryHistory([]);
-            }}
-            data-testid="button-clear-history"
-          >
-            Clear History
-          </Button>
-        </div>
-        <div className="p-4 space-y-2">
-          {queryHistory.length === 0 ? (
-            <p className="text-xs text-muted-foreground">No queries yet</p>
-          ) : (
-            queryHistory.slice().reverse().map(item => (
-              <button
-                key={item.id}
-                onClick={() => {
-                  const msg = chatMessages.find(m => m.timestamp === item.timestamp);
-                  if (msg) {
-                    setChatInput(msg.content);
-                  }
-                }}
-                className="w-full text-left p-2 text-xs bg-white dark:bg-slate-800 rounded border border-gray-200 dark:border-slate-700 hover-elevate"
-                data-testid={`button-history-${item.id}`}
-              >
-                <div className="font-medium truncate">{item.question.substring(0, 40)}</div>
-                <div className="text-muted-foreground text-xs">
-                  Confidence: {(item.confidence).toFixed(0)}%
-                </div>
-              </button>
-            ))
-          )}
-        </div>
-      </aside>
+          <div className="p-4 space-y-2">
+            {queryHistory.length === 0 ? (
+              <p className="text-xs text-muted-foreground">No queries yet</p>
+            ) : (
+              queryHistory.slice().reverse().map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    const msg = chatMessages.find(m => m.timestamp === item.timestamp);
+                    if (msg) {
+                      setChatInput(msg.content);
+                    }
+                  }}
+                  className="w-full text-left p-2 text-xs bg-white dark:bg-slate-800 rounded border border-gray-200 dark:border-slate-700 hover-elevate"
+                  data-testid={`button-history-${item.id}`}
+                >
+                  <div className="font-medium truncate">{item.question.substring(0, 40)}</div>
+                  <div className="text-muted-foreground text-xs">
+                    Confidence: {(item.confidence).toFixed(0)}%
+                  </div>
+                </button>
+              ))
+            )}
+          </div>
+        </aside>
+      )}
 
       <div className="flex-1 flex flex-col">
         {/* FDA Official Header */}
