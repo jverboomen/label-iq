@@ -346,11 +346,8 @@ export default function HomePage() {
             />
           </div>
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-white/20 px-3 py-1.5 rounded" data-testid="badge-user-role">
+            <div className="bg-white/20 px-3 py-1.5 rounded" data-testid="badge-user-role">
               <span className="text-white text-sm font-medium capitalize">{userRole}</span>
-              {userRole === "judge" && <span className="text-white text-xs">(Full Access + SQL)</span>}
-              {userRole === "physician" && <span className="text-white text-xs">(All 9 Views, No SQL)</span>}
-              {userRole === "patient" && <span className="text-white text-xs">(8 of 9 Views, No SQL)</span>}
             </div>
             <Button 
               variant="ghost" 
