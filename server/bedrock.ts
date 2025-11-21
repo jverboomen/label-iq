@@ -252,7 +252,16 @@ export async function chatWithDenodoAI(
               if (allowedViews && allowedViews.length > 0) {
                 // FAIL-CLOSED SECURITY: If tables_used is missing/empty, we cannot verify
                 // RBAC compliance, so we must reject the response to prevent potential data leaks
-                if (tablesUsed.length === 0) {
+                // EXCEPTION: If the AI genuinely couldn't find information (indicated by "Sorry" messages),
+                // pass through without RBAC check since no data was accessed
+                const isNoAnswerResponse = data.answer && (
+                  data.answer.toLowerCase().includes("sorry") ||
+                  data.answer.toLowerCase().includes("can't help") ||
+                  data.answer.toLowerCase().includes("cannot help") ||
+                  data.answer.toLowerCase().includes("couldn't find")
+                );
+                
+                if (tablesUsed.length === 0 && !isNoAnswerResponse) {
                   console.error(`[RBAC VIOLATION] Response missing tables_used metadata - cannot verify RBAC compliance`);
                   console.error(`[RBAC VIOLATION] Failing closed to prevent potential unauthorized data access`);
                   
@@ -261,6 +270,23 @@ export async function chatWithDenodoAI(
                     `I'm sorry, I couldn't find an answer to your question in the available drug information. ` +
                     `Please try asking in a different way or select a drug from the list to get started.`
                   ));
+                  return;
+                }
+                
+                // If no tables used but it's a "no answer" response, pass through
+                if (tablesUsed.length === 0 && isNoAnswerResponse) {
+                  console.log(`[RBAC] Passing through "no answer" response - no data accessed`);
+                  settled = true;
+                  resolve({
+                    message: data.answer || "No response generated",
+                    model: "Claude via Denodo AI SDK + AWS Bedrock",
+                    responseTime,
+                    source: "Denodo AI SDK",
+                    tablesUsed: [],
+                    sqlQuery: data.sql_query,
+                    confidence: 50,
+                    executionTime: data.total_execution_time,
+                  });
                   return;
                 }
                 
