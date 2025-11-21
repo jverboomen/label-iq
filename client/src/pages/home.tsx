@@ -473,8 +473,13 @@ export default function HomePage() {
                       </Button>
                     )}
                     {selectedDrug && (
-                      <div className="flex items-center gap-1">
-                        <span className="text-xs text-muted-foreground">Selected:</span>
+                      <div className="flex items-center gap-2">
+                        <img 
+                          src={`/drug-logos/${selectedDrug.toLowerCase().replace(/\s+/g, '-')}.png`}
+                          alt={`${selectedDrug} logo`}
+                          className="h-8 w-auto object-contain"
+                          data-testid="img-selected-drug-logo"
+                        />
                         <div className="px-2 py-1 bg-[#007CBA] text-white rounded text-xs font-medium">
                           {selectedDrug.toUpperCase()}
                         </div>
