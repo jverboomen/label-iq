@@ -139,15 +139,8 @@ export default function HomePage() {
     const originalInput = chatInput.trim();
     let apiContent = originalInput;
     
-    // Replace uppercase drug name with database-friendly title case for API
-    if (selectedDrug) {
-      const upperDrug = selectedDrug.toUpperCase();
-      const regex = new RegExp(upperDrug, 'gi');
-      apiContent = apiContent.replace(regex, selectedDrug);
-    }
-    
     // If a drug is selected and the message doesn't mention it, automatically append it for API
-    if (selectedDrug && !originalInput.toUpperCase().includes(selectedDrug.toUpperCase())) {
+    if (selectedDrug && !originalInput.toLowerCase().includes(selectedDrug.toLowerCase())) {
       apiContent = `${originalInput} for ${selectedDrug}`;
     }
     
@@ -182,7 +175,7 @@ export default function HomePage() {
   
   const handleDrugSelect = (drugName: string) => {
     setSelectedDrug(drugName);
-    setChatInput(`Tell me about ${drugName.toUpperCase()}`);
+    setChatInput(`Tell me about ${drugName}`);
   };
 
   const handleAuthSubmit = (e: React.FormEvent) => {
@@ -508,7 +501,7 @@ export default function HomePage() {
                   {chatMessages.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-full text-center">
                       <p className="text-muted-foreground">
-                        Ask your first question about {selectedDrug.toUpperCase()}
+                        Ask your first question about {selectedDrug}
                       </p>
                     </div>
                   ) : (
