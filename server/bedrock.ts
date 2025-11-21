@@ -279,8 +279,7 @@ export async function chatWithDenodoAI(
                   
                   settled = true; // Mark as settled
                   reject(new Error(
-                    `Access Denied: This query requires access to database views that are restricted for your role (${unauthorizedViews.join(', ')}). ` +
-                    `Please contact a healthcare professional for information requiring clinical interpretation.`
+                    `This information requires guidance from a healthcare professional. Please contact your doctor or pharmacist for personalized medical advice about dosing and administration.`
                   ));
                   return;
                 }
