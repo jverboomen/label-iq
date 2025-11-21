@@ -224,9 +224,9 @@ export default function HomePage() {
                   className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-800"
                   data-testid="select-role"
                 >
-                  <option value="judge">Judge - Full Access (All views + SQL)</option>
-                  <option value="physician">Physician - All views, No SQL</option>
-                  <option value="patient">Patient - All views (Demo), No SQL</option>
+                  <option value="judge">Judge</option>
+                  <option value="physician">Physician</option>
+                  <option value="patient">Patient</option>
                 </select>
               </div>
               <Button type="submit" className="w-full bg-[#007CBA] hover:bg-[#006399]" data-testid="button-auth-submit">
