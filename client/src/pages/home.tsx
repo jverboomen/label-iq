@@ -74,6 +74,7 @@ export default function HomePage() {
   const [sqlPasswordModal, setSqlPasswordModal] = useState<{ open: boolean; messageIdx: number | null }>({ open: false, messageIdx: null });
   const [sqlPasswordInput, setSqlPasswordInput] = useState("");
   const [userRole, setUserRole] = useState<"judge" | "physician" | "patient">("patient");
+  const [selectedDrug, setSelectedDrug] = useState<string | null>(null);
   const SQL_PASSWORD = "denodo";
 
   // Chatbot mutation
@@ -127,9 +128,16 @@ export default function HomePage() {
       return;
     }
     
+    let messageContent = chatInput.trim();
+    
+    // If a drug is selected and the message doesn't mention it, automatically append it
+    if (selectedDrug && !messageContent.toUpperCase().includes(selectedDrug.toUpperCase())) {
+      messageContent = `${messageContent} for ${selectedDrug}`;
+    }
+    
     const userMessage: ChatMessage = {
       role: "user",
-      content: chatInput.trim(),
+      content: messageContent,
     };
     
     // Clear input first
@@ -143,6 +151,11 @@ export default function HomePage() {
       chatMutation.mutate(nextMessages);
       return nextMessages;
     });
+  };
+  
+  const handleDrugSelect = (drugName: string) => {
+    setSelectedDrug(drugName);
+    setChatInput(`Tell me about ${drugName}`);
   };
 
   const handleAuthSubmit = (e: React.FormEvent) => {
@@ -378,9 +391,26 @@ export default function HomePage() {
         <main className="flex-1 max-w-4xl mx-auto w-full px-6 py-8 md:px-8 md:py-12">
         <Card className="shadow-lg">
           <CardHeader className="border-b">
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 flex-wrap">
               <span className="font-bold text-[#007CBA]">Denodo</span>
               <span className="text-muted-foreground">AI Assistant</span>
+              {selectedDrug && (
+                <div className="flex items-center gap-1 ml-auto">
+                  <span className="text-xs text-muted-foreground">Selected:</span>
+                  <div className="px-2 py-1 bg-[#007CBA] text-white rounded text-xs font-medium">
+                    {selectedDrug}
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSelectedDrug(null)}
+                    className="h-6 w-6 p-0 hover:bg-red-100 dark:hover:bg-red-900"
+                    data-testid="button-clear-drug"
+                  >
+                    ×
+                  </Button>
+                </div>
+              )}
             </CardTitle>
             <CardDescription>
               Ask questions about FDA drug labels. Powered by AWS Bedrock Claude 3.5 Sonnet + Denodo Agora.
@@ -407,23 +437,30 @@ export default function HomePage() {
                       Select a drug to learn more:
                     </p>
                     <div className="grid grid-cols-3 md:grid-cols-5 gap-2 mt-2 max-w-3xl mx-auto">
-                      {Object.entries(DRUG_LOGOS).map(([drugName, logoPath]) => (
-                        <button
-                          key={drugName}
-                          onClick={() => setChatInput(`Tell me about ${drugName}`)}
-                          className={`flex ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "flex-col" : ""} items-center justify-center ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "gap-1" : ""} p-2 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 hover-elevate active-elevate-2 transition-all`}
-                          data-testid={`button-drug-${drugName.toLowerCase().replace(/\s+/g, '-')}`}
-                        >
-                          <img 
-                            src={logoPath} 
-                            alt={`${drugName} logo`}
-                            className="h-12 w-auto object-contain"
-                          />
-                          {drugName === "ELIQUIS 30-DAY STARTER PACK" && (
-                            <span className="text-[10px] font-medium text-center leading-tight">30-Day Starter Pack</span>
-                          )}
-                        </button>
-                      ))}
+                      {Object.entries(DRUG_LOGOS).map(([drugName, logoPath]) => {
+                        const isSelected = selectedDrug === drugName;
+                        return (
+                          <button
+                            key={drugName}
+                            onClick={() => handleDrugSelect(drugName)}
+                            className={`flex ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "flex-col" : ""} items-center justify-center ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "gap-1" : ""} p-2 rounded-md border ${
+                              isSelected 
+                                ? "border-[#007CBA] bg-[#007CBA]/10 dark:bg-[#007CBA]/20" 
+                                : "border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800"
+                            } hover-elevate active-elevate-2 transition-all`}
+                            data-testid={`button-drug-${drugName.toLowerCase().replace(/\s+/g, '-')}`}
+                          >
+                            <img 
+                              src={logoPath} 
+                              alt={`${drugName} logo`}
+                              className="h-12 w-auto object-contain"
+                            />
+                            {drugName === "ELIQUIS 30-DAY STARTER PACK" && (
+                              <span className="text-[10px] font-medium text-center leading-tight">30-Day Starter Pack</span>
+                            )}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
