@@ -179,15 +179,16 @@ export default function HomePage() {
 
   if (showAuth) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Card className="w-full max-w-md shadow-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <span className="font-bold text-[#007CBA]">Label iQ</span>
-            </CardTitle>
-            <CardDescription>FDA Drug Label AI Assistant</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
+      <div className="min-h-screen bg-background flex items-center justify-center py-8">
+        <div className="w-full max-w-md space-y-6">
+          <Card className="shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <span className="font-bold text-[#007CBA]">Label iQ</span>
+              </CardTitle>
+              <CardDescription>FDA Drug Label AI Assistant</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
             <div className="text-center mb-6">
               <h2 className="text-lg font-semibold text-[#007CBA] mb-2">
                 {authMode === "login" ? "Sign In" : "Create Account"}
@@ -258,6 +259,29 @@ export default function HomePage() {
             </Button>
           </CardContent>
         </Card>
+
+        {/* Technology Stack & Built By */}
+        <div className="text-center space-y-4 px-4">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Powered by <span className="font-semibold">Denodo AI SDK</span> + <span className="font-semibold">AWS Bedrock</span>
+          </p>
+          
+          <div className="flex flex-col items-center gap-3">
+            <div className="text-sm text-gray-600 dark:text-gray-400">Built by</div>
+            <div className="px-6 py-3 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 shadow-sm">
+              <img 
+                src="/massive-insights-logo.jpg" 
+                alt="Massive Insights" 
+                className="h-12 w-auto object-contain"
+                data-testid="img-massive-insights-logo-auth"
+              />
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              For Denodo Hackathon 2025
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
     );
   }
