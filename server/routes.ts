@@ -216,8 +216,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log(`[Access Control] Patient role - EXCLUDED: master_safety_risk`);
       }
       
-      // Database name for AI SDK query
-      const databaseName = "jl_verboomen";
+      // Database name for AI SDK query (from environment variable)
+      const databaseName = process.env.DENODO_DATABASE || "charles_kim";
 
       // Call Denodo AI SDK with role-specific view filtering
       // App-level RBAC: Only allowed views will be queried
