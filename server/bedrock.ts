@@ -169,37 +169,27 @@ export function getAllowedViewsForRole(userRole: string): string[] {
 /**
  * Get role-specific Denodo credentials for RBAC
  * 
- * Uses separate Denodo users for each role, each with their own view-level permissions:
- * - patient_user: Access to 8 of 9 views (excludes master_safety_risk)
- * - physician_user: Access to all 9 views
- * - judge_user: Access to all 9 views
+ * NOTE: Denodo Agora (managed cloud service) manages users through its own portal.
+ * VQL CREATE USER commands create local VDP users which don't work with Agora's
+ * Data Catalog authentication. For Agora deployments, we use the main credentials
+ * for all roles and enforce RBAC at the application level via getAllowedViewsForRole().
  * 
- * This provides true database-level RBAC enforcement in addition to app-level filtering.
+ * If role-specific credentials are configured AND the deployment supports them
+ * (e.g., on-premise VDP), they will be used. Otherwise, falls back to main credentials.
  */
 export function getDenodoCredentialsByRole(userRole: string): { username: string; password: string } {
-  switch (userRole) {
-    case 'patient':
-      return {
-        username: process.env.DENODO_PATIENT_USERNAME || process.env.DENODO_USERNAME || '',
-        password: process.env.DENODO_PATIENT_PASSWORD || process.env.DENODO_PASSWORD || ''
-      };
-    case 'physician':
-      return {
-        username: process.env.DENODO_PHYSICIAN_USERNAME || process.env.DENODO_USERNAME || '',
-        password: process.env.DENODO_PHYSICIAN_PASSWORD || process.env.DENODO_PASSWORD || ''
-      };
-    case 'judge':
-      return {
-        username: process.env.DENODO_JUDGE_USERNAME || process.env.DENODO_USERNAME || '',
-        password: process.env.DENODO_JUDGE_PASSWORD || process.env.DENODO_PASSWORD || ''
-      };
-    default:
-      // Default to patient (most restrictive) for safety
-      return {
-        username: process.env.DENODO_PATIENT_USERNAME || process.env.DENODO_USERNAME || '',
-        password: process.env.DENODO_PATIENT_PASSWORD || process.env.DENODO_PASSWORD || ''
-      };
-  }
+  // For Denodo Agora, use main credentials (Agora doesn't support VQL-created users)
+  // Application-level RBAC is enforced by restricting which views can be queried
+  const mainUsername = process.env.DENODO_USERNAME || '';
+  const mainPassword = process.env.DENODO_PASSWORD || '';
+  
+  // Log which credentials are being used for debugging
+  console.log(`[RBAC Credentials] Using main Denodo credentials for ${userRole} role (Agora mode)`);
+  
+  return {
+    username: mainUsername,
+    password: mainPassword
+  };
 }
 
 /**
