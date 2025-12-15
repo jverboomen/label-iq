@@ -169,18 +169,37 @@ export function getAllowedViewsForRole(userRole: string): string[] {
 /**
  * Get role-specific Denodo credentials for RBAC
  * 
- * NOTE: For Denodo Agora (managed service), custom role creation is not supported.
- * This function uses the main DENODO_USERNAME/PASSWORD for all roles.
- * View-level filtering is enforced at the application level via getAllowedViewsForRole().
+ * Uses separate Denodo users for each role, each with their own view-level permissions:
+ * - patient_user: Access to 8 of 9 views (excludes master_safety_risk)
+ * - physician_user: Access to all 9 views
+ * - judge_user: Access to all 9 views
+ * 
+ * This provides true database-level RBAC enforcement in addition to app-level filtering.
  */
 export function getDenodoCredentialsByRole(userRole: string): { username: string; password: string } {
-  // Denodo Agora managed service doesn't support custom roles
-  // All roles use the same credentials (main account)
-  // View-level filtering is enforced by restricting which views can be queried
-  return {
-    username: process.env.DENODO_USERNAME || '',
-    password: process.env.DENODO_PASSWORD || ''
-  };
+  switch (userRole) {
+    case 'patient':
+      return {
+        username: process.env.DENODO_PATIENT_USERNAME || process.env.DENODO_USERNAME || '',
+        password: process.env.DENODO_PATIENT_PASSWORD || process.env.DENODO_PASSWORD || ''
+      };
+    case 'physician':
+      return {
+        username: process.env.DENODO_PHYSICIAN_USERNAME || process.env.DENODO_USERNAME || '',
+        password: process.env.DENODO_PHYSICIAN_PASSWORD || process.env.DENODO_PASSWORD || ''
+      };
+    case 'judge':
+      return {
+        username: process.env.DENODO_JUDGE_USERNAME || process.env.DENODO_USERNAME || '',
+        password: process.env.DENODO_JUDGE_PASSWORD || process.env.DENODO_PASSWORD || ''
+      };
+    default:
+      // Default to patient (most restrictive) for safety
+      return {
+        username: process.env.DENODO_PATIENT_USERNAME || process.env.DENODO_USERNAME || '',
+        password: process.env.DENODO_PATIENT_PASSWORD || process.env.DENODO_PASSWORD || ''
+      };
+  }
 }
 
 /**
