@@ -217,7 +217,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Database name for AI SDK query (from environment variable)
-      const databaseName = process.env.DENODO_DATABASE || "charles_kim";
+      const databaseName = process.env.DENODO_DATABASE || "labeliq";
 
       // Call Denodo AI SDK with role-specific view filtering
       // App-level RBAC: Only allowed views will be queried
