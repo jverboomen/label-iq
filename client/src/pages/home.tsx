@@ -325,7 +325,7 @@ export default function HomePage() {
         {/* Technology Stack & Built By */}
         <div className="text-center space-y-4 px-4">
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Powered by <span className="font-semibold">Denodo AI SDK</span> + <span className="font-semibold">AWS Bedrock</span>
+            Powered by <span className="font-semibold">Denodo AI SDK</span> + <span className="font-semibold">AWS EC2</span> + <span className="font-semibold">AWS Bedrock</span>
           </p>
           
           <div className="flex flex-col items-center gap-3">
@@ -442,7 +442,7 @@ export default function HomePage() {
                 Ask Your Questions in Plain Language
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400" data-testid="text-subtitle">
-                Powered by Denodo AI SDK + AWS Bedrock
+                Powered by Denodo AI SDK + AWS EC2 + AWS Bedrock
               </p>
             </div>
           </div>
@@ -710,7 +710,7 @@ export default function HomePage() {
         
         {/* Technology Stack Footer */}
         <div className="mt-8 text-sm text-gray-600 dark:text-gray-400 text-center px-4">
-          <p>Powered by <span className="font-semibold">Denodo AI SDK</span> + <span className="font-semibold">AWS Bedrock</span></p>
+          <p>Powered by <span className="font-semibold">Denodo AI SDK</span> + <span className="font-semibold">AWS EC2</span> + <span className="font-semibold">AWS Bedrock</span></p>
         </div>
 
         {/* Built By Massive Insights */}
