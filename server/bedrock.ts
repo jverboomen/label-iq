@@ -7,6 +7,7 @@
  */
 
 import https from 'https';
+import http from 'http';
 
 export interface ChatMessage {
   role: "user" | "assistant";
@@ -256,7 +257,7 @@ export async function chatWithDenodoAI(
         } : {})
       };
 
-      const requester = urlObj.protocol === 'https:' ? https : require('http');
+      const requester = urlObj.protocol === 'https:' ? https : http;
       
       const req = requester.request(options, (res: any) => {
         let responseData = '';
