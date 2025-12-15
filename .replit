@@ -40,3 +40,8 @@ waitForPort = 5000
 
 [agent]
 integrations = ["javascript_openai_ai_integrations:1.0.0"]
+
+[userenv]
+
+[userenv.shared]
+DENODO_BASE_URL = "https://4c08624c-aa2a-4058-8ca8-571799f7e31e.c1a1.denodoagora.cloud/denodo-restfulws"
