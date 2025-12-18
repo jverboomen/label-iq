@@ -321,15 +321,15 @@ export default function HomePage() {
                   <div className="grid grid-cols-3 gap-2 text-xs">
                     <div className="text-center p-2 bg-white dark:bg-slate-800 rounded border">
                       <div className="font-medium text-gray-700 dark:text-gray-300">Patient</div>
-                      <div className="text-gray-500 dark:text-gray-400">patient / patient</div>
+                      <div className="text-gray-500 dark:text-gray-400">Patient / patient</div>
                     </div>
                     <div className="text-center p-2 bg-white dark:bg-slate-800 rounded border">
                       <div className="font-medium text-gray-700 dark:text-gray-300">Physician</div>
-                      <div className="text-gray-500 dark:text-gray-400">physician / physician</div>
+                      <div className="text-gray-500 dark:text-gray-400">Physician / physician</div>
                     </div>
                     <div className="text-center p-2 bg-white dark:bg-slate-800 rounded border">
                       <div className="font-medium text-gray-700 dark:text-gray-300">Judge</div>
-                      <div className="text-gray-500 dark:text-gray-400">judge / judge</div>
+                      <div className="text-gray-500 dark:text-gray-400">Judge / judge</div>
                     </div>
                   </div>
                 </div>
