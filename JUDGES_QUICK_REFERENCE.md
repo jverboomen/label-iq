@@ -10,6 +10,8 @@
 
 **Username:** Any value (e.g., "judge1")
 
+**Note:** Passwords are case-sensitive (use lowercase)
+
 ---
 
 ## Recommended Test Flow
