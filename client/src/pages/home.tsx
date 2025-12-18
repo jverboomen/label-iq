@@ -77,7 +77,15 @@ export default function HomePage() {
   const [userRole, setUserRole] = useState<"judge" | "physician" | "patient">("patient");
   const [selectedDrug, setSelectedDrug] = useState<string | null>(null);
   const [loadingStatus, setLoadingStatus] = useState<string>("");
+  const [authError, setAuthError] = useState<string>("");
   const SQL_PASSWORD = "denodo";
+  
+  // Role passwords for demo
+  const ROLE_PASSWORDS: Record<string, string> = {
+    patient: "patient",
+    physician: "physician",
+    judge: "judge",
+  };
 
   // Chatbot mutation
   const chatMutation = useMutation({
@@ -219,10 +227,27 @@ export default function HomePage() {
 
   const handleAuthSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (username.trim() && password.trim() && userRole) {
-      setIsLoggedIn(true);
-      setShowAuth(false);
+    setAuthError("");
+    
+    if (!username.trim()) {
+      setAuthError("Please enter a username");
+      return;
     }
+    
+    if (!password.trim()) {
+      setAuthError("Please enter a password");
+      return;
+    }
+    
+    // Validate password for selected role
+    const expectedPassword = ROLE_PASSWORDS[userRole];
+    if (password !== expectedPassword) {
+      setAuthError("Incorrect password for selected role");
+      return;
+    }
+    
+    setIsLoggedIn(true);
+    setShowAuth(false);
   };
 
   const handleSqlPasswordSubmit = () => {
@@ -292,9 +317,14 @@ export default function HomePage() {
                   <option value="judge">Judge (All 9 views + SQL)</option>
                 </select>
                 <p className="text-xs text-muted-foreground italic">
-                  Demo Mode: Role selection is honor system for prototype demonstration. Production would use authenticated sessions.
+                  Password hint: Use the role name as password (patient, physician, or judge)
                 </p>
               </div>
+              {authError && (
+                <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-sm text-red-600 dark:text-red-400" data-testid="error-auth">
+                  {authError}
+                </div>
+              )}
               <Button type="submit" className="w-full bg-[#007CBA] hover:bg-[#006399]" data-testid="button-auth-submit">
                 {authMode === "login" ? "Sign In" : "Sign Up"}
               </Button>
