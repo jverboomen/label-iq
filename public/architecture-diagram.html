@@ -11,9 +11,9 @@
       box-sizing: border-box;
     }
     body {
-      background: #0a0c10;
+      background: #ffffff;
       font-family: 'Segoe UI', system-ui, sans-serif;
-      color: #fff;
+      color: #1e293b;
       min-height: 100vh;
       padding: 30px 40px;
     }
@@ -37,23 +37,23 @@
       width: 70px;
       height: 70px;
       border-radius: 50%;
-      border: 2px solid #2dd4bf;
+      border: 2px solid #0891b2;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 8px;
-      background: rgba(45, 212, 191, 0.1);
+      background: #e0f2fe;
     }
     .user-icon svg {
       width: 36px;
       height: 36px;
-      stroke: #2dd4bf;
+      stroke: #0891b2;
       fill: none;
       stroke-width: 1.5;
     }
     .user-label {
       font-size: 14px;
-      color: #94a3b8;
+      color: #475569;
       font-weight: 500;
     }
     
@@ -67,16 +67,17 @@
     
     /* Panel Styles */
     .panel {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(45, 212, 191, 0.3);
+      background: #f8fafc;
+      border: 1px solid #0891b2;
       border-radius: 12px;
       padding: 20px;
       position: relative;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
     .panel-header {
       font-size: 16px;
       font-weight: 700;
-      color: #2dd4bf;
+      color: #0e7490;
       margin-bottom: 18px;
       letter-spacing: 0.5px;
     }
@@ -92,13 +93,13 @@
       align-items: center;
       gap: 10px;
       font-size: 13px;
-      color: #cbd5e1;
+      color: #475569;
     }
     .feature-icon {
       width: 20px;
       height: 20px;
-      background: rgba(45, 212, 191, 0.15);
-      border: 1px solid rgba(45, 212, 191, 0.4);
+      background: #e0f2fe;
+      border: 1px solid #0891b2;
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -108,14 +109,14 @@
     .feature-icon svg {
       width: 12px;
       height: 12px;
-      stroke: #2dd4bf;
+      stroke: #0891b2;
       fill: none;
     }
     
     /* Sub-panels */
     .sub-panel {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
       border-radius: 8px;
       padding: 14px;
       margin-top: 12px;
@@ -123,7 +124,7 @@
     .sub-panel-header {
       font-size: 12px;
       font-weight: 600;
-      color: #64748b;
+      color: #0e7490;
       margin-bottom: 10px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -132,12 +133,12 @@
     /* Arrow Labels */
     .arrow-label {
       position: absolute;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(45, 212, 191, 0.5);
+      background: #ffffff;
+      border: 1px solid #0891b2;
       padding: 6px 14px;
       border-radius: 6px;
       font-size: 11px;
-      color: #2dd4bf;
+      color: #0e7490;
       font-weight: 600;
       z-index: 10;
     }
@@ -164,19 +165,19 @@
       flex-wrap: wrap;
     }
     .tech-badge {
-      background: rgba(45, 212, 191, 0.1);
-      border: 1px solid rgba(45, 212, 191, 0.3);
+      background: #e0f2fe;
+      border: 1px solid #0891b2;
       padding: 4px 10px;
       border-radius: 4px;
       font-size: 10px;
-      color: #2dd4bf;
+      color: #0e7490;
       font-weight: 600;
     }
     
     /* RBAC Box */
     .rbac-box {
-      background: linear-gradient(135deg, rgba(45, 212, 191, 0.08), rgba(6, 182, 212, 0.08));
-      border: 2px solid rgba(45, 212, 191, 0.4);
+      background: linear-gradient(135deg, #ecfeff, #e0f2fe);
+      border: 2px solid #0891b2;
       border-radius: 10px;
       padding: 16px;
       margin-top: 15px;
@@ -190,23 +191,23 @@
     .rbac-header svg {
       width: 18px;
       height: 18px;
-      stroke: #2dd4bf;
+      stroke: #0891b2;
     }
     .rbac-title {
       font-size: 13px;
       font-weight: 700;
-      color: #2dd4bf;
+      color: #0e7490;
     }
     .rbac-rule {
       font-size: 12px;
-      color: #94a3b8;
+      color: #475569;
       margin: 6px 0;
       display: flex;
       align-items: center;
       gap: 8px;
     }
     .rbac-rule strong {
-      color: #fff;
+      color: #0f172a;
       min-width: 70px;
     }
     
@@ -218,19 +219,19 @@
       margin-top: 12px;
     }
     .view-item {
-      background: rgba(6, 182, 212, 0.1);
-      border: 1px solid rgba(6, 182, 212, 0.3);
+      background: #ecfeff;
+      border: 1px solid #0891b2;
       padding: 8px 10px;
       border-radius: 6px;
       font-size: 10px;
-      color: #67e8f9;
+      color: #0e7490;
       text-align: center;
       font-weight: 500;
     }
     .view-item.restricted {
-      background: rgba(239, 68, 68, 0.1);
-      border-color: rgba(239, 68, 68, 0.4);
-      color: #fca5a5;
+      background: #fef2f2;
+      border-color: #dc2626;
+      color: #dc2626;
     }
     
     /* Component Grid */
@@ -240,12 +241,12 @@
       gap: 8px;
     }
     .component-item {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
       padding: 10px;
       border-radius: 6px;
       font-size: 11px;
-      color: #94a3b8;
+      color: #475569;
       text-align: center;
     }
     
@@ -266,15 +267,15 @@
     .connection-line {
       width: 2px;
       height: 60px;
-      background: linear-gradient(to bottom, #2dd4bf, #06b6d4);
+      background: linear-gradient(to bottom, #0891b2, #06b6d4);
     }
     .connection-label {
-      background: #0a0c10;
-      border: 1px solid rgba(45, 212, 191, 0.5);
+      background: #ffffff;
+      border: 1px solid #0891b2;
       padding: 6px 12px;
       border-radius: 6px;
       font-size: 10px;
-      color: #2dd4bf;
+      color: #0e7490;
       white-space: nowrap;
     }
     
@@ -289,15 +290,15 @@
     .divider-line {
       flex: 1;
       height: 1px;
-      background: linear-gradient(to right, transparent, rgba(45, 212, 191, 0.3), transparent);
+      background: linear-gradient(to right, transparent, #0891b2, transparent);
     }
     .divider-label {
-      background: rgba(45, 212, 191, 0.1);
-      border: 1px solid rgba(45, 212, 191, 0.3);
+      background: #e0f2fe;
+      border: 1px solid #0891b2;
       padding: 6px 16px;
       border-radius: 20px;
       font-size: 11px;
-      color: #2dd4bf;
+      color: #0e7490;
       font-weight: 600;
     }
     
@@ -307,12 +308,12 @@
       right: -15px;
       top: 50%;
       transform: translateY(-50%) rotate(90deg);
-      background: #0a0c10;
-      border: 1px solid rgba(45, 212, 191, 0.4);
+      background: #ffffff;
+      border: 1px solid #0891b2;
       padding: 4px 12px;
       border-radius: 4px;
       font-size: 10px;
-      color: #2dd4bf;
+      color: #0e7490;
       font-weight: 600;
       white-space: nowrap;
     }
@@ -329,24 +330,24 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
       padding: 8px 16px;
       border-radius: 8px;
       font-size: 12px;
-      color: #64748b;
+      color: #475569;
     }
     .footer-item svg {
       width: 14px;
       height: 14px;
-      stroke: #2dd4bf;
+      stroke: #0891b2;
     }
     
     /* Shield Icon */
     .shield-icon {
       width: 24px;
       height: 24px;
-      stroke: #2dd4bf;
+      stroke: #0891b2;
       fill: none;
     }
   </style>
