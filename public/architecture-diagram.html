@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Label iQ - Architecture Diagram</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #0f0f23 100%);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 40px;
+      background: linear-gradient(90deg, #00d4ff, #0099cc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 16px;
+      color: #888;
+      margin-top: -30px;
+      margin-bottom: 40px;
+    }
+    .users-row {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-bottom: 30px;
+    }
+    .user {
+      text-align: center;
+    }
+    .user-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00d4ff, #0066aa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      font-size: 28px;
+    }
+    .user-label {
+      font-size: 14px;
+      color: #ccc;
+    }
+    .arrow-down {
+      text-align: center;
+      font-size: 24px;
+      color: #00d4ff;
+      margin: 15px 0;
+    }
+    .layers {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .layer {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+    }
+    .layer-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    .layer-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #00d4ff, #0066aa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .layer-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #00d4ff;
+    }
+    .layer-subtitle {
+      font-size: 12px;
+      color: #666;
+    }
+    .badges {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      display: flex;
+      gap: 8px;
+    }
+    .badge {
+      background: rgba(0, 212, 255, 0.15);
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      color: #00d4ff;
+    }
+    .components {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .component {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #aaa;
+    }
+    .component.highlight {
+      border-color: rgba(0, 212, 255, 0.5);
+      color: #fff;
+    }
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .views-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .view-item {
+      background: rgba(0, 100, 150, 0.2);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: #88ccee;
+      text-align: center;
+    }
+    .view-item.restricted {
+      background: rgba(255, 100, 100, 0.15);
+      border-color: rgba(255, 100, 100, 0.4);
+      color: #ff8888;
+    }
+    .flow-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #666;
+      font-size: 12px;
+      margin: 10px 0;
+    }
+    .flow-label span {
+      background: rgba(0, 212, 255, 0.1);
+      padding: 4px 12px;
+      border-radius: 4px;
+      color: #00d4ff;
+    }
+    .rbac-box {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 100, 170, 0.1));
+      border: 2px solid rgba(0, 212, 255, 0.5);
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 10px;
+    }
+    .rbac-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #00d4ff;
+      margin-bottom: 10px;
+    }
+    .rbac-rule {
+      font-size: 12px;
+      color: #aaa;
+      margin: 5px 0;
+    }
+    .rbac-rule strong {
+      color: #fff;
+    }
+    .tech-stack {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .tech-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Label iQ - System Architecture</h1>
+    <p class="subtitle">FDA Drug Label AI Assistant | Denodo Hackathon 2025</p>
+    
+    <div class="users-row">
+      <div class="user">
+        <div class="user-icon">👤</div>
+        <div class="user-label">Patient</div>
+      </div>
+      <div class="user">
+        <div class="user-icon">⚕️</div>
+        <div class="user-label">Physician</div>
+      </div>
+      <div class="user">
+        <div class="user-icon">⚖️</div>
+        <div class="user-label">Judge</div>
+      </div>
+    </div>
+    
+    <div class="arrow-down">▼</div>
+    
+    <div class="layers">
+      <!-- Frontend Layer -->
+      <div class="layer">
+        <div class="badges">
+          <span class="badge">React 18</span>
+          <span class="badge">TypeScript</span>
+          <span class="badge">Vite</span>
+        </div>
+        <div class="layer-header">
+          <div class="layer-icon">🖥️</div>
+          <div>
+            <div class="layer-title">Frontend - Presentation Layer</div>
+            <div class="layer-subtitle">Single Page Application</div>
+          </div>
+        </div>
+        <div class="components">
+          <div class="component highlight">Chatbot UI</div>
+          <div class="component highlight">Drug Logo Grid (14 medications)</div>
+          <div class="component highlight">Role Selector</div>
+          <div class="component">TanStack Query</div>
+          <div class="component">Shadcn UI Components</div>
+          <div class="component">TailwindCSS</div>
+        </div>
+      </div>
+      
+      <div class="flow-label">
+        <span>POST /api/chat</span> → <span>HTTP/REST</span> → <span>JSON</span>
+      </div>
+      
+      <!-- Backend Layer -->
+      <div class="layer">
+        <div class="badges">
+          <span class="badge">Express.js</span>
+          <span class="badge">Node.js</span>
+          <span class="badge">Zod</span>
+        </div>
+        <div class="layer-header">
+          <div class="layer-icon">⚙️</div>
+          <div>
+            <div class="layer-title">Backend - API Layer</div>
+            <div class="layer-subtitle">REST API Server</div>
+          </div>
+        </div>
+        <div class="two-column">
+          <div class="components">
+            <div class="component highlight">Request Validation</div>
+            <div class="component highlight">Session Management</div>
+            <div class="component">Error Handling</div>
+            <div class="component">Response Filtering</div>
+          </div>
+          <div class="rbac-box">
+            <div class="rbac-title">🔐 RBAC Middleware Engine</div>
+            <div class="rbac-rule"><strong>Patient:</strong> 8 views (excludes master_safety_risk)</div>
+            <div class="rbac-rule"><strong>Physician:</strong> All 9 views</div>
+            <div class="rbac-rule"><strong>Judge:</strong> All 9 views + SQL visibility</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flow-label">
+        <span>Basic Auth</span> → <span>Allowed Views List</span> → <span>Question</span>
+      </div>
+      
+      <!-- AI SDK Layer -->
+      <div class="layer">
+        <div class="badges">
+          <span class="badge">AWS EC2</span>
+          <span class="badge">Python</span>
+          <span class="badge">FastAPI</span>
+        </div>
+        <div class="layer-header">
+          <div class="layer-icon">🤖</div>
+          <div>
+            <div class="layer-title">Denodo AI SDK - AI Orchestration Layer</div>
+            <div class="layer-subtitle">RAG Pipeline Microservice</div>
+          </div>
+        </div>
+        <div class="components">
+          <div class="component highlight">Query Decomposition</div>
+          <div class="component highlight">Vector Store Search</div>
+          <div class="component highlight">Context Retrieval</div>
+          <div class="component">Embedding Model</div>
+          <div class="component">Prompt Engineering</div>
+          <div class="component">Response Streaming</div>
+        </div>
+      </div>
+      
+      <div class="flow-label">
+        <span>Prompt + Context</span> → <span>AWS Bedrock API</span>
+      </div>
+      
+      <!-- LLM Layer -->
+      <div class="layer">
+        <div class="badges">
+          <span class="badge">AWS Bedrock</span>
+          <span class="badge">Anthropic</span>
+        </div>
+        <div class="layer-header">
+          <div class="layer-icon">🧠</div>
+          <div>
+            <div class="layer-title">Claude 3.5 Sonnet - LLM Layer</div>
+            <div class="layer-subtitle">Large Language Model</div>
+          </div>
+        </div>
+        <div class="components">
+          <div class="component highlight">Natural Language Generation</div>
+          <div class="component highlight">Medical Knowledge</div>
+          <div class="component">Token Processing</div>
+          <div class="component">Context Window (200K)</div>
+        </div>
+      </div>
+      
+      <div class="flow-label">
+        <span>SQL Queries</span> → <span>Federated Execution</span>
+      </div>
+      
+      <!-- Data Layer -->
+      <div class="layer">
+        <div class="badges">
+          <span class="badge">Denodo Agora</span>
+          <span class="badge">Data Virtualization</span>
+        </div>
+        <div class="layer-header">
+          <div class="layer-icon">🗄️</div>
+          <div>
+            <div class="layer-title">Denodo Agora - Data Virtualization Layer</div>
+            <div class="layer-subtitle">labeliq Database - 9 FDA Drug Label Views</div>
+          </div>
+        </div>
+        <div class="views-grid">
+          <div class="view-item">drug_purpose_and_identity</div>
+          <div class="view-item">clinical_pharmacology</div>
+          <div class="view-item">dosing_and_administration</div>
+          <div class="view-item">interactions</div>
+          <div class="view-item restricted">master_safety_risk ⚠️</div>
+          <div class="view-item">overdose_emergency</div>
+          <div class="view-item">product_and_label_index</div>
+          <div class="view-item">specific_population</div>
+          <div class="view-item">storage_and_handling</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tech-stack">
+      <div class="tech-item">🔒 TLS 1.3 Encryption</div>
+      <div class="tech-item">🛡️ Input Validation</div>
+      <div class="tech-item">🔐 Role-Based Access Control</div>
+      <div class="tech-item">📊 Real-time Metadata</div>
+      <div class="tech-item">⚡ Sub-second Response</div>
+    </div>
+  </div>
+</body>
+</html>
