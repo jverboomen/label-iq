@@ -316,9 +316,23 @@ export default function HomePage() {
                   <option value="physician">Physician (All 9 views)</option>
                   <option value="judge">Judge (All 9 views + SQL)</option>
                 </select>
-                <p className="text-xs text-muted-foreground italic">
-                  Password hint: Use the role name as password (patient, physician, or judge)
-                </p>
+                <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-md">
+                  <p className="text-xs font-semibold text-blue-800 dark:text-blue-300 mb-2">Hackathon Demo Credentials:</p>
+                  <div className="grid grid-cols-3 gap-2 text-xs">
+                    <div className="text-center p-2 bg-white dark:bg-slate-800 rounded border">
+                      <div className="font-medium text-gray-700 dark:text-gray-300">Patient</div>
+                      <div className="text-gray-500 dark:text-gray-400">patient / patient</div>
+                    </div>
+                    <div className="text-center p-2 bg-white dark:bg-slate-800 rounded border">
+                      <div className="font-medium text-gray-700 dark:text-gray-300">Physician</div>
+                      <div className="text-gray-500 dark:text-gray-400">physician / physician</div>
+                    </div>
+                    <div className="text-center p-2 bg-white dark:bg-slate-800 rounded border">
+                      <div className="font-medium text-gray-700 dark:text-gray-300">Judge</div>
+                      <div className="text-gray-500 dark:text-gray-400">judge / judge</div>
+                    </div>
+                  </div>
+                </div>
               </div>
               {authError && (
                 <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-sm text-red-600 dark:text-red-400" data-testid="error-auth">
