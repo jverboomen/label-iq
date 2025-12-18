@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Label iQ - Architecture Diagram</title>
+  <title>Label iQ - Technical Architecture</title>
   <style>
     * {
       margin: 0;
@@ -12,511 +12,759 @@
     }
     body {
       background: #ffffff;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
       color: #1e293b;
       min-height: 100vh;
-      padding: 30px 40px;
+      padding: 25px 30px;
+      font-size: 12px;
     }
     .container {
-      max-width: 1600px;
+      max-width: 1700px;
       margin: 0 auto;
+    }
+    
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #0891b2;
+      padding-bottom: 15px;
+    }
+    .header-left h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0e7490;
+      letter-spacing: -0.5px;
+    }
+    .header-left .subtitle {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+    .header-right {
+      text-align: right;
+    }
+    .version-badge {
+      background: #0891b2;
+      color: white;
+      padding: 3px 10px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .date-info {
+      font-size: 10px;
+      color: #64748b;
+      margin-top: 5px;
     }
     
     /* Users Row */
     .users-section {
       display: flex;
-      justify-content: flex-start;
-      gap: 50px;
-      margin-bottom: 25px;
-      padding-left: 20px;
+      gap: 25px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+    .users-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .users-grid {
+      display: flex;
+      gap: 30px;
     }
     .user {
       text-align: center;
     }
     .user-icon {
-      width: 70px;
-      height: 70px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       border: 2px solid #0891b2;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 8px;
-      background: #e0f2fe;
+      margin: 0 auto 6px;
+      background: #ecfeff;
     }
     .user-icon svg {
-      width: 36px;
-      height: 36px;
+      width: 24px;
+      height: 24px;
       stroke: #0891b2;
       fill: none;
       stroke-width: 1.5;
     }
     .user-label {
-      font-size: 14px;
-      color: #475569;
-      font-weight: 500;
+      font-size: 11px;
+      color: #0e7490;
+      font-weight: 600;
+    }
+    .user-access {
+      font-size: 9px;
+      color: #64748b;
+      margin-top: 2px;
     }
     
     /* Main Grid */
     .main-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      position: relative;
+      gap: 20px;
     }
     
     /* Panel Styles */
     .panel {
-      background: #f8fafc;
-      border: 1px solid #0891b2;
-      border-radius: 12px;
-      padding: 20px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
       position: relative;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
     }
     .panel-header {
-      font-size: 16px;
+      background: linear-gradient(135deg, #0891b2, #0e7490);
+      color: white;
+      padding: 10px 15px;
+      font-size: 11px;
       font-weight: 700;
-      color: #0e7490;
-      margin-bottom: 18px;
       letter-spacing: 0.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .panel-header .tech-stack {
+      font-size: 9px;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+    .panel-body {
+      padding: 15px;
+    }
+    
+    /* Code Block Style */
+    .code-block {
+      background: #1e293b;
+      border-radius: 4px;
+      padding: 10px 12px;
+      margin: 10px 0;
+      font-size: 10px;
+      color: #e2e8f0;
+      overflow-x: auto;
+    }
+    .code-comment {
+      color: #64748b;
+    }
+    .code-keyword {
+      color: #c084fc;
+    }
+    .code-string {
+      color: #4ade80;
+    }
+    .code-function {
+      color: #60a5fa;
     }
     
     /* Feature Items */
     .feature-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
     }
     .feature-item {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 11px;
       color: #475569;
+      padding: 6px 8px;
+      background: #f8fafc;
+      border-radius: 4px;
+      border-left: 3px solid #0891b2;
     }
     .feature-icon {
-      width: 20px;
-      height: 20px;
-      background: #e0f2fe;
-      border: 1px solid #0891b2;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 16px;
+      height: 16px;
       flex-shrink: 0;
+      margin-top: 1px;
     }
     .feature-icon svg {
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       stroke: #0891b2;
       fill: none;
     }
-    
-    /* Sub-panels */
-    .sub-panel {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 14px;
-      margin-top: 12px;
-    }
-    .sub-panel-header {
-      font-size: 12px;
-      font-weight: 600;
+    .feature-text strong {
       color: #0e7490;
-      margin-bottom: 10px;
+    }
+    
+    /* Metrics Box */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .metric {
+      background: #ecfeff;
+      border: 1px solid #0891b2;
+      border-radius: 4px;
+      padding: 8px;
+      text-align: center;
+    }
+    .metric-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0e7490;
+    }
+    .metric-label {
+      font-size: 9px;
+      color: #64748b;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
     
-    /* Arrow Labels */
-    .arrow-label {
-      position: absolute;
-      background: #ffffff;
+    /* RBAC Matrix */
+    .rbac-matrix {
+      margin: 12px 0;
       border: 1px solid #0891b2;
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 11px;
-      color: #0e7490;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .rbac-header-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr 1fr;
+      background: #0891b2;
+      color: white;
+      font-size: 9px;
       font-weight: 600;
-      z-index: 10;
+    }
+    .rbac-header-row > div {
+      padding: 6px 8px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.2);
+    }
+    .rbac-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr 1fr;
+      font-size: 10px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .rbac-row:last-child {
+      border-bottom: none;
+    }
+    .rbac-row > div {
+      padding: 6px 8px;
+      text-align: center;
+      border-right: 1px solid #e2e8f0;
+    }
+    .rbac-row > div:first-child {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #0e7490;
+      text-align: left;
+    }
+    .check {
+      color: #10b981;
+      font-weight: bold;
+    }
+    .cross {
+      color: #ef4444;
+      font-weight: bold;
     }
     
-    /* Left Column Specific */
-    .left-column {
+    /* Data Flow Arrow */
+    .data-flow {
       display: flex;
-      flex-direction: column;
-      gap: 20px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px;
+      background: #f1f5f9;
+      margin: 15px 0;
+      border-radius: 4px;
     }
-    
-    /* Right Column Specific */
-    .right-column {
+    .flow-arrow {
       display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    
-    /* Badge Row */
-    .badge-row {
-      display: flex;
+      align-items: center;
       gap: 8px;
-      margin-bottom: 15px;
-      flex-wrap: wrap;
     }
-    .tech-badge {
-      background: #e0f2fe;
+    .flow-label {
+      background: white;
       border: 1px solid #0891b2;
       padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 10px;
+      border-radius: 3px;
+      font-size: 9px;
       color: #0e7490;
       font-weight: 600;
     }
-    
-    /* RBAC Box */
-    .rbac-box {
-      background: linear-gradient(135deg, #ecfeff, #e0f2fe);
-      border: 2px solid #0891b2;
-      border-radius: 10px;
-      padding: 16px;
-      margin-top: 15px;
+    .flow-line {
+      width: 40px;
+      height: 2px;
+      background: #0891b2;
+      position: relative;
     }
-    .rbac-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    .rbac-header svg {
-      width: 18px;
-      height: 18px;
-      stroke: #0891b2;
-    }
-    .rbac-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #0e7490;
-    }
-    .rbac-rule {
-      font-size: 12px;
-      color: #475569;
-      margin: 6px 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .rbac-rule strong {
-      color: #0f172a;
-      min-width: 70px;
+    .flow-line::after {
+      content: '▶';
+      position: absolute;
+      right: -8px;
+      top: -7px;
+      color: #0891b2;
+      font-size: 10px;
     }
     
     /* Views Grid */
     .views-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 12px;
+      gap: 6px;
+      margin-top: 10px;
     }
     .view-item {
-      background: #ecfeff;
-      border: 1px solid #0891b2;
-      padding: 8px 10px;
-      border-radius: 6px;
-      font-size: 10px;
-      color: #0e7490;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      padding: 6px 8px;
+      border-radius: 3px;
+      font-size: 9px;
+      color: #475569;
       text-align: center;
-      font-weight: 500;
+      font-family: 'SF Mono', monospace;
     }
     .view-item.restricted {
       background: #fef2f2;
-      border-color: #dc2626;
+      border-color: #fca5a5;
       color: #dc2626;
+      position: relative;
+    }
+    .view-item.restricted::after {
+      content: '🔒';
+      font-size: 8px;
+      margin-left: 3px;
     }
     
-    /* Component Grid */
-    .component-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+    /* Technical Notes */
+    .tech-notes {
+      background: #fffbeb;
+      border: 1px solid #fbbf24;
+      border-radius: 4px;
+      padding: 12px;
+      margin-top: 15px;
+    }
+    .tech-notes-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .tech-note {
+      font-size: 10px;
+      color: #78350f;
+      margin: 4px 0;
+      padding-left: 12px;
+      position: relative;
+    }
+    .tech-note::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #d97706;
+    }
+    
+    /* Architecture Notes Panel */
+    .notes-panel {
+      grid-column: 1 / -1;
+      background: #f0fdf4;
+      border: 1px solid #22c55e;
+      border-radius: 6px;
+      padding: 15px;
+      margin-top: 15px;
+    }
+    .notes-header {
+      font-size: 12px;
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
       gap: 8px;
     }
-    .component-item {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 11px;
-      color: #475569;
-      text-align: center;
-    }
-    
-    /* Connection Lines */
-    .connection-area {
-      position: absolute;
-      width: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 0;
-      bottom: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 15px;
     }
-    .connection-line {
-      width: 2px;
-      height: 60px;
-      background: linear-gradient(to bottom, #0891b2, #06b6d4);
-    }
-    .connection-label {
-      background: #ffffff;
-      border: 1px solid #0891b2;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 10px;
-      color: #0e7490;
-      white-space: nowrap;
-    }
-    
-    /* Horizontal dividers between rows */
-    .section-divider {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      margin: 20px 0;
-    }
-    .divider-line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, transparent, #0891b2, transparent);
-    }
-    .divider-label {
-      background: #e0f2fe;
-      border: 1px solid #0891b2;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 11px;
-      color: #0e7490;
-      font-weight: 600;
-    }
-    
-    /* Layer Label */
-    .layer-label {
-      position: absolute;
-      right: -15px;
-      top: 50%;
-      transform: translateY(-50%) rotate(90deg);
-      background: #ffffff;
-      border: 1px solid #0891b2;
-      padding: 4px 12px;
+    .note-section {
+      background: white;
       border-radius: 4px;
+      padding: 12px;
+      border: 1px solid #bbf7d0;
+    }
+    .note-section-title {
       font-size: 10px;
-      color: #0e7490;
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .note-item {
+      font-size: 10px;
+      color: #475569;
+      margin: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .note-bullet {
+      color: #22c55e;
+      font-weight: bold;
+    }
+    
+    /* Security Badge Row */
+    .security-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .security-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      padding: 4px 10px;
+      border-radius: 3px;
+      font-size: 9px;
+      color: #92400e;
       font-weight: 600;
-      white-space: nowrap;
+    }
+    .security-badge svg {
+      width: 12px;
+      height: 12px;
+      stroke: #f59e0b;
     }
     
     /* Footer */
     .footer {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #e2e8f0;
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
-      flex-wrap: wrap;
-    }
-    .footer-item {
-      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      background: #f8fafc;
-      border: 1px solid #cbd5e1;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 12px;
-      color: #475569;
     }
-    .footer-item svg {
-      width: 14px;
-      height: 14px;
-      stroke: #0891b2;
+    .footer-left {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-stat {
+      text-align: center;
+    }
+    .footer-stat-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0891b2;
+    }
+    .footer-stat-label {
+      font-size: 9px;
+      color: #64748b;
+      text-transform: uppercase;
+    }
+    .footer-right {
+      text-align: right;
+      font-size: 10px;
+      color: #64748b;
     }
     
-    /* Shield Icon */
-    .shield-icon {
-      width: 24px;
-      height: 24px;
-      stroke: #0891b2;
-      fill: none;
+    /* Component Tags */
+    .component-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 10px;
+    }
+    .component-tag {
+      background: #e0f2fe;
+      border: 1px solid #0891b2;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 9px;
+      color: #0e7490;
+    }
+    
+    /* Protocol Labels */
+    .protocol-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 9px;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Users Row -->
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <h1>LABEL iQ — SYSTEM ARCHITECTURE</h1>
+        <div class="subtitle">FDA Drug Label AI Assistant | Denodo Data Virtualization Hackathon 2025</div>
+      </div>
+      <div class="header-right">
+        <span class="version-badge">v1.0.0-demo</span>
+        <div class="date-info">Architecture Rev. Dec 2024</div>
+      </div>
+    </div>
+    
+    <!-- Users Section -->
     <div class="users-section">
-      <div class="user">
-        <div class="user-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+      <div>
+        <div class="users-title">Authenticated User Roles</div>
+        <div class="users-grid">
+          <div class="user">
+            <div class="user-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+            </div>
+            <div class="user-label">Patient</div>
+            <div class="user-access">8 views | Limited</div>
+          </div>
+          <div class="user">
+            <div class="user-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/><path d="M12 14v4m-2-2h4"/></svg>
+            </div>
+            <div class="user-label">Physician</div>
+            <div class="user-access">9 views | Full</div>
+          </div>
+          <div class="user">
+            <div class="user-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="user-label">Judge</div>
+            <div class="user-access">9 views + SQL</div>
+          </div>
         </div>
-        <div class="user-label">Patient</div>
-      </div>
-      <div class="user">
-        <div class="user-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/><path d="M12 14v4m-2-2h4"/></svg>
-        </div>
-        <div class="user-label">Physician</div>
-      </div>
-      <div class="user">
-        <div class="user-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        </div>
-        <div class="user-label">Judge</div>
       </div>
     </div>
     
     <!-- Main Two-Column Layout -->
     <div class="main-grid">
-      <!-- Left Column -->
-      <div class="left-column">
+      <!-- Left Column: Frontend + AI -->
+      <div style="display: flex; flex-direction: column; gap: 15px;">
         <!-- Presentation Layer -->
         <div class="panel">
-          <div class="panel-header">PRESENTATION SPA</div>
-          <div class="badge-row">
-            <span class="tech-badge">React 18</span>
-            <span class="tech-badge">TypeScript</span>
-            <span class="tech-badge">Vite</span>
+          <div class="panel-header">
+            <span>PRESENTATION LAYER — Single Page Application</span>
+            <span class="tech-stack">React 18 • TypeScript • Vite 5</span>
           </div>
-          <div class="feature-list">
-            <div class="feature-item">
-              <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg></div>
-              TanStack Query state management
+          <div class="panel-body">
+            <div class="feature-list">
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg></div>
+                <div class="feature-text"><strong>TanStack Query v5</strong> — Server state management with optimistic updates</div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
+                <div class="feature-text"><strong>Shadcn/UI</strong> — Accessible component library with Radix primitives</div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+                <div class="feature-text"><strong>Chat Interface</strong> — Real-time streaming responses with typing indicators</div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <div class="feature-text"><strong>RBAC UI Filtering</strong> — Role-based component visibility & data masking</div>
+              </div>
             </div>
-            <div class="feature-item">
-              <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
-              Shadcn UI components
+            
+            <div class="code-block">
+<span class="code-comment">// API Integration Pattern</span>
+<span class="code-keyword">const</span> { data } = <span class="code-function">useQuery</span>({
+  queryKey: [<span class="code-string">'/api/chat'</span>, role],
+  queryFn: () => <span class="code-function">fetch</span>(<span class="code-string">`/api/chat?role=${role}`</span>)
+});
             </div>
-            <div class="feature-item">
-              <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-              Real-time AI responses
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-              Role-Based UI filtering
-            </div>
-          </div>
-          <div class="sub-panel">
-            <div class="sub-panel-header">REST API</div>
-            <div class="component-grid">
-              <div class="component-item">POST /api/chat</div>
-              <div class="component-item">Session Maps</div>
-              <div class="component-item">Role Context</div>
+            
+            <div class="component-tags">
+              <span class="component-tag">wouter</span>
+              <span class="component-tag">zod</span>
+              <span class="component-tag">react-hook-form</span>
+              <span class="component-tag">tailwindcss</span>
+              <span class="component-tag">framer-motion</span>
             </div>
           </div>
         </div>
         
-        <!-- Section Divider -->
-        <div class="section-divider">
-          <div class="divider-line"></div>
-          <div class="divider-label">TLS 1.3</div>
-          <div class="divider-line"></div>
+        <!-- Data Flow -->
+        <div class="data-flow">
+          <span class="flow-label">POST /api/chat</span>
+          <div class="flow-line"></div>
+          <span class="flow-label">JSON payload</span>
+          <div class="flow-line"></div>
+          <span class="protocol-label">HTTPS/TLS 1.3</span>
         </div>
         
         <!-- AI Orchestration Layer -->
         <div class="panel">
-          <div class="panel-header">AI ORCHESTRATION LAYER</div>
-          <div class="badge-row">
-            <span class="tech-badge">Denodo AI SDK</span>
-            <span class="tech-badge">AWS EC2</span>
-            <span class="tech-badge">Python</span>
+          <div class="panel-header">
+            <span>AI ORCHESTRATION — Denodo AI SDK</span>
+            <span class="tech-stack">Python • FastAPI • AWS EC2</span>
           </div>
-          <div class="sub-panel">
-            <div class="sub-panel-header">LLM - AWS Bedrock Claude 3.5 Sonnet</div>
-            <div class="component-grid">
-              <div class="component-item">RAG Pipeline</div>
-              <div class="component-item">Token processing</div>
-              <div class="component-item">Retrieval-Augmented</div>
-              <div class="component-item">Query Decomposition</div>
-              <div class="component-item">Embedding Model</div>
-              <div class="component-item">Prompt engineering</div>
-              <div class="component-item">Response streaming</div>
-              <div class="component-item">Vector Search</div>
-              <div class="component-item">Context Window</div>
+          <div class="panel-body">
+            <div class="metrics-row">
+              <div class="metric">
+                <div class="metric-value">RAG</div>
+                <div class="metric-label">Pipeline Type</div>
+              </div>
+              <div class="metric">
+                <div class="metric-value">200K</div>
+                <div class="metric-label">Context Window</div>
+              </div>
+              <div class="metric">
+                <div class="metric-value">&lt;3s</div>
+                <div class="metric-label">Avg Response</div>
+              </div>
+            </div>
+            
+            <div class="feature-list">
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg></div>
+                <div class="feature-text"><strong>Query Decomposition</strong> — Multi-hop reasoning for complex questions</div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8"/></svg></div>
+                <div class="feature-text"><strong>Vector Store</strong> — ChromaDB embeddings for semantic search</div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 110 20 10 10 0 010-20z"/><path d="M12 6v6l4 2"/></svg></div>
+                <div class="feature-text"><strong>Prompt Engineering</strong> — Domain-specific FDA label templates</div>
+              </div>
+            </div>
+            
+            <div class="code-block">
+<span class="code-comment"># LLM Configuration</span>
+model = <span class="code-string">"anthropic.claude-3-5-sonnet-20241022-v2:0"</span>
+provider = <span class="code-string">"AWS Bedrock"</span>
+region = <span class="code-string">"us-east-1"</span>
             </div>
           </div>
         </div>
       </div>
       
-      <!-- Right Column -->
-      <div class="right-column">
+      <!-- Right Column: API + Data -->
+      <div style="display: flex; flex-direction: column; gap: 15px;">
         <!-- Express.js API -->
         <div class="panel">
-          <div class="panel-header">Express.js API</div>
-          <div class="badge-row">
-            <span class="tech-badge">HTTP/REST</span>
-            <span class="tech-badge">TLS 1.3</span>
-            <span class="tech-badge">RBAC</span>
+          <div class="panel-header">
+            <span>API LAYER — Express.js Server</span>
+            <span class="tech-stack">Node.js 20 • TypeScript • Zod</span>
           </div>
-          <div class="feature-list">
-            <div class="feature-item">
-              <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-              Zod validation
+          <div class="panel-body">
+            <div class="feature-list">
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/></svg></div>
+                <div class="feature-text"><strong>Input Validation</strong> — Zod schema validation on all endpoints</div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+                <div class="feature-text"><strong>Session Management</strong> — Stateless JWT with role claims</div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <div class="feature-text"><strong>Response Filtering</strong> — Patient-friendly content transformation</div>
+              </div>
             </div>
-            <div class="feature-item">
-              <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-              Session management
+            
+            <!-- RBAC Matrix -->
+            <div class="rbac-matrix">
+              <div class="rbac-header-row">
+                <div>Permission</div>
+                <div>Patient</div>
+                <div>Physician</div>
+                <div>Judge</div>
+              </div>
+              <div class="rbac-row">
+                <div>8 Base Views</div>
+                <div class="check">✓</div>
+                <div class="check">✓</div>
+                <div class="check">✓</div>
+              </div>
+              <div class="rbac-row">
+                <div>safety_risk</div>
+                <div class="cross">✗</div>
+                <div class="check">✓</div>
+                <div class="check">✓</div>
+              </div>
+              <div class="rbac-row">
+                <div>SQL Visibility</div>
+                <div class="cross">✗</div>
+                <div class="cross">✗</div>
+                <div class="check">✓</div>
+              </div>
             </div>
-            <div class="feature-item">
-              <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
-              Input Validation
+            
+            <div class="security-badges">
+              <span class="security-badge">
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                TLS 1.3
+              </span>
+              <span class="security-badge">
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                RBAC Enforced
+              </span>
+              <span class="security-badge">
+                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/></svg>
+                Input Sanitized
+              </span>
             </div>
-          </div>
-          
-          <!-- RBAC Box -->
-          <div class="rbac-box">
-            <div class="rbac-header">
-              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <span class="rbac-title">RBAC Middleware Engine</span>
-            </div>
-            <div class="rbac-rule"><strong>Patient:</strong> 8 views (excludes master_safety_risk)</div>
-            <div class="rbac-rule"><strong>Physician:</strong> All 9 FDA label views</div>
-            <div class="rbac-rule"><strong>Judge:</strong> All 9 views + SQL query visibility</div>
           </div>
         </div>
         
-        <!-- Section Divider -->
-        <div class="section-divider">
-          <div class="divider-line"></div>
-          <div class="divider-label">Basic Auth + SQL Queries</div>
-          <div class="divider-line"></div>
+        <!-- Data Flow -->
+        <div class="data-flow">
+          <span class="flow-label">Basic Auth</span>
+          <div class="flow-line"></div>
+          <span class="flow-label">Allowed Views[]</span>
+          <div class="flow-line"></div>
+          <span class="protocol-label">SQL via JDBC</span>
         </div>
         
         <!-- Data Virtualization Layer -->
         <div class="panel">
-          <div class="panel-header">DATA VIRTUALIZATION LAYER</div>
-          <div class="badge-row">
-            <span class="tech-badge">Denodo Agora</span>
-            <span class="tech-badge">labeliq Database</span>
+          <div class="panel-header">
+            <span>DATA VIRTUALIZATION — Denodo Agora</span>
+            <span class="tech-stack">labeliq Database • 9 Views</span>
           </div>
-          <div class="feature-list">
-            <div class="feature-item">
-              <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
-              Query Federation
+          <div class="panel-body">
+            <div class="feature-list">
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8"/></svg></div>
+                <div class="feature-text"><strong>Query Federation</strong> — Unified access across heterogeneous sources</div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/></svg></div>
+                <div class="feature-text"><strong>Vector Catalog</strong> — Semantic metadata for AI-powered discovery</div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg></div>
+                <div class="feature-text"><strong>Query Optimization</strong> — Cost-based execution planning</div>
+              </div>
             </div>
-            <div class="feature-item">
-              <div class="feature-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
-              Vector Catalog
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
-              Query Catalog
-            </div>
-          </div>
-          
-          <!-- Views Grid -->
-          <div class="sub-panel">
-            <div class="sub-panel-header">9 FDA Drug Label Views</div>
+            
             <div class="views-grid">
               <div class="view-item">drug_purpose_and_identity</div>
               <div class="view-item">clinical_pharmacology</div>
@@ -528,6 +776,47 @@
               <div class="view-item">specific_population</div>
               <div class="view-item">storage_and_handling</div>
             </div>
+            
+            <div class="tech-notes">
+              <div class="tech-notes-title">
+                <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#d97706;fill:none;"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                Implementation Notes
+              </div>
+              <div class="tech-note">Patient role excludes master_safety_risk (technical risk assessments)</div>
+              <div class="tech-note">App-level RBAC validates tables_used metadata post-response</div>
+              <div class="tech-note">Agora managed service - custom VQL roles not supported</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Architecture Notes Panel -->
+      <div class="notes-panel">
+        <div class="notes-header">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#166534;fill:none;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+          ARCHITECTURE DECISION RECORDS
+        </div>
+        <div class="notes-grid">
+          <div class="note-section">
+            <div class="note-section-title">Why Denodo AI SDK?</div>
+            <div class="note-item"><span class="note-bullet">•</span> Production-ready microservice architecture</div>
+            <div class="note-item"><span class="note-bullet">•</span> Manages 200+ Python dependencies independently</div>
+            <div class="note-item"><span class="note-bullet">•</span> AWS Bedrock credentials isolated to AI SDK</div>
+            <div class="note-item"><span class="note-bullet">•</span> RAG pipeline with ChromaDB vector store</div>
+          </div>
+          <div class="note-section">
+            <div class="note-section-title">Why App-Level RBAC?</div>
+            <div class="note-item"><span class="note-bullet">•</span> Agora managed service limits VQL user creation</div>
+            <div class="note-item"><span class="note-bullet">•</span> Common pattern in production healthcare apps</div>
+            <div class="note-item"><span class="note-bullet">•</span> Post-response validation of tables_used metadata</div>
+            <div class="note-item"><span class="note-bullet">•</span> Disclaimer system for patient role violations</div>
+          </div>
+          <div class="note-section">
+            <div class="note-section-title">Security Considerations</div>
+            <div class="note-item"><span class="note-bullet">•</span> TLS 1.3 encryption on all connections</div>
+            <div class="note-item"><span class="note-bullet">•</span> Zod schema validation prevents injection</div>
+            <div class="note-item"><span class="note-bullet">•</span> Patient-friendly response transformation</div>
+            <div class="note-item"><span class="note-bullet">•</span> Secrets managed via environment variables</div>
           </div>
         </div>
       </div>
@@ -535,21 +824,27 @@
     
     <!-- Footer -->
     <div class="footer">
-      <div class="footer-item">
-        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        TLS 1.3 Encryption
+      <div class="footer-left">
+        <div class="footer-stat">
+          <div class="footer-stat-value">14</div>
+          <div class="footer-stat-label">Drug Labels</div>
+        </div>
+        <div class="footer-stat">
+          <div class="footer-stat-value">9</div>
+          <div class="footer-stat-label">Database Views</div>
+        </div>
+        <div class="footer-stat">
+          <div class="footer-stat-value">3</div>
+          <div class="footer-stat-label">User Roles</div>
+        </div>
+        <div class="footer-stat">
+          <div class="footer-stat-value">5</div>
+          <div class="footer-stat-label">Arch Layers</div>
+        </div>
       </div>
-      <div class="footer-item">
-        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Role-Based Access Control
-      </div>
-      <div class="footer-item">
-        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
-        Input Validation
-      </div>
-      <div class="footer-item">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        Sub-second Response
+      <div class="footer-right">
+        <div>Label iQ — Denodo Hackathon 2025</div>
+        <div>Team: Massive Insights</div>
       </div>
     </div>
   </div>
