@@ -229,7 +229,7 @@ Response:
 ### 7.3 Performance Testing
 | Metric | Target | Actual |
 |--------|--------|--------|
-| Response time | < 5s | ~2-3s |
+| Response time | N/A | ~45-60s (complex RAG pipeline) |
 | UI load time | < 2s | < 1s |
 | Memory usage | < 512MB | ~256MB |
 

@@ -51,14 +51,14 @@
 ## 6. AI Orchestration Layer (Denodo AI SDK)
 > "This is where the magic happens. The Denodo AI SDK runs as a microservice on AWS EC2.
 >
-> Three key metrics:
+> Key capabilities:
 > - **RAG** - Retrieval Augmented Generation pipeline
 > - **200K token context window** - can handle complex medical documents
-> - **Under 3 seconds** average response time
+> - **Comprehensive processing** - queries take 45-60 seconds due to the thorough RAG pipeline
 >
 > The SDK uses **query decomposition** to break complex questions into sub-queries, **ChromaDB** for semantic vector search, and **custom prompt engineering** for FDA-specific responses.
 >
-> Under the hood, it's calling **Claude 3.5 Sonnet** on AWS Bedrock."
+> Under the hood, it's calling **Claude 3.5 Sonnet** on AWS Bedrock. The response time reflects the quality of the answer - the AI thoroughly searches the database and synthesizes accurate medical information."
 
 ---
 

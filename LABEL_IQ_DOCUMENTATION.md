@@ -270,11 +270,13 @@ The frontend displays the response with:
 
 | Metric | Value |
 |--------|-------|
-| Average Response Time | < 3 seconds |
+| Average Response Time | ~45-60 seconds |
 | LLM Context Window | 200,000 tokens |
 | Number of Drug Labels | 14 |
 | Number of Database Views | 9 |
 | User Roles | 3 |
+
+Note: Response time reflects the comprehensive RAG pipeline processing, including query decomposition, vector search, SQL generation, data retrieval from Denodo Agora, and LLM response synthesis.
 
 ---
 
