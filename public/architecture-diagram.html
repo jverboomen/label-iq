@@ -11,380 +11,545 @@
       box-sizing: border-box;
     }
     body {
-      background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #0f0f23 100%);
+      background: #0a0c10;
       font-family: 'Segoe UI', system-ui, sans-serif;
       color: #fff;
       min-height: 100vh;
-      padding: 40px;
+      padding: 30px 40px;
     }
     .container {
-      max-width: 1400px;
+      max-width: 1600px;
       margin: 0 auto;
     }
-    .title {
-      text-align: center;
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 40px;
-      background: linear-gradient(90deg, #00d4ff, #0099cc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
-    }
-    .subtitle {
-      text-align: center;
-      font-size: 16px;
-      color: #888;
-      margin-top: -30px;
-      margin-bottom: 40px;
-    }
-    .users-row {
+    
+    /* Users Row */
+    .users-section {
       display: flex;
-      justify-content: center;
-      gap: 60px;
-      margin-bottom: 30px;
+      justify-content: flex-start;
+      gap: 50px;
+      margin-bottom: 25px;
+      padding-left: 20px;
     }
     .user {
       text-align: center;
     }
     .user-icon {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #00d4ff, #0066aa);
+      border: 2px solid #2dd4bf;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 10px;
-      font-size: 28px;
+      margin: 0 auto 8px;
+      background: rgba(45, 212, 191, 0.1);
+    }
+    .user-icon svg {
+      width: 36px;
+      height: 36px;
+      stroke: #2dd4bf;
+      fill: none;
+      stroke-width: 1.5;
     }
     .user-label {
       font-size: 14px;
-      color: #ccc;
+      color: #94a3b8;
+      font-weight: 500;
     }
-    .arrow-down {
-      text-align: center;
-      font-size: 24px;
-      color: #00d4ff;
-      margin: 15px 0;
+    
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      position: relative;
     }
-    .layers {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .layer {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(0, 212, 255, 0.3);
+    
+    /* Panel Styles */
+    .panel {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(45, 212, 191, 0.3);
       border-radius: 12px;
       padding: 20px;
       position: relative;
     }
-    .layer-header {
+    .panel-header {
+      font-size: 16px;
+      font-weight: 700;
+      color: #2dd4bf;
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Feature Items */
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .feature-item {
       display: flex;
       align-items: center;
-      gap: 15px;
-      margin-bottom: 15px;
+      gap: 10px;
+      font-size: 13px;
+      color: #cbd5e1;
     }
-    .layer-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #00d4ff, #0066aa);
+    .feature-icon {
+      width: 20px;
+      height: 20px;
+      background: rgba(45, 212, 191, 0.15);
+      border: 1px solid rgba(45, 212, 191, 0.4);
+      border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      flex-shrink: 0;
     }
-    .layer-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #00d4ff;
+    .feature-icon svg {
+      width: 12px;
+      height: 12px;
+      stroke: #2dd4bf;
+      fill: none;
     }
-    .layer-subtitle {
-      font-size: 12px;
-      color: #666;
-    }
-    .badges {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      display: flex;
-      gap: 8px;
-    }
-    .badge {
-      background: rgba(0, 212, 255, 0.15);
-      border: 1px solid rgba(0, 212, 255, 0.4);
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 11px;
-      color: #00d4ff;
-    }
-    .components {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .component {
+    
+    /* Sub-panels */
+    .sub-panel {
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 10px 16px;
       border-radius: 8px;
-      font-size: 13px;
-      color: #aaa;
+      padding: 14px;
+      margin-top: 12px;
     }
-    .component.highlight {
-      border-color: rgba(0, 212, 255, 0.5);
-      color: #fff;
+    .sub-panel-header {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    .two-column {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    
+    /* Arrow Labels */
+    .arrow-label {
+      position: absolute;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(45, 212, 191, 0.5);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: #2dd4bf;
+      font-weight: 600;
+      z-index: 10;
+    }
+    
+    /* Left Column Specific */
+    .left-column {
+      display: flex;
+      flex-direction: column;
       gap: 20px;
     }
+    
+    /* Right Column Specific */
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    /* Badge Row */
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    .tech-badge {
+      background: rgba(45, 212, 191, 0.1);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      color: #2dd4bf;
+      font-weight: 600;
+    }
+    
+    /* RBAC Box */
+    .rbac-box {
+      background: linear-gradient(135deg, rgba(45, 212, 191, 0.08), rgba(6, 182, 212, 0.08));
+      border: 2px solid rgba(45, 212, 191, 0.4);
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 15px;
+    }
+    .rbac-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .rbac-header svg {
+      width: 18px;
+      height: 18px;
+      stroke: #2dd4bf;
+    }
+    .rbac-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #2dd4bf;
+    }
+    .rbac-rule {
+      font-size: 12px;
+      color: #94a3b8;
+      margin: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rbac-rule strong {
+      color: #fff;
+      min-width: 70px;
+    }
+    
+    /* Views Grid */
     .views-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
+      margin-top: 12px;
     }
     .view-item {
-      background: rgba(0, 100, 150, 0.2);
-      border: 1px solid rgba(0, 212, 255, 0.3);
-      padding: 8px 12px;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      padding: 8px 10px;
       border-radius: 6px;
-      font-size: 11px;
-      color: #88ccee;
+      font-size: 10px;
+      color: #67e8f9;
       text-align: center;
+      font-weight: 500;
     }
     .view-item.restricted {
-      background: rgba(255, 100, 100, 0.15);
-      border-color: rgba(255, 100, 100, 0.4);
-      color: #ff8888;
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
     }
-    .flow-label {
+    
+    /* Component Grid */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .component-item {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: #94a3b8;
+      text-align: center;
+    }
+    
+    /* Connection Lines */
+    .connection-area {
+      position: absolute;
+      width: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    .connection-line {
+      width: 2px;
+      height: 60px;
+      background: linear-gradient(to bottom, #2dd4bf, #06b6d4);
+    }
+    .connection-label {
+      background: #0a0c10;
+      border: 1px solid rgba(45, 212, 191, 0.5);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 10px;
+      color: #2dd4bf;
+      white-space: nowrap;
+    }
+    
+    /* Horizontal dividers between rows */
+    .section-divider {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      color: #666;
-      font-size: 12px;
-      margin: 10px 0;
+      gap: 15px;
+      margin: 20px 0;
     }
-    .flow-label span {
-      background: rgba(0, 212, 255, 0.1);
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(45, 212, 191, 0.3), transparent);
+    }
+    .divider-label {
+      background: rgba(45, 212, 191, 0.1);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 11px;
+      color: #2dd4bf;
+      font-weight: 600;
+    }
+    
+    /* Layer Label */
+    .layer-label {
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      background: #0a0c10;
+      border: 1px solid rgba(45, 212, 191, 0.4);
       padding: 4px 12px;
       border-radius: 4px;
-      color: #00d4ff;
-    }
-    .rbac-box {
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 100, 170, 0.1));
-      border: 2px solid rgba(0, 212, 255, 0.5);
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 10px;
-    }
-    .rbac-title {
-      font-size: 14px;
+      font-size: 10px;
+      color: #2dd4bf;
       font-weight: 600;
-      color: #00d4ff;
-      margin-bottom: 10px;
+      white-space: nowrap;
     }
-    .rbac-rule {
-      font-size: 12px;
-      color: #aaa;
-      margin: 5px 0;
-    }
-    .rbac-rule strong {
-      color: #fff;
-    }
-    .tech-stack {
+    
+    /* Footer */
+    .footer {
       display: flex;
-      gap: 15px;
-      margin-top: 30px;
       justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
       flex-wrap: wrap;
     }
-    .tech-item {
-      background: rgba(255, 255, 255, 0.05);
+    .footer-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(15, 23, 42, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 8px 16px;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 12px;
-      color: #888;
+      color: #64748b;
+    }
+    .footer-item svg {
+      width: 14px;
+      height: 14px;
+      stroke: #2dd4bf;
+    }
+    
+    /* Shield Icon */
+    .shield-icon {
+      width: 24px;
+      height: 24px;
+      stroke: #2dd4bf;
+      fill: none;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1 class="title">Label iQ - System Architecture</h1>
-    <p class="subtitle">FDA Drug Label AI Assistant | Denodo Hackathon 2025</p>
-    
-    <div class="users-row">
+    <!-- Users Row -->
+    <div class="users-section">
       <div class="user">
-        <div class="user-icon">👤</div>
+        <div class="user-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </div>
         <div class="user-label">Patient</div>
       </div>
       <div class="user">
-        <div class="user-icon">⚕️</div>
+        <div class="user-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/><path d="M12 14v4m-2-2h4"/></svg>
+        </div>
         <div class="user-label">Physician</div>
       </div>
       <div class="user">
-        <div class="user-icon">⚖️</div>
+        <div class="user-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
         <div class="user-label">Judge</div>
       </div>
     </div>
     
-    <div class="arrow-down">▼</div>
-    
-    <div class="layers">
-      <!-- Frontend Layer -->
-      <div class="layer">
-        <div class="badges">
-          <span class="badge">React 18</span>
-          <span class="badge">TypeScript</span>
-          <span class="badge">Vite</span>
-        </div>
-        <div class="layer-header">
-          <div class="layer-icon">🖥️</div>
-          <div>
-            <div class="layer-title">Frontend - Presentation Layer</div>
-            <div class="layer-subtitle">Single Page Application</div>
+    <!-- Main Two-Column Layout -->
+    <div class="main-grid">
+      <!-- Left Column -->
+      <div class="left-column">
+        <!-- Presentation Layer -->
+        <div class="panel">
+          <div class="panel-header">PRESENTATION SPA</div>
+          <div class="badge-row">
+            <span class="tech-badge">React 18</span>
+            <span class="tech-badge">TypeScript</span>
+            <span class="tech-badge">Vite</span>
+          </div>
+          <div class="feature-list">
+            <div class="feature-item">
+              <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg></div>
+              TanStack Query state management
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
+              Shadcn UI components
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+              Real-time AI responses
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+              Role-Based UI filtering
+            </div>
+          </div>
+          <div class="sub-panel">
+            <div class="sub-panel-header">REST API</div>
+            <div class="component-grid">
+              <div class="component-item">POST /api/chat</div>
+              <div class="component-item">Session Maps</div>
+              <div class="component-item">Role Context</div>
+            </div>
           </div>
         </div>
-        <div class="components">
-          <div class="component highlight">Chatbot UI</div>
-          <div class="component highlight">Drug Logo Grid (14 medications)</div>
-          <div class="component highlight">Role Selector</div>
-          <div class="component">TanStack Query</div>
-          <div class="component">Shadcn UI Components</div>
-          <div class="component">TailwindCSS</div>
+        
+        <!-- Section Divider -->
+        <div class="section-divider">
+          <div class="divider-line"></div>
+          <div class="divider-label">TLS 1.3</div>
+          <div class="divider-line"></div>
+        </div>
+        
+        <!-- AI Orchestration Layer -->
+        <div class="panel">
+          <div class="panel-header">AI ORCHESTRATION LAYER</div>
+          <div class="badge-row">
+            <span class="tech-badge">Denodo AI SDK</span>
+            <span class="tech-badge">AWS EC2</span>
+            <span class="tech-badge">Python</span>
+          </div>
+          <div class="sub-panel">
+            <div class="sub-panel-header">LLM - AWS Bedrock Claude 3.5 Sonnet</div>
+            <div class="component-grid">
+              <div class="component-item">RAG Pipeline</div>
+              <div class="component-item">Token processing</div>
+              <div class="component-item">Retrieval-Augmented</div>
+              <div class="component-item">Query Decomposition</div>
+              <div class="component-item">Embedding Model</div>
+              <div class="component-item">Prompt engineering</div>
+              <div class="component-item">Response streaming</div>
+              <div class="component-item">Vector Search</div>
+              <div class="component-item">Context Window</div>
+            </div>
+          </div>
         </div>
       </div>
       
-      <div class="flow-label">
-        <span>POST /api/chat</span> → <span>HTTP/REST</span> → <span>JSON</span>
-      </div>
-      
-      <!-- Backend Layer -->
-      <div class="layer">
-        <div class="badges">
-          <span class="badge">Express.js</span>
-          <span class="badge">Node.js</span>
-          <span class="badge">Zod</span>
-        </div>
-        <div class="layer-header">
-          <div class="layer-icon">⚙️</div>
-          <div>
-            <div class="layer-title">Backend - API Layer</div>
-            <div class="layer-subtitle">REST API Server</div>
+      <!-- Right Column -->
+      <div class="right-column">
+        <!-- Express.js API -->
+        <div class="panel">
+          <div class="panel-header">Express.js API</div>
+          <div class="badge-row">
+            <span class="tech-badge">HTTP/REST</span>
+            <span class="tech-badge">TLS 1.3</span>
+            <span class="tech-badge">RBAC</span>
           </div>
-        </div>
-        <div class="two-column">
-          <div class="components">
-            <div class="component highlight">Request Validation</div>
-            <div class="component highlight">Session Management</div>
-            <div class="component">Error Handling</div>
-            <div class="component">Response Filtering</div>
+          <div class="feature-list">
+            <div class="feature-item">
+              <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+              Zod validation
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+              Session management
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+              Input Validation
+            </div>
           </div>
+          
+          <!-- RBAC Box -->
           <div class="rbac-box">
-            <div class="rbac-title">🔐 RBAC Middleware Engine</div>
+            <div class="rbac-header">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span class="rbac-title">RBAC Middleware Engine</span>
+            </div>
             <div class="rbac-rule"><strong>Patient:</strong> 8 views (excludes master_safety_risk)</div>
-            <div class="rbac-rule"><strong>Physician:</strong> All 9 views</div>
-            <div class="rbac-rule"><strong>Judge:</strong> All 9 views + SQL visibility</div>
+            <div class="rbac-rule"><strong>Physician:</strong> All 9 FDA label views</div>
+            <div class="rbac-rule"><strong>Judge:</strong> All 9 views + SQL query visibility</div>
           </div>
         </div>
-      </div>
-      
-      <div class="flow-label">
-        <span>Basic Auth</span> → <span>Allowed Views List</span> → <span>Question</span>
-      </div>
-      
-      <!-- AI SDK Layer -->
-      <div class="layer">
-        <div class="badges">
-          <span class="badge">AWS EC2</span>
-          <span class="badge">Python</span>
-          <span class="badge">FastAPI</span>
+        
+        <!-- Section Divider -->
+        <div class="section-divider">
+          <div class="divider-line"></div>
+          <div class="divider-label">Basic Auth + SQL Queries</div>
+          <div class="divider-line"></div>
         </div>
-        <div class="layer-header">
-          <div class="layer-icon">🤖</div>
-          <div>
-            <div class="layer-title">Denodo AI SDK - AI Orchestration Layer</div>
-            <div class="layer-subtitle">RAG Pipeline Microservice</div>
+        
+        <!-- Data Virtualization Layer -->
+        <div class="panel">
+          <div class="panel-header">DATA VIRTUALIZATION LAYER</div>
+          <div class="badge-row">
+            <span class="tech-badge">Denodo Agora</span>
+            <span class="tech-badge">labeliq Database</span>
           </div>
-        </div>
-        <div class="components">
-          <div class="component highlight">Query Decomposition</div>
-          <div class="component highlight">Vector Store Search</div>
-          <div class="component highlight">Context Retrieval</div>
-          <div class="component">Embedding Model</div>
-          <div class="component">Prompt Engineering</div>
-          <div class="component">Response Streaming</div>
-        </div>
-      </div>
-      
-      <div class="flow-label">
-        <span>Prompt + Context</span> → <span>AWS Bedrock API</span>
-      </div>
-      
-      <!-- LLM Layer -->
-      <div class="layer">
-        <div class="badges">
-          <span class="badge">AWS Bedrock</span>
-          <span class="badge">Anthropic</span>
-        </div>
-        <div class="layer-header">
-          <div class="layer-icon">🧠</div>
-          <div>
-            <div class="layer-title">Claude 3.5 Sonnet - LLM Layer</div>
-            <div class="layer-subtitle">Large Language Model</div>
+          <div class="feature-list">
+            <div class="feature-item">
+              <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
+              Query Federation
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+              Vector Catalog
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
+              Query Catalog
+            </div>
           </div>
-        </div>
-        <div class="components">
-          <div class="component highlight">Natural Language Generation</div>
-          <div class="component highlight">Medical Knowledge</div>
-          <div class="component">Token Processing</div>
-          <div class="component">Context Window (200K)</div>
-        </div>
-      </div>
-      
-      <div class="flow-label">
-        <span>SQL Queries</span> → <span>Federated Execution</span>
-      </div>
-      
-      <!-- Data Layer -->
-      <div class="layer">
-        <div class="badges">
-          <span class="badge">Denodo Agora</span>
-          <span class="badge">Data Virtualization</span>
-        </div>
-        <div class="layer-header">
-          <div class="layer-icon">🗄️</div>
-          <div>
-            <div class="layer-title">Denodo Agora - Data Virtualization Layer</div>
-            <div class="layer-subtitle">labeliq Database - 9 FDA Drug Label Views</div>
+          
+          <!-- Views Grid -->
+          <div class="sub-panel">
+            <div class="sub-panel-header">9 FDA Drug Label Views</div>
+            <div class="views-grid">
+              <div class="view-item">drug_purpose_and_identity</div>
+              <div class="view-item">clinical_pharmacology</div>
+              <div class="view-item">dosing_and_administration</div>
+              <div class="view-item">interactions</div>
+              <div class="view-item restricted">master_safety_risk</div>
+              <div class="view-item">overdose_emergency</div>
+              <div class="view-item">product_and_label_index</div>
+              <div class="view-item">specific_population</div>
+              <div class="view-item">storage_and_handling</div>
+            </div>
           </div>
-        </div>
-        <div class="views-grid">
-          <div class="view-item">drug_purpose_and_identity</div>
-          <div class="view-item">clinical_pharmacology</div>
-          <div class="view-item">dosing_and_administration</div>
-          <div class="view-item">interactions</div>
-          <div class="view-item restricted">master_safety_risk ⚠️</div>
-          <div class="view-item">overdose_emergency</div>
-          <div class="view-item">product_and_label_index</div>
-          <div class="view-item">specific_population</div>
-          <div class="view-item">storage_and_handling</div>
         </div>
       </div>
     </div>
     
-    <div class="tech-stack">
-      <div class="tech-item">🔒 TLS 1.3 Encryption</div>
-      <div class="tech-item">🛡️ Input Validation</div>
-      <div class="tech-item">🔐 Role-Based Access Control</div>
-      <div class="tech-item">📊 Real-time Metadata</div>
-      <div class="tech-item">⚡ Sub-second Response</div>
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-item">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        TLS 1.3 Encryption
+      </div>
+      <div class="footer-item">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Role-Based Access Control
+      </div>
+      <div class="footer-item">
+        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+        Input Validation
+      </div>
+      <div class="footer-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Sub-second Response
+      </div>
     </div>
   </div>
 </body>
