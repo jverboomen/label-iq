@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label iQ - System Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            padding: 30px 40px;
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 26px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+        
+        .header .subtitle {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        /* Main Layout */
+        .architecture {
+            display: grid;
+            grid-template-columns: 180px 60px 200px 60px 220px 60px 200px 60px 180px;
+            align-items: start;
+            gap: 0;
+            position: relative;
+        }
+        
+        .column-header {
+            font-size: 11px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        
+        /* Source Boxes */
+        .source-box {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .source-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            background: #f0f4f8;
+        }
+        
+        .source-text {
+            font-size: 12px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .source-label {
+            font-size: 10px;
+            color: #888;
+            margin-top: 2px;
+        }
+        
+        /* Arrow Columns */
+        .arrow-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 100px;
+            position: relative;
+        }
+        
+        .arrow-line {
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ccc 0%, #ff6b35 50%, #ccc 100%);
+            position: relative;
+        }
+        
+        .arrow-line::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -5px;
+            border: 7px solid transparent;
+            border-left-color: #ff6b35;
+        }
+        
+        .flow-num {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 28px;
+            height: 28px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(255, 107, 53, 0.4);
+        }
+        
+        .flow-label {
+            position: absolute;
+            top: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            color: #666;
+            white-space: nowrap;
+            text-align: center;
+            background: #f8f9fa;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        /* AWS Box */
+        .aws-box {
+            background: #e8f5e9;
+            border: 2px dashed #66bb6a;
+            border-radius: 10px;
+            padding: 16px;
+        }
+        
+        .aws-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #a5d6a7;
+        }
+        
+        .aws-title {
+            font-weight: 600;
+            color: #2e7d32;
+            font-size: 13px;
+        }
+        
+        .aws-item {
+            background: white;
+            border: 1px solid #c8e6c9;
+            padding: 10px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .aws-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .aws-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: white;
+        }
+        
+        .aws-icon.bedrock { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .aws-icon.ec2 { background: #ff9800; }
+        .aws-icon.chroma { background: #10b981; }
+        
+        .aws-text {
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .aws-label {
+            font-size: 9px;
+            color: #666;
+        }
+        
+        /* Denodo Box */
+        .denodo-box {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            border-radius: 10px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.25);
+        }
+        
+        .denodo-logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+        
+        .denodo-logo span { color: rgba(255,255,255,0.6); }
+        
+        .denodo-subtitle {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-bottom: 16px;
+        }
+        
+        .denodo-features {
+            background: rgba(255,255,255,0.15);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .denodo-feature {
+            font-size: 10px;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .denodo-feature:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        /* App Box */
+        .app-box {
+            background: #1a365d;
+            border-radius: 10px;
+            padding: 16px;
+            color: white;
+        }
+        
+        .app-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+        
+        .app-logo {
+            width: 38px;
+            height: 38px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .app-title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .app-subtitle {
+            font-size: 10px;
+            opacity: 0.7;
+        }
+        
+        .app-feature {
+            background: rgba(255,255,255,0.08);
+            padding: 8px 10px;
+            border-radius: 5px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        
+        .app-feature:last-child { margin-bottom: 0; }
+        
+        /* User Boxes */
+        .user-box {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .user-box.patient { border-color: #4caf50; }
+        .user-box.physician { border-color: #2196f3; }
+        .user-box.judge { border-color: #9c27b0; }
+        
+        .user-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+        }
+        
+        .user-box.patient .user-icon { background: #4caf50; }
+        .user-box.physician .user-icon { background: #2196f3; }
+        .user-box.judge .user-icon { background: #9c27b0; }
+        
+        .user-role {
+            font-weight: 600;
+            font-size: 13px;
+            color: #333;
+        }
+        
+        .user-access {
+            font-size: 10px;
+            color: #666;
+        }
+        
+        /* Process Flow Section */
+        .process-flow {
+            margin-top: 50px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .process-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+        }
+        
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 60px;
+            right: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b35, #f7931e, #ff6b35);
+            border-radius: 2px;
+            z-index: 0;
+        }
+        
+        .process-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 160px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.35);
+        }
+        
+        .step-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+        }
+        
+        .step-desc {
+            font-size: 11px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Data Flow Detail */
+        .data-flow-detail {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .flow-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            border-left: 4px solid #ff6b35;
+        }
+        
+        .flow-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .flow-card-num {
+            width: 24px;
+            height: 24px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .flow-card-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .flow-card-content {
+            font-size: 11px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .flow-card-protocol {
+            margin-top: 10px;
+            display: inline-block;
+            background: #1a365d;
+            color: white;
+            font-size: 9px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        /* Legend */
+        .legend {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #555;
+        }
+        
+        .legend-color {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+        }
+        
+        .legend-color.denodo { background: linear-gradient(135deg, #ff6b35, #f7931e); }
+        .legend-color.aws { background: #e8f5e9; border: 2px dashed #66bb6a; }
+        .legend-color.app { background: #1a365d; }
+        .legend-color.flow { background: #ff6b35; border-radius: 50%; }
+        
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 11px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Label iQ - System Architecture</h1>
+            <div class="subtitle">FDA Drug Label AI Assistant | Denodo Data Virtualization Hackathon 2025</div>
+        </div>
+        
+        <!-- Main Architecture Diagram -->
+        <div class="architecture">
+            <!-- Data Sources -->
+            <div>
+                <div class="column-header">Data Sources</div>
+                <div class="source-box">
+                    <div class="source-icon">📋</div>
+                    <div>
+                        <div class="source-text">FDA Labels</div>
+                        <div class="source-label">Prescribing Info</div>
+                    </div>
+                </div>
+                <div class="source-box">
+                    <div class="source-icon">💊</div>
+                    <div>
+                        <div class="source-text">14 Drugs</div>
+                        <div class="source-label">Brand Names</div>
+                    </div>
+                </div>
+                <div class="source-box">
+                    <div class="source-icon">📊</div>
+                    <div>
+                        <div class="source-text">9 Views</div>
+                        <div class="source-label">Semantic Layer</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Arrow 1 -->
+            <div class="arrow-col">
+                <div class="flow-num">1</div>
+                <div class="arrow-line"></div>
+                <div class="flow-label">JDBC</div>
+            </div>
+            
+            <!-- AWS -->
+            <div>
+                <div class="column-header">AWS Services</div>
+                <div class="aws-box">
+                    <div class="aws-header">
+                        <span>☁️</span>
+                        <div class="aws-title">AWS Cloud</div>
+                    </div>
+                    <div class="aws-item">
+                        <div class="aws-icon bedrock">🧠</div>
+                        <div>
+                            <div class="aws-text">AWS Bedrock</div>
+                            <div class="aws-label">Claude 3.5 Sonnet</div>
+                        </div>
+                    </div>
+                    <div class="aws-item">
+                        <div class="aws-icon ec2">🖥️</div>
+                        <div>
+                            <div class="aws-text">Amazon EC2</div>
+                            <div class="aws-label">AI SDK Host</div>
+                        </div>
+                    </div>
+                    <div class="aws-item">
+                        <div class="aws-icon chroma">📚</div>
+                        <div>
+                            <div class="aws-text">ChromaDB</div>
+                            <div class="aws-label">Vector Store</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Arrow 2 -->
+            <div class="arrow-col">
+                <div class="flow-num">2</div>
+                <div class="arrow-line"></div>
+                <div class="flow-label">VQL</div>
+            </div>
+            
+            <!-- Denodo -->
+            <div>
+                <div class="column-header">Data Virtualization</div>
+                <div class="denodo-box">
+                    <div class="denodo-logo">denodo<span>*</span></div>
+                    <div class="denodo-subtitle">Agora Cloud Platform</div>
+                    <div class="denodo-features">
+                        <div class="denodo-feature">🔗 Unified Data Access</div>
+                        <div class="denodo-feature">🤖 AI SDK Integration</div>
+                        <div class="denodo-feature">📝 VQL Query Engine</div>
+                        <div class="denodo-feature">🔐 Enterprise Security</div>
+                        <div class="denodo-feature">⚡ Real-Time Queries</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Arrow 3 -->
+            <div class="arrow-col">
+                <div class="flow-num">3</div>
+                <div class="arrow-line"></div>
+                <div class="flow-label">REST API</div>
+            </div>
+            
+            <!-- App -->
+            <div>
+                <div class="column-header">Application</div>
+                <div class="app-box">
+                    <div class="app-header">
+                        <div class="app-logo">💊</div>
+                        <div>
+                            <div class="app-title">Label iQ</div>
+                            <div class="app-subtitle">FDA Assistant</div>
+                        </div>
+                    </div>
+                    <div class="app-feature">💬 Natural Language Chat</div>
+                    <div class="app-feature">🎯 Role-Based Access</div>
+                    <div class="app-feature">📱 Responsive UI</div>
+                    <div class="app-feature">⚡ Real-Time Response</div>
+                </div>
+            </div>
+            
+            <!-- Arrow 4 -->
+            <div class="arrow-col">
+                <div class="flow-num">4</div>
+                <div class="arrow-line"></div>
+                <div class="flow-label">HTTPS</div>
+            </div>
+            
+            <!-- Users -->
+            <div>
+                <div class="column-header">Consumers</div>
+                <div class="user-box patient">
+                    <div class="user-icon">👤</div>
+                    <div>
+                        <div class="user-role">Patient</div>
+                        <div class="user-access">8 of 9 views</div>
+                    </div>
+                </div>
+                <div class="user-box physician">
+                    <div class="user-icon">👨‍⚕️</div>
+                    <div>
+                        <div class="user-role">Physician</div>
+                        <div class="user-access">All 9 views</div>
+                    </div>
+                </div>
+                <div class="user-box judge">
+                    <div class="user-icon">⚖️</div>
+                    <div>
+                        <div class="user-role">Judge</div>
+                        <div class="user-access">All + SQL</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Process Flow Section -->
+        <div class="process-flow">
+            <div class="process-title">Data Flow Process</div>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">User Question</div>
+                    <div class="step-desc">Natural language query submitted through chat interface</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">AI Processing</div>
+                    <div class="step-desc">Denodo AI SDK generates VQL using Claude 3.5 Sonnet</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Data Retrieval</div>
+                    <div class="step-desc">VQL executed against Denodo Agora virtual views</div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Response</div>
+                    <div class="step-desc">AI synthesizes results into patient-friendly answer</div>
+                </div>
+            </div>
+            
+            <!-- Detailed Flow Cards -->
+            <div class="data-flow-detail">
+                <div class="flow-card">
+                    <div class="flow-card-header">
+                        <div class="flow-card-num">1</div>
+                        <div class="flow-card-title">Input</div>
+                    </div>
+                    <div class="flow-card-content">
+                        User types question like "What is ENTRESTO used for?" with role context (Patient/Physician/Judge)
+                    </div>
+                    <div class="flow-card-protocol">HTTPS / TLS 1.3</div>
+                </div>
+                <div class="flow-card">
+                    <div class="flow-card-header">
+                        <div class="flow-card-num">2</div>
+                        <div class="flow-card-title">AI SDK</div>
+                    </div>
+                    <div class="flow-card-content">
+                        ChromaDB semantic search + Claude 3.5 generates optimized VQL query with table restrictions
+                    </div>
+                    <div class="flow-card-protocol">REST API / JSON</div>
+                </div>
+                <div class="flow-card">
+                    <div class="flow-card-header">
+                        <div class="flow-card-num">3</div>
+                        <div class="flow-card-title">Denodo</div>
+                    </div>
+                    <div class="flow-card-content">
+                        VQL executed against labeliq database, queries 9 semantic views for FDA drug information
+                    </div>
+                    <div class="flow-card-protocol">JDBC / VQL</div>
+                </div>
+                <div class="flow-card">
+                    <div class="flow-card-header">
+                        <div class="flow-card-num">4</div>
+                        <div class="flow-card-title">Output</div>
+                    </div>
+                    <div class="flow-card-content">
+                        Response filtered by role, formatted as Markdown with model metadata and response time
+                    </div>
+                    <div class="flow-card-protocol">HTTPS / Markdown</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color denodo"></div>
+                <span>Denodo Platform</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color aws"></div>
+                <span>AWS Cloud</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color app"></div>
+                <span>Label iQ App</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color flow"></div>
+                <span>Data Flow</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Massive Insights | Denodo Hackathon 2025 | December 2024
+        </div>
+    </div>
+</body>
+</html>
