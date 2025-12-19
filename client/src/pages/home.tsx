@@ -41,6 +41,7 @@ function renderMarkdown(text: string): string {
   const lines = result.split('\n');
   const processedLines: string[] = [];
   let inList = false;
+  let listType: 'ul' | 'ol' | null = null;
   
   for (const line of lines) {
     // Check for bullet points
@@ -48,39 +49,40 @@ function renderMarkdown(text: string): string {
     const numberMatch = line.match(/^\d+\.\s+(.+)$/);
     
     if (bulletMatch) {
-      if (!inList) {
-        processedLines.push('<ul class="list-disc ml-4 space-y-1">');
+      if (!inList || listType !== 'ul') {
+        if (inList) processedLines.push(listType === 'ol' ? '</ol>' : '</ul>');
+        processedLines.push('<ul class="list-disc ml-4">');
         inList = true;
+        listType = 'ul';
       }
       processedLines.push(`<li>${bulletMatch[1]}</li>`);
     } else if (numberMatch) {
-      if (!inList) {
-        processedLines.push('<ol class="list-decimal ml-4 space-y-1">');
+      if (!inList || listType !== 'ol') {
+        if (inList) processedLines.push(listType === 'ol' ? '</ol>' : '</ul>');
+        processedLines.push('<ol class="list-decimal ml-4">');
         inList = true;
+        listType = 'ol';
       }
       processedLines.push(`<li>${numberMatch[1]}</li>`);
     } else {
       if (inList) {
-        // Close the list - check if we started with ol or ul
-        const hasOl = processedLines.some(l => l.includes('<ol'));
-        processedLines.push(hasOl ? '</ol>' : '</ul>');
+        processedLines.push(listType === 'ol' ? '</ol>' : '</ul>');
         inList = false;
+        listType = null;
       }
-      // Add paragraph break for empty lines, otherwise just the content
-      if (line.trim() === '') {
-        processedLines.push('<br />');
-      } else {
-        processedLines.push(line);
+      // Skip empty lines, just add content
+      if (line.trim() !== '') {
+        processedLines.push(`<p class="mb-2">${line}</p>`);
       }
     }
   }
   
   // Close any open list
   if (inList) {
-    processedLines.push('</ul>');
+    processedLines.push(listType === 'ol' ? '</ol>' : '</ul>');
   }
   
-  return processedLines.join('\n');
+  return processedLines.join('');
 }
 
 // Function to detect drug names in message content
@@ -657,7 +659,7 @@ export default function HomePage() {
                       }`}
                     >
                       <div 
-                        className="text-sm break-words prose prose-sm max-w-none dark:prose-invert"
+                        className="text-sm break-words [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0.5 [&_br]:hidden [&_br+br]:block"
                         dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }}
                       />
                       
