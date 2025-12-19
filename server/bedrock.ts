@@ -81,12 +81,6 @@ function formatQuestionWithContext(messages: ChatMessage[]): string {
  * Detects when Denodo AI SDK returns technical schema information instead of drug information
  */
 function filterTechnicalResponse(answer: string): string {
-  // Remove the SDK's generic LLM disclaimer
-  let filteredAnswer = answer.replace(
-    /\n*DISCLAIMER:\s*This response has been generated based on an LLM's interpretation of the data and may not be accurate\.?\n*/gi,
-    ''
-  ).trim();
-  
   // Patterns that indicate technical schema responses (not patient-friendly)
   const technicalPatterns = [
     /based on the provided schema/i,
@@ -107,7 +101,7 @@ function filterTechnicalResponse(answer: string): string {
   ];
   
   // Check if response contains technical database language
-  const isTechnicalResponse = technicalPatterns.some(pattern => pattern.test(filteredAnswer));
+  const isTechnicalResponse = technicalPatterns.some(pattern => pattern.test(answer));
   
   if (isTechnicalResponse) {
     console.log('[Response Filter] Detected technical schema response - replacing with patient-friendly message');
@@ -122,7 +116,7 @@ function filterTechnicalResponse(answer: string): string {
            "• What are the warnings or precautions?";
   }
   
-  return filteredAnswer;
+  return answer;
 }
 
 /**
