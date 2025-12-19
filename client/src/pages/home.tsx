@@ -298,7 +298,7 @@ export default function HomePage() {
               <CardTitle className="flex items-center gap-2">
                 <span className="font-bold text-[#007CBA]">Label iQ</span>
               </CardTitle>
-              <CardDescription>FDA Drug Label AI Assistant</CardDescription>
+              <CardDescription>Drug Label AI Assistant</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
             <div className="text-center mb-6">
@@ -469,15 +469,10 @@ export default function HomePage() {
       )}
 
       <div className="flex-1 flex flex-col">
-        {/* FDA Official Header */}
+        {/* App Header */}
         <header className="bg-[#007CBA] shadow-md flex items-center justify-between px-8 py-4">
           <div className="flex items-center gap-4">
-            <img 
-              src="/fda-logo-full.svg" 
-              alt="U.S. Food and Drug Administration" 
-              className="h-10 md:h-12"
-              data-testid="img-fda-logo"
-            />
+            <span className="text-white text-xl font-bold" data-testid="text-header-logo">Label iQ</span>
           </div>
           <div className="flex items-center gap-4">
             <div className="bg-white/20 px-3 py-1.5 rounded" data-testid="badge-user-role">
@@ -528,7 +523,7 @@ export default function HomePage() {
                   Select a Medication
                 </h2>
                 <p className="text-muted-foreground">
-                  Choose a drug to start asking questions about its FDA label information
+                  Choose a drug to start asking questions about its label information
                 </p>
               </div>
               <div className="grid grid-cols-3 md:grid-cols-5 gap-3 max-w-4xl">
