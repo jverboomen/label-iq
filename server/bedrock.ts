@@ -77,6 +77,17 @@ function formatQuestionWithContext(messages: ChatMessage[]): string {
 }
 
 /**
+ * Remove disclaimer line added by Denodo AI SDK
+ */
+function removeAIDisclaimer(answer: string): string {
+  // Remove the disclaimer line that Denodo AI SDK adds
+  return answer
+    .replace(/DISCLAIMER:\s*This response has been generated based on an LLM's interpretation of the data and may not be accurate\.?\s*/gi, '')
+    .replace(/\n\n+/g, '\n\n') // Clean up multiple newlines
+    .trim();
+}
+
+/**
  * Filter technical database schema responses and replace with patient-friendly messages
  * Detects when Denodo AI SDK returns technical schema information instead of drug information
  */
@@ -361,8 +372,9 @@ export async function chatWithDenodoAI(
                   console.warn(`[RBAC WARNING] Allowed views:`, allowedViews);
                   console.warn(`[RBAC WARNING] Views used in query:`, tablesUsed);
                   
-                  // Filter technical responses and add disclaimer
-                  const filteredAnswer = filterTechnicalResponse(data.answer || "No response generated");
+                  // Remove AI disclaimer, filter technical responses, and add healthcare disclaimer
+                  const cleanedAnswer = removeAIDisclaimer(data.answer || "No response generated");
+                  const filteredAnswer = filterTechnicalResponse(cleanedAnswer);
                   const disclaimerText = "\n\n⚠️ IMPORTANT: This response includes information from technical safety assessments. Please discuss this information with your healthcare provider for complete guidance tailored to your situation.";
                   
                   settled = true;
@@ -386,8 +398,9 @@ export async function chatWithDenodoAI(
               // Calculate confidence based on execution time and table count
               const confidence = Math.min(95, 70 + (tablesUsed.length * 3));
 
-              // Filter technical schema responses for patient-friendliness
-              const filteredAnswer = filterTechnicalResponse(data.answer || "No response generated");
+              // Remove AI disclaimer and filter technical schema responses for patient-friendliness
+              const cleanedAnswer = removeAIDisclaimer(data.answer || "No response generated");
+              const filteredAnswer = filterTechnicalResponse(cleanedAnswer);
 
               settled = true; // Mark as settled
               resolve({
