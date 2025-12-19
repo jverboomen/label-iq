@@ -28,6 +28,23 @@ const DRUG_LOGOS: Record<string, string> = {
   "Linzess": "/drug-logos/LINZESS_LOGO.svg",
 };
 
+// Simple Markdown to HTML converter for AI responses
+function renderMarkdown(text: string): string {
+  return text
+    // Bold: **text** or __text__
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/__(.+?)__/g, '<strong>$1</strong>')
+    // Italic: *text* or _text_
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/_(.+?)_/g, '<em>$1</em>')
+    // Bullet points: • or - at start of line
+    .replace(/^[•\-]\s+(.+)$/gm, '<li class="ml-4">$1</li>')
+    // Numbered lists: 1. 2. etc at start of line
+    .replace(/^\d+\.\s+(.+)$/gm, '<li class="ml-4 list-decimal">$1</li>')
+    // Line breaks
+    .replace(/\n/g, '<br />');
+}
+
 // Function to detect drug names in message content
 function detectDrugLogos(content: string): string[] {
   const detectedLogos = new Set<string>();
@@ -610,9 +627,10 @@ export default function HomePage() {
                           : "bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700"
                       }`}
                     >
-                      <p className="text-sm whitespace-pre-wrap break-words">
-                        {msg.content}
-                      </p>
+                      <div 
+                        className="text-sm break-words prose prose-sm max-w-none dark:prose-invert"
+                        dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }}
+                      />
                       
                       {/* Display metadata and data quality */}
                       {msg.role === "assistant" && (
