@@ -40,61 +40,121 @@
       color: #666;
     }
     
+    .role-nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    
+    .role-nav a {
+      padding: 12px 24px;
+      background: white;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #007CBA;
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      transition: all 0.2s;
+    }
+    
+    .role-nav a:hover {
+      background: #007CBA;
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .role-nav a.patient { border-left: 4px solid #28a745; }
+    .role-nav a.physician { border-left: 4px solid #007CBA; }
+    .role-nav a.judge { border-left: 4px solid #6f42c1; }
+    
+    .role-section {
+      margin-bottom: 60px;
+    }
+    
+    .role-header {
+      text-align: center;
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      color: white;
+    }
+    
+    .role-header.patient {
+      background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+    }
+    
+    .role-header.physician {
+      background: linear-gradient(135deg, #007CBA 0%, #005a8c 100%);
+    }
+    
+    .role-header.judge {
+      background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+    }
+    
+    .role-header h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    
+    .role-header p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+    }
+    
     .step {
       background: white;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       overflow: hidden;
     }
     
     .step-header {
-      background: linear-gradient(135deg, #007CBA 0%, #005a8c 100%);
-      color: white;
-      padding: 20px 30px;
+      background: #f8f9fa;
+      padding: 15px 25px;
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
+      border-bottom: 1px solid #eee;
     }
     
+    .step-header.patient { border-left: 4px solid #28a745; }
+    .step-header.physician { border-left: 4px solid #007CBA; }
+    .step-header.judge { border-left: 4px solid #6f42c1; }
+    
     .step-number {
-      background: rgba(255,255,255,0.2);
-      width: 40px;
-      height: 40px;
+      background: #007CBA;
+      color: white;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 0.9rem;
     }
     
+    .step-header.patient .step-number { background: #28a745; }
+    .step-header.physician .step-number { background: #007CBA; }
+    .step-header.judge .step-number { background: #6f42c1; }
+    
     .step-title {
-      font-size: 1.4rem;
+      font-size: 1.1rem;
       font-weight: 600;
+      color: #333;
     }
     
     .step-content {
-      padding: 30px;
+      padding: 25px;
     }
     
     .step-description {
       margin-bottom: 20px;
       line-height: 1.6;
-      color: #444;
-    }
-    
-    .step-description ul {
-      margin-left: 20px;
-      margin-top: 10px;
-    }
-    
-    .step-description li {
-      margin-bottom: 8px;
-    }
-    
-    .step-description strong {
-      color: #007CBA;
+      color: #555;
     }
     
     .screenshot {
@@ -118,7 +178,7 @@
     
     .credentials-table th,
     .credentials-table td {
-      padding: 12px 15px;
+      padding: 10px 15px;
       text-align: left;
       border-bottom: 1px solid #eee;
     }
@@ -131,28 +191,49 @@
     
     .credentials-table code {
       background: #f0f4f8;
-      padding: 3px 8px;
+      padding: 2px 6px;
       border-radius: 4px;
       font-family: 'Monaco', 'Consolas', monospace;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
     
     .highlight-box {
       background: #e8f4fc;
       border-left: 4px solid #007CBA;
-      padding: 15px 20px;
+      padding: 12px 16px;
       margin: 15px 0;
       border-radius: 0 8px 8px 0;
+      font-size: 0.95rem;
     }
     
-    .highlight-box.tip {
+    .highlight-box.patient {
       background: #e8f8e8;
       border-left-color: #28a745;
     }
     
-    .highlight-box.warning {
-      background: #fff8e6;
-      border-left-color: #ffc107;
+    .highlight-box.judge {
+      background: #f3e8fc;
+      border-left-color: #6f42c1;
+    }
+    
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 15px 0;
+    }
+    
+    .feature-list li {
+      padding: 8px 0;
+      padding-left: 25px;
+      position: relative;
+    }
+    
+    .feature-list li::before {
+      content: ">";
+      position: absolute;
+      left: 0;
+      color: #28a745;
+      font-weight: bold;
     }
     
     footer {
@@ -171,21 +252,10 @@
     }
     
     @media (max-width: 768px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-      
-      .step-header {
-        padding: 15px 20px;
-      }
-      
-      .step-title {
-        font-size: 1.1rem;
-      }
-      
-      .step-content {
-        padding: 20px;
-      }
+      h1 { font-size: 1.8rem; }
+      .role-header h2 { font-size: 1.5rem; }
+      .step-content { padding: 15px; }
+      .role-nav { flex-direction: column; align-items: center; }
     }
   </style>
 </head>
@@ -196,186 +266,279 @@
       <p class="subtitle">Drug Label AI Assistant - Powered by Denodo AI SDK</p>
     </header>
 
-    <!-- Step 1: Login Screen -->
-    <div class="step">
-      <div class="step-header">
-        <div class="step-number">1</div>
-        <div class="step-title">Login Screen</div>
-      </div>
-      <div class="step-content">
-        <div class="step-description">
-          <p>When you first visit Label iQ, you'll see the login dialog with role-based access control:</p>
-          <ul>
-            <li><strong>Patient</strong> - Basic drug information access</li>
-            <li><strong>Physician</strong> - Full access to all drug data</li>
-            <li><strong>Judge</strong> - Full access + SQL query visibility</li>
-          </ul>
-        </div>
-        <div class="screenshot">
-          <img src="/demo-screenshots/step1_login_screen.png" alt="Login Screen">
-        </div>
-      </div>
-    </div>
+    <nav class="role-nav">
+      <a href="#patient" class="patient">Patient Walkthrough</a>
+      <a href="#physician" class="physician">Physician Walkthrough</a>
+      <a href="#judge" class="judge">Judge Walkthrough</a>
+    </nav>
 
-    <!-- Step 2: Role Selection -->
-    <div class="step">
-      <div class="step-header">
-        <div class="step-number">2</div>
-        <div class="step-title">Role Selection</div>
+    <!-- ========== PATIENT WALKTHROUGH ========== -->
+    <section id="patient" class="role-section">
+      <div class="role-header patient">
+        <h2>Patient Walkthrough</h2>
+        <p>Basic drug information access with patient-friendly filtering</p>
       </div>
-      <div class="step-content">
-        <div class="step-description">
-          <p>Click the role dropdown to select your access level. Each role has different permissions for viewing drug information.</p>
-          <div class="highlight-box">
-            For this demo, we'll use the <strong>Physician</strong> role which provides full access to all 9 database views.
+
+      <div class="step">
+        <div class="step-header patient">
+          <div class="step-number">1</div>
+          <div class="step-title">Login as Patient</div>
+        </div>
+        <div class="step-content">
+          <div class="step-description">
+            <p>Select "Patient" from the role dropdown and enter credentials:</p>
+            <table class="credentials-table">
+              <tr><th>Username</th><td><code>patient</code></td></tr>
+              <tr><th>Password</th><td><code>patient</code></td></tr>
+            </table>
+          </div>
+          <div class="screenshot">
+            <img src="/demo-screenshots/patient_login.png" alt="Patient Login">
           </div>
         </div>
-        <div class="screenshot">
-          <img src="/demo-screenshots/step2_role_dropdown.png" alt="Role Selection Dropdown">
+      </div>
+
+      <div class="step">
+        <div class="step-header patient">
+          <div class="step-number">2</div>
+          <div class="step-title">Drug Selection Grid</div>
+        </div>
+        <div class="step-content">
+          <div class="step-description">
+            <p>After login, you see the drug grid with a <strong>"Patient View"</strong> badge indicating your access level.</p>
+            <div class="highlight-box patient">
+              Patient role has access to 8 of 9 database views. Technical risk assessments are filtered with a disclaimer.
+            </div>
+          </div>
+          <div class="screenshot">
+            <img src="/demo-screenshots/patient_grid.png" alt="Patient Drug Grid">
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Step 3: Enter Credentials -->
-    <div class="step">
-      <div class="step-header">
-        <div class="step-number">3</div>
-        <div class="step-title">Enter Credentials</div>
+      <div class="step">
+        <div class="step-header patient">
+          <div class="step-number">3</div>
+          <div class="step-title">AI Response</div>
+        </div>
+        <div class="step-content">
+          <div class="step-description">
+            <p>The AI provides clear, patient-friendly drug information. If restricted data was accessed, a disclaimer is shown advising to consult a healthcare provider.</p>
+            <ul class="feature-list">
+              <li>Clear, readable drug information</li>
+              <li>Data Sources shown below response</li>
+              <li>Disclaimer if technical data included</li>
+            </ul>
+          </div>
+          <div class="screenshot">
+            <img src="/demo-screenshots/patient_response.png" alt="Patient Response">
+          </div>
+        </div>
       </div>
-      <div class="step-content">
-        <div class="step-description">
-          <p>Enter your username and password to sign in. Credentials match the role name:</p>
-          <table class="credentials-table">
+    </section>
+
+    <!-- ========== PHYSICIAN WALKTHROUGH ========== -->
+    <section id="physician" class="role-section">
+      <div class="role-header physician">
+        <h2>Physician Walkthrough</h2>
+        <p>Full access to all drug data and clinical information</p>
+      </div>
+
+      <div class="step">
+        <div class="step-header physician">
+          <div class="step-number">1</div>
+          <div class="step-title">Login as Physician</div>
+        </div>
+        <div class="step-content">
+          <div class="step-description">
+            <p>Select "Physician" from the role dropdown and enter credentials:</p>
+            <table class="credentials-table">
+              <tr><th>Username</th><td><code>physician</code></td></tr>
+              <tr><th>Password</th><td><code>physician</code></td></tr>
+            </table>
+          </div>
+          <div class="screenshot">
+            <img src="/demo-screenshots/physician_login.png" alt="Physician Login">
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-header physician">
+          <div class="step-number">2</div>
+          <div class="step-title">Drug Selection Grid</div>
+        </div>
+        <div class="step-content">
+          <div class="step-description">
+            <p>The Physician view shows the drug grid without any access restrictions badge.</p>
+            <div class="highlight-box">
+              Physicians have full access to all 9 database views including clinical details and safety assessments.
+            </div>
+          </div>
+          <div class="screenshot">
+            <img src="/demo-screenshots/physician_grid.png" alt="Physician Drug Grid">
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-header physician">
+          <div class="step-number">3</div>
+          <div class="step-title">Complete AI Response</div>
+        </div>
+        <div class="step-content">
+          <div class="step-description">
+            <p>Physicians receive complete drug information with all data sources displayed. No content is filtered or restricted.</p>
+            <ul class="feature-list">
+              <li>Full clinical drug information</li>
+              <li>All Data Sources visible</li>
+              <li>Complete safety and dosing details</li>
+              <li>No disclaimers or restrictions</li>
+            </ul>
+          </div>
+          <div class="screenshot">
+            <img src="/demo-screenshots/physician_response.png" alt="Physician Response">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== JUDGE WALKTHROUGH ========== -->
+    <section id="judge" class="role-section">
+      <div class="role-header judge">
+        <h2>Judge Walkthrough</h2>
+        <p>Full access plus SQL query visibility for technical evaluation</p>
+      </div>
+
+      <div class="step">
+        <div class="step-header judge">
+          <div class="step-number">1</div>
+          <div class="step-title">Login as Judge</div>
+        </div>
+        <div class="step-content">
+          <div class="step-description">
+            <p>Select "Judge" from the role dropdown and enter credentials:</p>
+            <table class="credentials-table">
+              <tr><th>Username</th><td><code>judge</code></td></tr>
+              <tr><th>Password</th><td><code>judge</code></td></tr>
+            </table>
+          </div>
+          <div class="screenshot">
+            <img src="/demo-screenshots/judge_login.png" alt="Judge Login">
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-header judge">
+          <div class="step-number">2</div>
+          <div class="step-title">Drug Selection Grid</div>
+        </div>
+        <div class="step-content">
+          <div class="step-description">
+            <p>The Judge view shows the same drug grid as Physician with full access to all data.</p>
+            <div class="highlight-box judge">
+              Judges have the same data access as Physicians, plus the ability to view generated SQL queries.
+            </div>
+          </div>
+          <div class="screenshot">
+            <img src="/demo-screenshots/judge_grid.png" alt="Judge Drug Grid">
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-header judge">
+          <div class="step-number">3</div>
+          <div class="step-title">AI Response with SQL Query</div>
+        </div>
+        <div class="step-content">
+          <div class="step-description">
+            <p>Judges see a "View SQL Query" button below the response. Click to expand and enter password to view the actual SQL generated by the AI.</p>
+            <ul class="feature-list">
+              <li>Full drug information like Physician</li>
+              <li>SQL Query section (expandable)</li>
+              <li>Password-protected SQL view</li>
+            </ul>
+          </div>
+          <div class="screenshot">
+            <img src="/demo-screenshots/judge_response.png" alt="Judge Response">
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-header judge">
+          <div class="step-number">4</div>
+          <div class="step-title">View SQL Query</div>
+        </div>
+        <div class="step-content">
+          <div class="step-description">
+            <p>Click "View SQL Query" and enter the password <code>denodo</code> to see the actual SQL generated by the Denodo AI SDK.</p>
+            <div class="highlight-box judge">
+              This feature allows judges to evaluate the AI's query generation and understand how natural language is translated to SQL.
+            </div>
+          </div>
+          <div class="screenshot">
+            <img src="/demo-screenshots/judge_sql.png" alt="Judge SQL View">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SUMMARY ========== -->
+    <section class="role-section">
+      <div class="step">
+        <div class="step-header">
+          <div class="step-number" style="background: #333;">i</div>
+          <div class="step-title">Role Comparison Summary</div>
+        </div>
+        <div class="step-content">
+          <table class="credentials-table" style="text-align: center;">
             <thead>
               <tr>
-                <th>Role</th>
-                <th>Username</th>
-                <th>Password</th>
+                <th>Feature</th>
+                <th style="color: #28a745;">Patient</th>
+                <th style="color: #007CBA;">Physician</th>
+                <th style="color: #6f42c1;">Judge</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Patient</td>
-                <td><code>patient</code></td>
-                <td><code>patient</code></td>
+                <td>Drug Information</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
               </tr>
               <tr>
-                <td>Physician</td>
-                <td><code>physician</code></td>
-                <td><code>physician</code></td>
+                <td>Data Sources</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
               </tr>
               <tr>
-                <td>Judge</td>
-                <td><code>judge</code></td>
-                <td><code>judge</code></td>
+                <td>Full View Access</td>
+                <td>8 of 9</td>
+                <td>9 of 9</td>
+                <td>9 of 9</td>
+              </tr>
+              <tr>
+                <td>SQL Query View</td>
+                <td>No</td>
+                <td>No</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Technical Disclaimers</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="screenshot">
-          <img src="/demo-screenshots/step3_credentials_filled.png" alt="Credentials Filled">
-        </div>
       </div>
-    </div>
-
-    <!-- Step 4: Drug Selection Grid -->
-    <div class="step">
-      <div class="step-header">
-        <div class="step-number">4</div>
-        <div class="step-title">Drug Selection Grid</div>
-      </div>
-      <div class="step-content">
-        <div class="step-description">
-          <p>After logging in, you'll see a grid of <strong>13 drug logos</strong>. Click any drug to start asking questions about it.</p>
-          <div class="highlight-box tip">
-            Available drugs include: Biktarvy, ELIQUIS, ENBREL, ENTRESTO, FARXIGA, HUMIRA, IBRANCE, Imbruvica, JAKAFI, JANUVIA, JARDIANCE, Lantus, and Linzess.
-          </div>
-        </div>
-        <div class="screenshot">
-          <img src="/demo-screenshots/step4_drug_grid.png" alt="Drug Selection Grid">
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 5: Chat Interface -->
-    <div class="step">
-      <div class="step-header">
-        <div class="step-number">5</div>
-        <div class="step-title">Chat Interface</div>
-      </div>
-      <div class="step-content">
-        <div class="step-description">
-          <p>When you click a drug logo, the chat interface opens with a pre-filled question: <strong>"What is [Drug] used for?"</strong></p>
-          <p>This format works reliably with the Denodo AI SDK. Simply click Send to submit.</p>
-        </div>
-        <div class="screenshot">
-          <img src="/demo-screenshots/step5_chat_interface.png" alt="Chat Interface">
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 6: AI Response -->
-    <div class="step">
-      <div class="step-header">
-        <div class="step-number">6</div>
-        <div class="step-title">AI Response with Metadata</div>
-      </div>
-      <div class="step-content">
-        <div class="step-description">
-          <p>The AI responds with detailed drug information pulled from the Denodo Agora database. The response includes:</p>
-          <ul>
-            <li><strong>Answer</strong> - Clear, formatted drug information</li>
-            <li><strong>Data Sources</strong> - Which database views were queried</li>
-            <li><strong>Response Time</strong> - How long the AI took to respond</li>
-          </ul>
-          <div class="highlight-box warning">
-            Response time is typically 20-60 seconds. The first query may take longer due to cold start.
-          </div>
-        </div>
-        <div class="screenshot">
-          <img src="/demo-screenshots/step6_ai_response.png" alt="AI Response">
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 7: Follow-up Questions -->
-    <div class="step">
-      <div class="step-header">
-        <div class="step-number">7</div>
-        <div class="step-title">Follow-up Questions</div>
-      </div>
-      <div class="step-content">
-        <div class="step-description">
-          <p>Ask follow-up questions naturally. The AI maintains conversation context and remembers which drug you're discussing.</p>
-          <p>Example follow-ups:</p>
-          <ul>
-            <li>"What are the side effects?"</li>
-            <li>"How should I take this medication?"</li>
-            <li>"Are there any drug interactions?"</li>
-          </ul>
-        </div>
-        <div class="screenshot">
-          <img src="/demo-screenshots/step7_followup.png" alt="Follow-up Conversation">
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 8: Logout -->
-    <div class="step">
-      <div class="step-header">
-        <div class="step-number">8</div>
-        <div class="step-title">Logout</div>
-      </div>
-      <div class="step-content">
-        <div class="step-description">
-          <p>Click the logout button in the header to end your session and return to the login screen.</p>
-          <p>Your conversation history is cleared when you log out.</p>
-        </div>
-        <div class="screenshot">
-          <img src="/demo-screenshots/step8_logged_out.png" alt="Logged Out">
-        </div>
-      </div>
-    </div>
+    </section>
 
     <footer>
       <p>Label iQ - Denodo Hackathon 2025</p>
