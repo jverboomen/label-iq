@@ -125,37 +125,37 @@ function filterTechnicalResponse(answer: string): string {
  */
 const ROLE_VIEW_PERMISSIONS: Record<string, string[]> = {
   patient: [
-    'drug_purpose_and_identity',
-    'clinical_pharmacology',
-    'dosing_and_administration',
-    'interactions',
-    'overdose_emergency',
-    'product_and_label_index',
-    'specific_population',
-    'storage_and_handling'
-    // EXCLUDED: master_safety_risk (technical risk assessments require healthcare professional review)
+    'dv_drug_purpose_and_identity',
+    'dv_clinical_pharmacology',
+    'dv_dosing_and_administration',
+    'dv_interactions',
+    'dv_overdose_emergency',
+    'dv_product_and_label_index',
+    'dv_specific_population',
+    'dv_storage_and_handling'
+    // EXCLUDED: dv_master_safety_risk (technical risk assessments require healthcare professional review)
   ],
   physician: [
-    'drug_purpose_and_identity',
-    'clinical_pharmacology',
-    'dosing_and_administration',
-    'interactions',
-    'master_safety_risk',
-    'overdose_emergency',
-    'product_and_label_index',
-    'specific_population',
-    'storage_and_handling'
+    'dv_drug_purpose_and_identity',
+    'dv_clinical_pharmacology',
+    'dv_dosing_and_administration',
+    'dv_interactions',
+    'dv_master_safety_risk',
+    'dv_overdose_emergency',
+    'dv_product_and_label_index',
+    'dv_specific_population',
+    'dv_storage_and_handling'
   ],
   judge: [
-    'drug_purpose_and_identity',
-    'clinical_pharmacology',
-    'dosing_and_administration',
-    'interactions',
-    'master_safety_risk',
-    'overdose_emergency',
-    'product_and_label_index',
-    'specific_population',
-    'storage_and_handling'
+    'dv_drug_purpose_and_identity',
+    'dv_clinical_pharmacology',
+    'dv_dosing_and_administration',
+    'dv_interactions',
+    'dv_master_safety_risk',
+    'dv_overdose_emergency',
+    'dv_product_and_label_index',
+    'dv_specific_population',
+    'dv_storage_and_handling'
   ]
 };
 
