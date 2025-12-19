@@ -1,0 +1,322 @@
+Label iQ – DRAFT Video Script (15 Minutes) 
+
+INTRO (0:00 - 1:00) 
+
+[Screen: Title slide with Label iQ logo] 
+
+"Hi, I'm Brian O’Donnell from Massive Insights, and I'm excited to present Label iQ - an AI-powered FDA drug label assistant built for the Denodo Data Virtualization Hackathon 2025. 
+
+In the next 15 minutes, I'll show you how we combined Denodo's data virtualization with generative AI to make complex medical information accessible to everyone - from patients to physicians." 
+
+Shape 
+
+THE PROBLEM (1:00 - 2:30) 
+
+[Screen: Show an actual FDA drug label - dense text] 
+
+"FDA drug labels are critical documents. They contain everything a doctor or patient needs to know about a medication - dosing, interactions, warnings, side effects. 
+
+But there's a problem. These labels are: 
+
+Dense and technical - written for pharmacists, not patients 
+
+Scattered across dozens of sections - good luck finding what you need quickly 
+
+Impossible to query - you can't just ask 'Does this drug interact with aspirin?' 
+
+Patients struggle to understand their medications. Doctors waste time searching through documentation. 
+
+We asked: What if you could just ask a question in plain English and get an accurate answer?" 
+
+Shape 
+
+THE SOLUTION (2:30 - 4:00) 
+
+[Screen: Show Label iQ home page] 
+
+"That's Label iQ. 
+
+It's a conversational AI chatbot that lets you ask questions about FDA drug labels in natural language. Click on a drug, ask your question, and get a clear, accurate answer sourced directly from official FDA data. 
+
+Three key innovations: 
+
+Natural language interface - Ask questions like 'What is ENTRESTO used for?' or 'Can I take ELIQUIS with aspirin?' 
+
+Role-based access control - Different users see different information. Patients get simplified, safe answers. Physicians get full clinical details. This reflects real-world healthcare information governance. 
+
+Powered by Denodo - All our data comes from Denodo Agora. We're not copying data anywhere - we're virtualizing access to FDA label information through 9 specialized database views." 
+
+Shape 
+
+LIVE DEMO - PATIENT ROLE (4:00 - 7:00) 
+
+[Screen: Live app - select Patient role] 
+
+"Let me show you how it works. I'll start as a Patient. 
+
+The password is simply 'patient' - lowercase. This is a demo, so we're using honor-system authentication. 
+
+[Login as Patient] 
+
+Now I see the main interface. Notice the grid of 14 drug logos - these are all the FDA labels in our database. I can click any drug to start a conversation. 
+
+[Click ENTRESTO logo] 
+
+The system auto-populates a question: 'What is ENTRESTO used for?' 
+
+[Send the message] 
+
+You'll notice this takes about 45-60 seconds. That's because the AI is doing a lot of work behind the scenes: 
+
+Decomposing my question into sub-queries 
+
+Searching a vector database for relevant content 
+
+Generating SQL to query Denodo Agora 
+
+Retrieving data from 9 different views 
+
+Having Claude 3.5 Sonnet synthesize a response 
+
+This isn't slow - it's thorough. We prioritize accuracy over speed when it comes to healthcare information. 
+
+[Show response] 
+
+There's our answer - written in patient-friendly language. Notice the metadata: the AI model used, response time, and which database tables were accessed. 
+
+As a patient, I cannot see the raw SQL query - that's hidden for my role." 
+
+Shape 
+
+LIVE DEMO - PHYSICIAN ROLE (7:00 - 8:30) 
+
+[Screen: Switch to Physician role] 
+
+"Now let me switch to Physician. Password is 'physician'. 
+
+[Login as Physician] 
+
+Same interface, but now I have access to all 9 database views - including master_safety_risk, which contains technical risk assessments meant for healthcare providers. 
+
+[Ask about drug interactions] 
+
+Let me ask about drug interactions: 'Does ELIQUIS interact with aspirin?' 
+
+[Wait for response] 
+
+The physician gets more clinical detail in the response. Still no SQL visibility - that's reserved for judges." 
+
+Shape 
+
+LIVE DEMO - JUDGE ROLE (8:30 - 10:00) 
+
+[Screen: Switch to Judge role] 
+
+"Finally, the Judge role - that's you! Password is 'judge'. 
+
+[Login as Judge] 
+
+As a judge, you see everything. Full access to all views, plus the actual SQL queries being generated. 
+
+[Ask a question] 
+
+Let me ask: 'What are the dosing instructions for JARDIANCE?' 
+
+[Show response with SQL] 
+
+There's the answer. But look - now you can see the SQL query that was generated. This demonstrates the power of Denodo AI SDK: it's translating natural language into SQL that queries our virtualized data layer. 
+
+You can also see our Query History panel - every question asked in this session." 
+
+Shape 
+
+ARCHITECTURE DEEP DIVE (10:00 - 12:30) 
+
+[Screen: Show architecture diagram] 
+
+"Let me walk you through the architecture. Label iQ uses a five-layer microservice design. 
+
+Layer 1: Presentation Layer 
+
+React frontend with TypeScript 
+
+TanStack Query for state management 
+
+Shadcn/UI components with FDA-inspired design 
+
+Layer 2: API Layer 
+
+Express.js backend 
+
+Zod validation on all inputs - prevents injection attacks 
+
+Role-based access control enforcement 
+
+Layer 3: AI Orchestration 
+
+Denodo AI SDK running on AWS EC2 
+
+This is a microservice pattern - the AI SDK is a separate, scalable service 
+
+It manages 200+ Python dependencies and its own AWS credentials 
+
+Layer 4: Large Language Model 
+
+Claude 3.5 Sonnet on AWS Bedrock 
+
+200,000 token context window - handles complex medical documents 
+
+Layer 5: Data Virtualization 
+
+Denodo Agora with our labeliq database 
+
+9 specialized views covering different aspects of drug labels 
+
+SQL over JDBC with basic authentication 
+
+One key architectural decision: since Denodo Agora is a managed service, we couldn't create custom database users. So we implemented application-level RBAC that validates the tables_used metadata after each response. This is actually a common pattern in production healthcare applications." 
+
+Shape 
+
+DATA MODEL (12:30 - 13:30) 
+
+[Screen: Show database views table] 
+
+"Our data model consists of 9 virtualized views in Denodo Agora: 
+
+drug_purpose_and_identity - Basic drug information 
+
+clinical_pharmacology - How the drug works 
+
+dosing_and_administration - Dosage instructions 
+
+interactions - Drug-drug and drug-food interactions 
+
+overdose_emergency - Emergency treatment info 
+
+product_and_label_index - Label metadata 
+
+specific_population - Pediatric, geriatric, pregnancy info 
+
+storage_and_handling - Storage requirements 
+
+master_safety_risk - Technical risk assessments (restricted) 
+
+Patients can access 8 of these views. The master_safety_risk view is restricted because it contains technical risk assessments that should be interpreted by a healthcare provider. 
+
+We have 14 drugs in our database - major brand-name medications like ENTRESTO, ELIQUIS, JARDIANCE, HUMIRA, and more." 
+
+Shape 
+
+SECURITY & COMPLIANCE (13:30 - 14:00) 
+
+[Screen: Security features slide] 
+
+"Quick note on security: 
+
+TLS 1.3 encryption on all connections 
+
+Zod schema validation prevents injection attacks 
+
+Credential isolation - app and AI SDK have separate credentials 
+
+Post-response validation - we verify only allowed views were accessed 
+
+This architecture is designed for healthcare compliance - protecting sensitive medical information at every layer." 
+
+Shape 
+
+FUTURE ROADMAP (14:00 - 14:30) 
+
+[Screen: Future enhancements slide] 
+
+"Where could this go next? 
+
+openFDA API integration - access 170,000+ drug labels 
+
+ClinicalTrials.gov - connect to clinical trial data 
+
+Drug pricing data - help patients understand costs 
+
+Multi-language support - Spanish and other languages 
+
+Voice interface - accessibility for visually impaired users 
+
+The beauty of Denodo's virtualization is that we can add new data sources without changing the application." 
+
+Shape 
+
+CLOSING (14:30 - 15:00) 
+
+[Screen: Final slide with key stats] 
+
+"To summarize: Label iQ demonstrates how Denodo's data virtualization, combined with modern generative AI, can transform access to critical healthcare information. 
+
+14 drug labels 
+
+9 database views 
+
+3 user roles 
+
+5 architectural layers 
+
+All working together to answer one simple question: What do I need to know about my medication? 
+
+Thank you for your time. I'm Brian O’Donnell from Team Massive Insights, and this has been Label iQ." 
+
+Shape 
+
+TIMING SUMMARY 
+
+Section 
+
+Duration 
+
+Intro 
+
+1:00 
+
+Problem 
+
+1:30 
+
+Solution 
+
+1:30 
+
+Demo: Patient 
+
+3:00 
+
+Demo: Physician 
+
+1:30 
+
+Demo: Judge 
+
+1:30 
+
+Architecture 
+
+2:30 
+
+Data Model 
+
+1:00 
+
+Security 
+
+0:30 
+
+Future 
+
+0:30 
+
+Closing 
+
+0:30 
+
+Total 
+
+15:00 
+
