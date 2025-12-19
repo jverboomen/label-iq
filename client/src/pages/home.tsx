@@ -29,19 +29,58 @@ const DRUG_LOGOS: Record<string, string> = {
 
 // Simple Markdown to HTML converter for AI responses
 function renderMarkdown(text: string): string {
-  return text
+  let result = text
     // Bold: **text** or __text__
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/__(.+?)__/g, '<strong>$1</strong>')
     // Italic: *text* or _text_
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/_(.+?)_/g, '<em>$1</em>')
-    // Bullet points: • or - at start of line
-    .replace(/^[•\-]\s+(.+)$/gm, '<li class="ml-4">$1</li>')
-    // Numbered lists: 1. 2. etc at start of line
-    .replace(/^\d+\.\s+(.+)$/gm, '<li class="ml-4 list-decimal">$1</li>')
-    // Line breaks
-    .replace(/\n/g, '<br />');
+    .replace(/_(.+?)_/g, '<em>$1</em>');
+  
+  // Process lines to handle lists properly
+  const lines = result.split('\n');
+  const processedLines: string[] = [];
+  let inList = false;
+  
+  for (const line of lines) {
+    // Check for bullet points
+    const bulletMatch = line.match(/^[•\-]\s+(.+)$/);
+    const numberMatch = line.match(/^\d+\.\s+(.+)$/);
+    
+    if (bulletMatch) {
+      if (!inList) {
+        processedLines.push('<ul class="list-disc ml-4 space-y-1">');
+        inList = true;
+      }
+      processedLines.push(`<li>${bulletMatch[1]}</li>`);
+    } else if (numberMatch) {
+      if (!inList) {
+        processedLines.push('<ol class="list-decimal ml-4 space-y-1">');
+        inList = true;
+      }
+      processedLines.push(`<li>${numberMatch[1]}</li>`);
+    } else {
+      if (inList) {
+        // Close the list - check if we started with ol or ul
+        const hasOl = processedLines.some(l => l.includes('<ol'));
+        processedLines.push(hasOl ? '</ol>' : '</ul>');
+        inList = false;
+      }
+      // Add paragraph break for empty lines, otherwise just the content
+      if (line.trim() === '') {
+        processedLines.push('<br />');
+      } else {
+        processedLines.push(line);
+      }
+    }
+  }
+  
+  // Close any open list
+  if (inList) {
+    processedLines.push('</ul>');
+  }
+  
+  return processedLines.join('\n');
 }
 
 // Function to detect drug names in message content
