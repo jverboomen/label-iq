@@ -10,7 +10,7 @@
 
 Label iQ is an AI-powered healthcare application that enables patients, physicians, and judges to query FDA drug label information using natural language. Built for the Denodo Data Virtualization Hackathon 2025, the application demonstrates the power of combining Denodo's data virtualization platform with generative AI to make complex medical information accessible to everyone.
 
-The system integrates Denodo AI SDK with AWS Bedrock (Claude 3.5 Sonnet) to retrieve and synthesize information from FDA drug labels stored in Denodo Agora, a cloud-based data virtualization service.
+The system integrates Denodo AI SDK with AWS Bedrock (Claude 3.5 Sonnet) to retrieve and synthesize information from FDA drug labels stored in AWS S3 and virtualized through Denodo Agora, a cloud-based data virtualization platform.
 
 ---
 
@@ -40,7 +40,7 @@ Label iQ solves these problems by providing:
    - Physicians get full clinical details
    - Judges can view the underlying SQL queries
 
-4. **Data Virtualization:** Denodo Agora provides unified access to drug label data without moving or copying the source data
+4. **Data Virtualization:** Denodo Agora virtualizes drug label data stored in AWS S3, providing unified access without moving or copying the source data
 
 ---
 
@@ -109,6 +109,7 @@ Label iQ uses a five-layer microservice architecture:
 ### Layer 5: Data Virtualization Layer
 - **Platform:** Denodo Agora (managed cloud service)
 - **Database:** labeliq
+- **Data Storage:** AWS S3 bucket (source data)
 - **Views:** 9 specialized views for different aspects of drug labels
 - **Protocol:** SQL via JDBC with Basic Authentication
 
@@ -134,22 +135,21 @@ The application accesses 9 virtualized database views in Denodo Agora:
 
 ## Available Drug Labels
 
-The system contains FDA label information for 14 drugs:
+The system contains FDA label information for 13 drugs:
 
 1. Biktarvy
 2. ELIQUIS
-3. ELIQUIS 30-DAY STARTER PACK
-4. ENBREL
-5. ENTRESTO
-6. FARXIGA
-7. HUMIRA
-8. IBRANCE
-9. Imbruvica
-10. JAKAFI
-11. JANUVIA
-12. JARDIANCE
-13. Lantus
-14. Linzess
+3. ENBREL
+4. ENTRESTO
+5. FARXIGA
+6. HUMIRA
+7. IBRANCE
+8. Imbruvica
+9. JAKAFI
+10. JANUVIA
+11. JARDIANCE
+12. Lantus
+13. Linzess
 
 ---
 

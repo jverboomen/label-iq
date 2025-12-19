@@ -2,7 +2,7 @@
 
 ## Overview
 
-Label iQ is a healthcare-focused hackathon prototype that demonstrates integration with Denodo AI SDK for querying FDA drug labels using natural language. The application features a conversational AI chatbot powered by AWS Bedrock (Claude 3.5 Sonnet) that retrieves information from Denodo Agora database. Built with a modern full-stack TypeScript architecture, emphasizing FDA branding, medical-grade UI design, and real-time AI model metadata display.
+Label iQ is a healthcare-focused hackathon prototype that demonstrates integration with Denodo AI SDK for querying FDA drug labels using natural language. The application features a conversational AI chatbot powered by AWS Bedrock (Claude 3.5 Sonnet) that retrieves information from drug label data stored in AWS S3 and virtualized through Denodo Agora. Built with a modern full-stack TypeScript architecture, emphasizing FDA branding, medical-grade UI design, and real-time AI model metadata display.
 
 ## User Preferences
 
@@ -62,7 +62,7 @@ Primary endpoint for chatbot integration:
 
 **Denodo AI SDK Integration:**
 The application queries an external Denodo AI SDK microservice:
-- **Architecture:** Label iQ → Denodo AI SDK (external) → AWS Bedrock Claude 3.5 Sonnet → ChromaDB → Denodo Agora
+- **Architecture:** Label iQ → Denodo AI SDK (external) → AWS Bedrock Claude 3.5 Sonnet → ChromaDB → Denodo Agora → AWS S3 (data storage)
 - **Communication:** HTTP REST API to external AI SDK service
 - **Configuration:** External AI SDK URL via `DENODO_AI_SDK_URL` secret
 - **Features:**
@@ -87,7 +87,7 @@ The application queries an external Denodo AI SDK microservice:
 **Integration Pattern:** Denodo AI SDK (External Microservice)
 - **Deployment:** AI SDK runs as separate service (recommended production pattern)
 - **Communication:** Label iQ → Denodo AI SDK REST API → AWS Bedrock → Claude 3.5 Sonnet
-- **Data Source:** AI SDK queries Denodo Agora for FDA label metadata
+- **Data Source:** AI SDK queries Denodo Agora, which virtualizes FDA label data stored in AWS S3
 - **Configuration:** External AI SDK instance URL provided via `DENODO_AI_SDK_URL` secret
 
 **Why External:**
