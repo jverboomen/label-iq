@@ -9,12 +9,11 @@ import { MessageSquare, Send, Sparkles, Shield, Pill, LogOut, History, LogIn, Lo
 import { apiRequest } from "@/lib/queryClient";
 
 // Drug logo mapping (using public directory for production builds)
-// Only includes 14 drugs that exist in the Denodo database
+// Only includes 13 drugs that exist in the Denodo database
 // Drug names must match database exactly (mixed case for some, uppercase for others)
 const DRUG_LOGOS: Record<string, string> = {
   "Biktarvy": "/drug-logos/BIKTARVY_LOGO.svg",
   "ELIQUIS": "/drug-logos/ELIQUIS_LOGO.svg",
-  "ELIQUIS 30-DAY STARTER PACK": "/drug-logos/ELIQUIS_LOGO.svg",
   "ENBREL": "/drug-logos/ENBREL_LOGO.svg",
   "ENTRESTO": "/drug-logos/ENTRESTO_LOGO.svg",
   "FARXIGA": "/drug-logos/FARXIGA_LOGO.svg",
@@ -242,7 +241,6 @@ export default function HomePage() {
       "ENBREL": "What is ENBREL used for?",
       "Imbruvica": "What is Imbruvica used for?",
       "Lantus": "What is Lantus used for?",
-      "ELIQUIS 30-DAY STARTER PACK": "What is ELIQUIS used for?",
     };
     
     // Default to "What is X used for?" if drug not in list
@@ -531,7 +529,7 @@ export default function HomePage() {
                   <button
                     key={drugName}
                     onClick={() => handleDrugSelect(drugName)}
-                    className={`flex ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "flex-col" : ""} items-center justify-center ${drugName === "ELIQUIS 30-DAY STARTER PACK" ? "gap-1" : ""} p-4 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 hover-elevate active-elevate-2 transition-all`}
+                    className="flex items-center justify-center p-4 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 hover-elevate active-elevate-2 transition-all"
                     data-testid={`button-drug-${drugName.toLowerCase().replace(/\s+/g, '-')}`}
                   >
                     <img 
@@ -539,9 +537,6 @@ export default function HomePage() {
                       alt={`${drugName} logo`}
                       className="h-16 w-auto object-contain"
                     />
-                    {drugName === "ELIQUIS 30-DAY STARTER PACK" && (
-                      <span className="text-[10px] font-medium text-center leading-tight">30-Day Starter Pack</span>
-                    )}
                   </button>
                 ))}
               </div>
