@@ -207,9 +207,10 @@ export default function HomePage() {
   const handleDrugSelect = (drugName: string) => {
     setSelectedDrug(drugName);
     
-    // Custom questions for specific drugs that need more targeted queries
-    // These drugs need "What is X used for?" to get better responses from Denodo AI SDK
-    const customQuestions: Record<string, string> = {
+    // All drugs need specific questions - "Tell me about X" doesn't work with AI SDK
+    // Using "What is X used for?" format for all drugs
+    const drugQuestions: Record<string, string> = {
+      // Original 9 drugs
       "ENTRESTO": "What is ENTRESTO used for?",
       "FARXIGA": "What is FARXIGA used for?",
       "JARDIANCE": "What is JARDIANCE used for?",
@@ -219,9 +220,16 @@ export default function HomePage() {
       "IBRANCE": "What is IBRANCE used for?",
       "ELIQUIS": "What is ELIQUIS used for?",
       "Linzess": "What is Linzess used for?",
+      // Previously missing 5 drugs
+      "Biktarvy": "What is Biktarvy used for?",
+      "ENBREL": "What is ENBREL used for?",
+      "Imbruvica": "What is Imbruvica used for?",
+      "Lantus": "What is Lantus used for?",
+      "ELIQUIS 30-DAY STARTER PACK": "What is ELIQUIS used for?",
     };
     
-    const question = customQuestions[drugName] || `Tell me about ${drugName}`;
+    // Default to "What is X used for?" if drug not in list
+    const question = drugQuestions[drugName] || `What is ${drugName} used for?`;
     setChatInput(question);
   };
 
