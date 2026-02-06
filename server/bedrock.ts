@@ -77,10 +77,11 @@ function formatQuestionWithContext(messages: ChatMessage[]): string {
 }
 
 /**
- * Remove disclaimer line added by Denodo AI SDK
+ * Remove only the uppercase DISCLAIMER line added by Denodo AI SDK
+ * Note: We KEEP the "Disclaimer: This response is based on general drug information..." text
  */
 function removeAIDisclaimer(answer: string): string {
-  // Remove the disclaimer line that Denodo AI SDK adds
+  // Only remove the uppercase DISCLAIMER format (the ugly technical one)
   return answer
     .replace(/DISCLAIMER:\s*This response has been generated based on an LLM's interpretation of the data and may not be accurate\.?\s*/gi, '')
     .replace(/\n\n+/g, '\n\n') // Clean up multiple newlines
